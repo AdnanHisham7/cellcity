@@ -1,0 +1,46 @@
+<!-- views/add-variants.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Variant</title>
+    <!-- Include Bootstrap CSS or other stylesheets as needed -->
+</head>
+<body>
+    <div class="container">
+        <h2>Add Variant</h2>
+        <form action="/admin/add-variants/<%= productId %>" method="POST">
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color" required>
+            </div>
+            <div class="form-group">
+                <label for="storage">Storage</label>
+                <input type="text" id="storage" name="storage" required>
+            </div>
+            <div class="form-group">
+                <label for="RAM">RAM</label>
+                <input type="text" id="RAM" name="RAM" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="discount">Discount</label>
+                <input type="number" id="discount" name="discount">
+            </div>
+            <div class="form-group">
+                <label for="stocks">Stocks</label>
+                <input type="number" id="stocks" name="stocks" required>
+            </div>
+            <div class="form-group">
+                <label for="variantImages">Variant Images (comma-separated URLs)</label>
+                <input type="text" id="variantImages" name="variantImages">
+            </div>
+            <button type="submit">Add Variant</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CellCity | User</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/admin.css">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        body {
+            overflow-x: hidden !important;
+        }
+
+        .profile-details {
+            padding: 100px;
+        }
+
+        .addresses .card {
+            border-radius: 8px !important;
+            border: #dc3545 !important;
+            border-color: #dc3545 !important;
+            transition: transform 0.3s ease;
+        }
+
+        .addresses .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .addresses .card-header {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .addresses .card-footer {
+            background-color: #fff;
+            padding-top: 0.75rem;
+        }
+
+        .addresses .card-text i {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .addresses .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+        .addresses .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid p-0">
+        <!-- Offcanvas Menu Begin -->
+        <div class="offcanvas-menu-overlay"></div>
+        <div class="offcanvas-menu-wrapper">
+            <div class="offcanvas__option">
+                <div class="offcanvas__links">
+                    <a href="#">Sign in</a>
+                    <a href="#">FAQs</a>
+                </div>
+                <div class="offcanvas__top__hover">
+                    <span>Usd <i class="arrow_carrot-down"></i></span>
+                    <ul>
+                        <li>USD</li>
+                        <li>EUR</li>
+                        <li>USD</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="offcanvas__nav__option">
+                <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                <div class="price">₹0.00</div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+            <div class="offcanvas__text">
+                <p>Free shipping, 30-day return or refund guarantee.</p>
+            </div>
+        </div>
+        <!-- Offcanvas Menu End -->
+
+        <!-- Header Section Begin -->
+        <header class="header">
+            <div class="header__top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-7">
+                            <div class="header__top__left">
+                                <p>Free shipping, 30-day return or refund guarantee.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5">
+                            <div class="header__top__right">
+                                <div class="header__top__links">
+                                    <p class="navbar-nav" id="authSection">
+                                        <!-- Placeholder for auth content -->
+                                    </p>
+                                    <a href="#">FAQs</a>
+                                </div>
+                                <div class="header__top__hover">
+                                    <span>Usd <i class="arrow_carrot-down"></i></span>
+                                    <ul>
+                                        <li>USD</li>
+                                        <li>EUR</li>
+                                        <li>USD</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Header Section End -->
+        <div class="row">
+            <div class="col-2 user-sidebar">
+                <div class="logo ms-4">CellCity</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile' ? 'active' : '' %>" href="/profile"><i
+                                class="fa-solid fa-chart-line"></i>My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/address' ? 'active' : '' %>"
+                            href="/profile/address"><i class="fa-solid fa-users"></i>Addresses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/orders' ? 'active' : '' %>" href="/orders"><i
+                                class="fa-solid fa-list"></i>Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/coupons' ? 'active' : '' %>" href="/coupons"><i
+                                class="fa-solid fa-cart-shopping"></i>Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/resetPassword' ? 'active' : '' %>"
+                            href="/resetPassword/<%= user.email %>/<%= user._id%>"><i
+                                class="fa-solid fa-cart-shopping"></i>Reset Password</a>
+                    </li>
+                </ul>
+            </div>

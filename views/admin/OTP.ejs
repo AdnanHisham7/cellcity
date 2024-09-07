@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellcity Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin.css">
+    <style>
+        body {
+            background-image: url('/images/slide-04.jpg');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- <div class="logo">
+                    <img src="./images/cellCity-logo.png" alt="Cellcity Logo" height="100px">
+                </div> -->
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4 rounded">
+                    <h2 class="text-start mb-2">Verify OTP</h2>
+                    <div>Check your MailBox and verify OTP.</div><br>
+                    
+                    <form action="/verifyOTP" method="POST">
+                        <input type="hidden" name="userId" id="userId" value="<%= userId %>"> <!-- Pass userId dynamically -->
+                        <input type="hidden" name="email" id="email" value="<%= email %>"> <!-- Pass email dynamically -->
+                        <div class="form-group">
+                            <input type="password" name="otp" id="otp" class="form-control" maxlength="6" placeholder="Enter OTP" required>
+                        </div>
+                        <% if (error) { %>
+                            <div class="alert alert-danger"><%= error %></div>
+                        <% } %>
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Continue</button>
+                        <button type="button" id="resendOTPBtn" class="btn btn-secondary btn-block mt-2" disabled>
+                            Resend OTP (<span id="timer">15</span>s)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Timer function
+        let timeLeft = 15;
+        const timerElement = document.getElementById('timer');
+        const resendOTPBtn = document.getElementById('resendOTPBtn');
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                resendOTPBtn.disabled = false;
+                resendOTPBtn.textContent = 'Resend OTP';
+            }
+        }, 1000);
+
+        // Resend OTP button click event
+        resendOTPBtn.addEventListener('click', function() {
+            const userId = document.getElementById('userId').value;
+            const email = document.getElementById('email').value;
+            
+            $.ajax({
+                url: '/resendOTP',
+                type: 'POST',
+                data: { userId, email },
+                success: function(response) {
+                    alert("OTP Resent Successfully!");
+                    // Reset the timer and disable the button again
+                    timeLeft = 15;
+                    resendOTPBtn.disabled = true;
+                    resendOTPBtn.innerHTML = `Resend OTP (<span id="timer">${timeLeft}</span>s)`;
+                    timerElement.textContent = timeLeft;
+                    
+                    // Restart the countdown
+                    countdown = setInterval(() => {
+                        timeLeft--;
+                        timerElement.textContent = timeLeft;
+
+                        if (timeLeft <= 0) {
+                            clearInterval(countdown);
+                            resendOTPBtn.disabled = false;
+                            resendOTPBtn.textContent = 'Resend OTP';
+                        }
+                    }, 1000);
+                },
+                error: function(error) {
+                    alert('Error resending OTP. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

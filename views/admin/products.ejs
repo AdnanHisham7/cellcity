@@ -1,0 +1,663 @@
+<%- include('../layouts/admin/header') %>
+
+    <div class="main-content" style="margin-top: 70px;">
+        <h3 class="sub-heading">Products</h3>
+        <div class="container">
+            <table id="productsTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>PRODUCT ID</th>
+                        <th>NAME</th>
+                        <th>BRAND</th>
+                        <th>DISPLAY</th>
+                        <th>PROCESSOR</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(product=> { %>
+                        <tr data-product-id="<%= product._id %>">
+                            <td>
+                                <%= product._id %>
+                            </td>
+                            <td>
+                                <%= product.productName %>
+                            </td>
+                            <td>
+                                <%= product.brand %>
+                            </td>
+                            <td>
+                                <%= product.display%>
+                            </td>
+                            <td>
+                                <%= product.processor%>
+                            </td>
+                            <% if(product.status=='active' ){%>
+                                <td class="text-success">
+                                    <%= product.status %>
+                                </td>
+                                <%}else{%>
+                                    <td class="text-danger">
+                                        <%= product.status %>
+                                    </td>
+                                    <% } %>
+                                        <td>
+                                            <button type="button" class="custom-button toggle-status"
+                                                data-product-id="<%= product._id %>"
+                                                data-status="<%= product.status %>">
+                                                Change status
+                                            </button>
+                                            <a href="/admin/products/<%= product._id %>/variants">
+                                                <button type="button" class="custom-button-2 toggle-status"
+                                                    data-product-id="<%= product._id %>">
+                                                    Variants
+                                                </button></a>
+                                        </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                Add New Product
+            </button>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Product Details Modal -->
+    <div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="productDetailsForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="productName" name="productName">
+                                    <div id="productNameError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="brand" class="form-label">Brand</label>
+                                    <select class="form-select" name="brand" id="brand">
+                                        <option selected disabled>Select</option>
+                                        <% brands.forEach(brand => { %>
+                                            <% if (brand.status == 'active') { %>
+                                                <option value="<%= brand.brandName %>"><%= brand.brandName %></option>
+                                            <% } %>
+                                        <% }) %>
+                                    </select>
+                                    <div id="brandError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input type="text" class="form-control" id="description" name="description">
+                                    <div id="descriptionError" class="text-danger" style="display: none;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="highlights" class="form-label">Highlights</label>
+                                    <input type="text" class="form-control" id="highlights" name="highlights">
+                                    <div id="highlightsError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="batteryCapacity" class="form-label">Battery Capacity</label>
+                                    <input type="text" class="form-control" id="batteryCapacity" name="batteryCapacity">
+                                    <div id="batteryCapacityError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="display" class="form-label">Display Size</label>
+                                    <input type="text" class="form-control" id="display" name="display">
+                                    <div id="displayError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="processor" class="form-label">Processor</label>
+                                    <input type="text" class="form-control" id="processor" name="processor">
+                                    <div id="processorError" class="text-danger" style="display: none;"></div>
+                                </div>
+                                <input type="hidden" id="productId" name="productId">
+                            </div>
+                            <br>
+                            <div class="col-12">
+                                <b class="text-success">Created At:</b>
+                                <div name="createdAt" id="createdAt"></div>
+                                <b class="text-danger">Updated At:</b>
+                                <div name="updatedAt" id="updatedAt"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Change</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to change the status of this product?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/products/add" method="POST" enctype="multipart/form-data" id="addProductForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" name="productName" id="productName"
+                                        placeholder="Name of the product">
+                                    <div id="productName-error" class="text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Brand</label>
+                                    <select class="form-select" name="brand" id="brand">
+                                        <option selected disabled>Select</option>
+                                        <% brands.forEach(brand=> { %>
+                                            <% if(brand.status=='active' ) { %>
+                                                <option>
+                                                    <%= brand.brandName %>
+                                                </option>
+                                                <% } %>
+                                                    <% }) %>
+                                    </select>
+                                    <div id="brand-error" class="text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" name="description" id="description" rows="7"
+                                        style="width: 100%;" placeholder="Description of the product"></textarea>
+                                    <div id="description-error" class="text-danger"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="highlights" class="form-label">Highlights</label>
+                                    <textarea class="form-control" name="highlights" id="highlights" rows="4"
+                                        style="width: 100%;" placeholder="Highlights of the product"></textarea>
+                                    <div id="highlights-error" class="text-danger"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="batteryCapacity" class="form-label">Battery Capacity</label>
+                                    <input type="text" class="form-control" name="batteryCapacity" id="batteryCapacity"
+                                        placeholder="in mAh">
+                                    <div id="batteryCapacity-error" class="text-danger"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="display" class="form-label">Display Size</label>
+                                    <input type="text" class="form-control" name="display" id="display"
+                                        placeholder="in inches">
+                                    <div id="display-error" class="text-danger"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="processor" class="form-label">Processor</label>
+                                    <input type="text" class="form-control" name="processor" id="processor"
+                                        placeholder="Processor (e.g., Snapdragon 888)">
+                                    <div id="processor-error" class="text-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">ADD +</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutConfirmationModal" tabindex="-1" aria-labelledby="logoutConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmationModalLabel">Logout Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogoutButton">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+    <script>
+        // Get the sub-heading text
+        const subHeadingText = document.querySelector('.sub-heading').textContent;
+
+        // Set the placeholder attribute of the input field
+        const searchInput = document.getElementById('customSearch');
+        searchInput.placeholder = `Search ${subHeadingText}...`;
+
+
+        $(document).ready(function () {
+            // Initialize the DataTable
+            var table = $('.table').DataTable({
+                "pageLength": 5, // Show 5 rows at a time
+                "lengthChange": false, //option to change the number of rows shown
+                "ordering": true, // Enable column ordering
+                "info": true, // Disable info showing "Showing X of X entries"
+                "pagingType": "simple", // Simple pagination controls
+                "searching": true, // Disable the default search bar
+                "language": {
+                    "paginate": {
+                        "previous": "Previous", // Customize the text
+                        "next": "Next" // Customize the text
+                    }
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": [-1] } // Disable ordering on the "Image" (3rd) and "Actions" (last) columns
+                ]
+            });
+
+            // Apply the search to the custom input field
+            $('#customSearch').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            const productDetailsForm = document.getElementById('productDetailsForm');
+            let productIdToToggle = null;
+
+            // Function to format the timestamp
+            function formatTimestamp(timestamp) {
+                const date = new Date(timestamp);
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                const seconds = date.getSeconds();
+
+                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+                const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+                const formattedDate = `${day}/${month}/${year}`;
+                const formattedTime = `${hours}:${formattedMinutes}:${formattedSeconds}`;
+
+                return `${formattedDate} ${formattedTime}`;
+            }
+
+            let croppers = [];
+            let images = [];
+
+            // document.getElementById('productImages').addEventListener('change', function (event) {
+            //     const files = event.target.files;
+            //     const imageContainer = document.getElementById('imageContainer');
+            //     imageContainer.innerHTML = ''; // Clear previous images
+
+            //     Array.from(files).forEach((file, index) => {
+            //         const reader = new FileReader();
+
+            //         reader.onload = function (event) {
+            //             const imageElement = document.createElement('img');
+            //             imageElement.src = event.target.result;
+            //             imageElement.style.maxWidth = '100%';
+            //             imageContainer.appendChild(imageElement);
+
+            //             const cropper = new Cropper(imageElement, {
+            //                 aspectRatio: 1,
+            //                 viewMode: 1,
+            //                 autoCropArea: 1,
+            //             });
+
+            //             croppers.push(cropper);
+            //             images.push(file);
+            //         };
+
+            //         reader.readAsDataURL(file);
+            //     });
+            // });
+
+            // Handle row clicks to show product details modal
+            document.querySelectorAll('tr').forEach(row => {
+                row.addEventListener('click', async (event) => {
+                    if (event.target.closest('.toggle-status')) {
+                        return; // Skip row click handling for action buttons
+                    }
+
+                    const productId = row.getAttribute('data-product-id');
+
+                    if (productId) {
+                        try {
+                            const response = await fetch(`/admin/products/${productId}`);
+                            const product = await response.json();
+
+                            // Populate the form with product details
+                            productDetailsForm.querySelector('#productName').value = product.productName;
+                            productDetailsForm.querySelector('#brand').value = product.brand;
+                            productDetailsForm.querySelector('#description').value = product.description;
+                            productDetailsForm.querySelector('#highlights').value = product.highlights;
+                            productDetailsForm.querySelector('#batteryCapacity').value = product.batteryCapacity;
+                            productDetailsForm.querySelector('#display').value = product.display;
+                            productDetailsForm.querySelector('#processor').value = product.processor;
+                            productDetailsForm.querySelector('#productId').value = productId;
+                            productDetailsForm.querySelector('#createdAt').innerHTML = formatTimestamp(product.createdAt);
+                            productDetailsForm.querySelector('#updatedAt').innerHTML = formatTimestamp(product.updatedAt);
+
+                            productDetailsModal.show(); // Show the product details modal
+                        } catch (error) {
+                            console.error('Error fetching product details:', error);
+                        }
+                    }
+                });
+            });
+
+            // Handle form submission
+            // productDetailsForm.addEventListener('submit', async (event) => {
+            //     event.preventDefault();
+
+            //     const formData = new FormData(productDetailsForm);
+            //     const productData = {
+            //         productName: formData.get('productName'),
+            //         brand: formData.get('brand'),
+            //         description: formData.get('description'),
+            //         highlights: formData.get('highlights'),
+            //         batteryCapacity: formData.get('batteryCapacity'),
+            //         display: formData.get('display'),
+            //         processor: formData.get('processor'),
+            //         updatedAt: Date.now(),
+            //     };
+
+            //     try {
+            //         const response = await fetch(`/admin/products/${formData.get('productId')}`, {
+            //             method: 'PUT',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //             },
+            //             body: JSON.stringify(productData)
+            //         });
+
+            //         if (response.ok) {
+            //             // Optionally, refresh the page or update the table
+            //             location.reload(); // Or update the table dynamically
+            //         } else {
+            //             alert('Failed to update product.');
+            //         }
+            //     } catch (error) {
+            //         console.error('Error updating product:', error);
+            //     }
+            // });
+
+            document.getElementById('productDetailsForm').addEventListener('submit', async function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Clear previous error messages and styles
+                const inputs = document.querySelectorAll('.form-control');
+                    inputs.forEach(input => input.classList.remove('input-error'));
+                    document.getElementById('productNameError').style.display = 'none';
+                    document.getElementById('brandError').style.display = 'none';
+                    document.getElementById('descriptionError').style.display = 'none';
+                    document.getElementById('highlightsError').style.display = 'none';
+                    document.getElementById('batteryCapacityError').style.display = 'none';
+                    document.getElementById('displayError').style.display = 'none';
+                    document.getElementById('processorError').style.display = 'none';
+
+                const formData = new FormData(e.target);
+                const productData = {
+                    productName: formData.get('productName'),
+                    brand: formData.get('brand'),
+                    description: formData.get('description'),
+                    highlights: formData.get('highlights'),
+                    batteryCapacity: formData.get('batteryCapacity'),
+                    display: formData.get('display'),
+                    processor: formData.get('processor'),
+                    productId: formData.get('productId')
+                };
+
+                let hasError = false;
+
+                // Client-side validations
+                if (!productData.productName || typeof productData.productName !== 'string') {
+                    document.getElementById('productNameError').textContent = 'Product Name is required and must be a string.';
+                    document.getElementById('productNameError').style.display = 'block';
+                    document.getElementById('productName').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.brand) {
+                    document.getElementById('brandError').textContent = 'Brand selection is required.';
+                    document.getElementById('brandError').style.display = 'block';
+                    document.getElementById('brand').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.description || typeof productData.description !== 'string') {
+                    document.getElementById('descriptionError').textContent = 'Description is required and must be a string.';
+                    document.getElementById('descriptionError').style.display = 'block';
+                    document.getElementById('description').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.highlights || typeof productData.highlights !== 'string') {
+                    document.getElementById('highlightsError').textContent = 'Highlights are required and must be a string.';
+                    document.getElementById('highlightsError').style.display = 'block';
+                    document.getElementById('highlights').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.batteryCapacity || typeof productData.batteryCapacity !== 'string'|| productData.batteryCapacity < 0) {
+                    document.getElementById('batteryCapacityError').textContent = 'Battery Capacity is required and must be a string.';
+                    document.getElementById('batteryCapacityError').style.display = 'block';
+                    document.getElementById('batteryCapacity').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.display || typeof productData.display !== 'string' || productData.display < 0) {
+                    document.getElementById('displayError').textContent = 'Display Size is required and must be a string.';
+                    document.getElementById('displayError').style.display = 'block';
+                    document.getElementById('display').classList.add('input-error');
+                    hasError = true;
+                }
+
+                if (!productData.processor || typeof productData.processor !== 'string') {
+                    document.getElementById('processorError').textContent = 'Processor is required and must be a string.';
+                    document.getElementById('processorError').style.display = 'block';
+                    document.getElementById('processor').classList.add('input-error');
+                    hasError = true;
+                }
+
+                // If there are any client-side validation errors, do not proceed
+                if (hasError) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/admin/products/${formData.get('productId')}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(productData)
+                    });
+
+                    if (response.ok) {
+                        location.reload(); // Or update the page dynamically
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Backend Error:', errorData.message);
+                        document.getElementById('error-message').textContent = 'Failed to update product. Please try again.';
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error updating product:', error);
+                    document.getElementById('error-message').textContent = 'Server Error. Please try again later.';
+                    document.getElementById('error-message').style.display = 'block';
+                }
+            });
+
+
+
+
+            // Handle action button clicks to show confirmation modal
+            document.querySelectorAll('.toggle-status').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Prevent row click event
+                    productIdToToggle = this.getAttribute('data-product-id');
+                    confirmationModal.show(); // Show the confirmation modal
+                });
+            });
+
+            // Handle confirmation action
+            document.getElementById('confirmAction').addEventListener('click', async () => {
+                if (productIdToToggle) {
+                    try {
+                        console.log(`Sending request to toggle status for productId: ${productIdToToggle}`);
+                        const response = await fetch(`/admin/products/action/${productIdToToggle}`, {
+                            method: 'POST'
+                        });
+
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log(`Response received: `, result);
+
+                            // Update the status in the table
+                            const row = document.querySelector(`tr[data-product-id="${productIdToToggle}"]`);
+                            if (row) {
+                                const statusCell = row.querySelector('td:nth-child(6)');
+                                statusCell.innerText = result.status;
+                                if (result.status === 'active') {
+                                    statusCell.classList.remove('text-danger');
+                                    statusCell.classList.add('text-success');
+                                } else {
+                                    statusCell.classList.remove('text-success');
+                                    statusCell.classList.add('text-danger');
+                                }
+                            }
+                        } else {
+                            const errorResult = await response.json();
+                            console.error('error is encountered by:', errorResult.message);
+                        }
+                    } catch (error) {
+                        console.error('Error toggling sssproduct status:', error);
+                    } finally {
+                        confirmationModal.hide(); // Hide the confirmation modal
+                    }
+                }
+            });
+
+        });
+
+
+        //logout Logic
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            const logoutConfirmationModal = new bootstrap.Modal(document.getElementById('logoutConfirmationModal'));
+            logoutConfirmationModal.show();
+        });
+
+        document.getElementById('confirmLogoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/admin/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/admin'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        document.getElementById('addProductForm').addEventListener('submit', async function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Clear previous error messages
+            ['productName', 'brand', 'description', 'highlights', 'batteryCapacity', 'display', 'processor'].forEach(field => {
+                document.getElementById(`${field}-error`).textContent = '';
+            });
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errors = await response.json();
+
+                    // Display specific error messages for each field
+                    for (const [field, message] of Object.entries(errors)) {
+                        document.getElementById(`${field}-error`).textContent = message;
+                    }
+                } else {
+                    // If the request is successful, redirect or handle accordingly
+                    window.location.href = '/admin/products';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = 'Server Error. Please try again later.';
+                errorMessage.style.display = 'block';
+            }
+        });
+
+
+
+    </script>
+
+    </body>
+
+    </html>

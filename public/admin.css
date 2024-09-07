@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  background-color: #F5F6F7;
+  min-height: 100vh;
+  display: flex;
+  color: #000000;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif!important;
+}
+
+.login-container {
+  width: 460px!important;
+  padding: 50px 40px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  min-height: 70vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.login-container h2 {
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+.sub-heading {
+  color: rgb(1, 20, 111);
+  font-weight: 600;
+}
+
+.content {
+  margin-left: 16.6667%;
+  background-color: rgb(245, 246, 247) !important;
+  padding: 20px;
+}
+
+.content nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 83.3333%;
+  padding: 12px;
+  background-color: #FFFFFF;
+}
+
+.search-bar {
+  margin-bottom: 40px !important;
+}
+
+.dataTables_filter {
+  display: none;
+}
+
+.sidebar {
+  background-color: #ffffff;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.223) !important;
+  /* Example values for a shadow */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 16.6667%;
+  /* This is 2 columns out of 12 (col-2) */
+  background-color: #f8f9fa;
+  /* Adjust this to match your theme */
+  padding-top: 20px;
+  z-index: 1000;
+  /* Ensure it stays on top */
+  overflow-y: auto;
+}
+
+.user-sidebar {
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.223) !important;
+  /* Example values for a shadow */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 16.6667%;
+  /* This is 2 columns out of 12 (col-2) */
+  background-color: #f8f9fa;
+  /* Adjust this to match your theme */
+  padding-top: 20px;
+  z-index: 1000;
+  /* Ensure it stays on top */
+  overflow-y: auto;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.alert-danger{
+  color: rgb(253, 100, 100);
+  background-color: transparent!important;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item:hover {
+  background-color: rgb(245, 246, 247) !important;
+}
+
+.nav-link i {
+  margin-right: 20px !important;
+}
+
+.nav-link.active {
+  font-weight: 600;
+  color: rgb(2, 69, 176) !important;
+  background-color: #e9ecef;
+}
+
+.create-account {
+  margin-top: 20px;
+}
+
+.btn {
+  font-size: 14px;
+  padding: 4px 6px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.login-container .form-control {
+  color: rgb(0, 0, 0);
+  border: none;
+  border-bottom: 1px solid #ccc;
+  /* Adjust color as needed */
+  background-color: transparent;
+  outline: none;
+  padding: 5px 0;
+  /* Adjust padding as needed */
+}
+
+.login-container .form-control:focus {
+  color: rgb(0, 0, 0);
+  border: none !important;
+  border-bottom: 1px solid #ccc;
+  /* Adjust color as needed */
+  background-color: transparent;
+  outline: none !important;
+  padding: 5px 0;
+  /* Adjust padding as needed */
+  border-bottom-color: #007bff;
+  /* Change color to blue on focus */
+}
+
+.custom-button-2 {
+  margin-right: -10px;
+  margin-left: 10px;
+  align-items: center;
+  background-color: #e7eeff;
+  background-position: 0 0;
+  border: 1px solid #FEE0E0;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #2c32d3;
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  padding: 2px 12px;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.custom-button-2:active:hover,
+.custom-button-2:focus:hover,
+.custom-button-2:focus {
+  background-color: #2c4bd3;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.custom-button-2:hover {
+  background-color: #e7eeff;
+  border-color: #a4d3fa;
+}
+
+
+.custom-button {
+  margin-right: -10px;
+  margin-left: 10px;
+  align-items: center;
+  background-color: #FFE7E7;
+  background-position: 0 0;
+  border: 1px solid #FEE0E0;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #D33A2C;
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  padding: 2px 12px;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.custom-button:active,
+.custom-button:hover,
+.custom-button:focus {
+  outline: 0;
+}
+
+
+.custom-button:active {
+  background-color: #D33A2C;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.custom-button:hover {
+  background-color: #FFE3E3;
+  border-color: #FAA4A4;
+}
+
+.custom-button:active:hover,
+.custom-button:focus:hover,
+.custom-button:focus {
+  background-color: #D33A2C;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  color: rgba(57, 57, 57, 0.866);
+  text-align: center;
+  vertical-align: middle;
+}
+
+td a{
+  text-decoration: none;
+}
+
+td button{
+  margin-bottom: 5px;
+}
+
+.table tbody tr {
+  border-top: 1px solid #dee2e6;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.table .badge {
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+.table th:first-child,
+.table td:first-child {
+  border-left: 0;
+}
+
+.table th:last-child,
+.table td:last-child {
+  border-right: 0;
+}
+
+.table thead th {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody td {
+  border-top: 1px solid #dee2e6;
+}
+
+.fa-chart-line,
+.fa-users,
+.fa-cart-shopping,
+.fa-sitemap,
+.fa-list,
+.fa-tag,
+.fa-file,
+.fa-money-bill,
+.fa-ticket-simple,
+.fa-solid {
+  margin-right: 20px !important;
+}
+
+.fa-arrow-right-from-bracket,
+.fa-user {
+  margin-right: 8px !important;
+}
+
+.input-error {
+  border-color: red;
+}
