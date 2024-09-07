@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  background-image: url("./images/login_background.jpg"); /* Replace with your background image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "Poppins", sans-serif!important;
+}
+
+.alert-danger{
+  color: rgb(253, 100, 100);
+  background-color: transparent!important;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.form-control{
+  color: white;
+  border: none;
+  border-bottom: 1px solid #ccc; /* Adjust color as needed */
+  background-color: transparent;
+  outline: none;
+  padding: 5px 0; /* Adjust padding as needed */
+}
+
+.form-control:focus {
+  color: white;
+  border: none!important;
+  border-bottom: 1px solid #ccc; /* Adjust color as needed */
+  background-color: transparent;
+  outline: none!important;
+  padding: 5px 0; /* Adjust padding as needed */
+  border-bottom-color: #007bff; /* Change color to blue on focus */
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo img {
+  width: 150px;
+}
+
+.card {
+  background-color: rgba(50, 50, 50, 0.8);
+  border: none;
+  padding: 55px!important;
+  height: 600px!important;
+
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #fff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.text-muted {
+  color: #aaaaaa!important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 20px;
+}
+
+.mt-4 {
+  margin-top: 20px;
+}
+

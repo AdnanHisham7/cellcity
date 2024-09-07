@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <!-- Include any CSS or JS files needed -->
+</head>
+<body>
+    <h1>Checkout</h1>
+
+    <!-- Cart Items Summary -->
+    <h2>Your Cart</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Variant</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cart.items.forEach(item => { %>
+                <tr>
+                    <td><%= item.variant.productId.name %></td>
+                    <td>
+                        Color: <%= item.variant.color %><br>
+                        Storage: <%= item.variant.storage %><br>
+                        RAM: <%= item.variant.RAM %>
+                    </td>
+                    <td><%= item.quantity %></td>
+                    <td>$<%= item.variant.price %></td>
+                    <td>$<%= item.variant.price * item.quantity %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <h3>Total: $<%= cart.items.reduce((acc, item) => acc + item.variant.price * item.quantity, 0) %></h3>
+
+    <!-- Shipping Information -->
+    <h2>Shipping Information</h2>
+    <form action="/order/submit" method="POST">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required><br><br>
+
+        <!-- Payment Method -->
+        <h2>Payment Method</h2>
+        <label for="paymentMethod">Choose a payment method:</label>
+        <select id="paymentMethod" name="paymentMethod" required>
+            <option value="creditCard">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <!-- Add more options as needed -->
+        </select><br><br>
+
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </form>
+
+    <a href="/cart" class="btn btn-secondary">Back to Cart</a>
+</body>
+</html>

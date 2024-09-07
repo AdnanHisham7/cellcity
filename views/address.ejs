@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Addresses</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/admin.css">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        .addresses .card {
+            border-radius: 8px !important;
+            border: #dc3545 !important;
+            border-color: #dc3545 !important;
+            transition: transform 0.3s ease;
+        }
+
+        .addresses .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .addresses .card-header {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .addresses .card-footer {
+            background-color: #fff;
+            padding-top: 0.75rem;
+        }
+
+        .addresses .card-text i {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .addresses .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+        .addresses .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+
+        .user-sidebar {
+            position: fixed;
+            /* Keep the sidebar fixed on the left */
+            top: 0;
+            left: 0;
+            height: 100%;
+            /* Make the sidebar full height */
+            width: 250px;
+            /* Adjust the width as needed */
+            background-color: #f8f9fa;
+            /* Background color for the sidebar */
+            padding-top: 70px;
+            /* Adjust the top padding to align content below the header */
+            z-index: 1000;
+            /* Ensure the sidebar is above other elements */
+        }
+
+        .header {
+            position: fixed;
+            /* Keep the header fixed on the top */
+            width: 100%;
+            top: 0;
+            z-index: 1050;
+            /* Ensure the header is above the sidebar */
+        }
+
+        .col-10 {
+            margin-left: 250px;
+            /* Add margin to the main content to avoid overlapping with the sidebar */
+            padding-top: 70px;
+            /* Add padding to prevent content from being hidden under the header */
+        }
+
+        .addresses {
+            padding: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        /* Adjust the modal z-index if it appears behind other elements */
+        .modal {
+            z-index: 1100;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid p-0">
+        <!-- Header Section Begin -->
+        <header class="header">
+            <div class="header__top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-7">
+                            <div class="header__top__left">
+                                <p>Free shipping, 30-day return or refund guarantee.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5">
+                            <div class="header__top__right">
+                                <div class="header__top__links">
+                                    <p class="navbar-nav" id="authSection">
+                                        <!-- Placeholder for auth content -->
+                                    </p>
+                                    <a href="#">FAQs</a>
+                                </div>
+                                <div class="header__top__hover">
+                                    <span>Usd <i class="arrow_carrot-down"></i></span>
+                                    <ul>
+                                        <li>USD</li>
+                                        <li>EUR</li>
+                                        <li>USD</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="row">
+            <div class="col-2 user-sidebar">
+                <div class="logo ms-4">CellCity</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile' ? 'active' : '' %>" href="/profile">
+                            <i class="fa-solid fa-chart-line"></i>My Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/address' ? 'active' : '' %>"
+                            href="/profile/address">
+                            <i class="fa-solid fa-users"></i>Addresses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/orders' ? 'active' : '' %>" href="/orders">
+                            <i class="fa-solid fa-list"></i>Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/coupons' ? 'active' : '' %>" href="/coupons">
+                            <i class="fa-solid fa-cart-shopping"></i>Coupons
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/resetPassword' ? 'active' : '' %>"
+                            href="/profile/resetPassword">
+                            <i class="fa-solid fa-cart-shopping"></i>Reset Password
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-10">
+                <section class="breadcrumb-option">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumb__text">
+                                    <h4>Addresses</h4>
+                                    <div class="breadcrumb__links">
+                                        <a href="./index.html">Home</a>
+                                        <a href="./shop.html">Profile</a>
+                                        <span>Addresses</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Address List -->
+                <div class="addresses my-4">
+                    <!-- <h1 class="mb-4">Your Addresses</h1> -->
+                    <div class="row">
+                        <!-- Button to Open Modal -->
+                        <div class="container my-4">
+                            <div class="row">
+                                <div class="col-12 text-start">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#addAddressModal">
+                                        Add New Address
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% if (user.addresses.length> 0) { %>
+                            <% user.addresses.forEach(address=> { %>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="card-header bg-light border-bottom-0">
+                                            <h5 class="mb-0">
+                                                <%= address.label || "Address" %>
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text mb-2">
+                                                <i class="fas fa-map-marker-alt text-primary"></i>
+                                                <%= address.street %>
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <i class="fas fa-city text-primary"></i>
+                                                <%= address.city %>, <%= address.state %> - <%= address.zip %>
+                                            </p>
+                                            <p class="card-text">
+                                                <i class="fas fa-globe text-primary"></i>
+                                                <%= address.country %>
+                                            </p>
+                                        </div>
+                                        <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editAddressModal"
+                                                data-id="<%= address.id %>" data-label="<%= address.label || "" %>"
+                                                data-street="<%= address.street %>" data-city="<%= address.city %>"
+                                                data-state="<%= address.state %>" data-country="<%= address.country %>"
+                                                data-phone="<%= address.phoneNumber %>" data-zip="<%= address.zip %>">
+                                                Edit
+                                            </button>
+                                            <form action="/profile/address/remove/<%= address.id %>" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this address?')">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <div class="col-12">
+                                            <p>No addresses found. <a href="/profile/address/add"
+                                                    class="btn btn-success">Add a new address</a></p>
+                                        </div>
+                                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add Addess Structure -->
+    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAddressForm">
+                        <div class="mb-3">
+                            <label for="label" class="form-label">Label (Optional)</label>
+                            <input type="text" class="form-control" id="label" name="label"
+                                placeholder="Home, Work, etc.">
+                            <div id="label-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="street" class="form-label">Street</label>
+                            <input type="text" class="form-control" id="street" name="street">
+                            <div id="street-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city">
+                            <div id="city-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="state" class="form-label">State</label>
+                            <input type="text" class="form-control" id="state" name="state">
+                            <div id="state-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" name="country">
+                            <div id="country-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber">
+                            <div id="phoneNumber-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="zip" class="form-label">ZIP Code</label>
+                            <input type="text" class="form-control" id="zip" name="zip">
+                            <div id="zip-error" class="text-danger"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Add New Address</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Address Structure -->
+    <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editAddressForm">
+                        <input type="hidden" id="addressId" name="addressId">
+                        <div class="mb-3">
+                            <label for="editLabel" class="form-label">Label (Optional)</label>
+                            <input type="text" class="form-control" id="editLabel" name="label"
+                                placeholder="Home, Work, etc.">
+                            <div id="editLabel-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editStreet" class="form-label">Street</label>
+                            <input type="text" class="form-control" id="editStreet" name="street">
+                            <div id="editStreet-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCity" class="form-label">City</label>
+                            <input type="text" class="form-control" id="editCity" name="city">
+                            <div id="editCity-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editState" class="form-label">State</label>
+                            <input type="text" class="form-control" id="editState" name="state">
+                            <div id="editState-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCountry" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="editCountry" name="country">
+                            <div id="editCountry-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" name="phone">
+                            <div id="editPhone-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editZip" class="form-label">ZIP Code</label>
+                            <input type="text" class="form-control" id="editZip" name="zip">
+                            <div id="editZip-error" class="text-danger"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Update Address</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('addAddressForm');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const label = document.getElementById('label').value;
+                const street = document.getElementById('street').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const country = document.getElementById('country').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+                const zip = document.getElementById('zip').value;
+
+                // Clear previous errors
+                document.getElementById('label-error').textContent = '';
+                document.getElementById('street-error').textContent = '';
+                document.getElementById('city-error').textContent = '';
+                document.getElementById('state-error').textContent = '';
+                document.getElementById('country-error').textContent = '';
+                document.getElementById('phoneNumber-error').textContent = '';
+                document.getElementById('zip-error').textContent = '';
+
+                let hasError = false;
+
+                // Example validation
+                if (!label) {
+                    document.getElementById('label-error').textContent = 'Label is required';
+                    hasError = true;
+                }
+
+
+                if (!street) {
+                    document.getElementById('street-error').textContent = 'Street is required';
+                    hasError = true;
+                }
+                if (!city) {
+                    document.getElementById('city-error').textContent = 'City is required';
+                    hasError = true;
+                }
+                if (!state) {
+                    document.getElementById('state-error').textContent = 'State is required';
+                    hasError = true;
+                }
+                if (!country) {
+                    document.getElementById('country-error').textContent = 'Country is required';
+                    hasError = true;
+                }
+                if (!phoneNumber) {
+                    document.getElementById('phoneNumber-error').textContent = 'Phone Number is required';
+                    hasError = true;
+                }
+                if (!zip) {
+                    document.getElementById('zip-error').textContent = 'ZIP Code is required';
+                    hasError = true;
+                }
+
+                if (hasError) {
+                    return; // Stop form submission if errors are present
+                }
+
+                try {
+                    const response = await fetch('/profile/address/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ label, street, city, state, country, phoneNumber, zip })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        window.location.href = '/profile/address'
+                        // Optionally, close the modal or reset the form
+                        $('#addAddressModal').modal('hide'); // Hide modal using Bootstrap
+                        form.reset(); // Reset form fields
+                    } else {
+                        // Handle backend validation errors
+                        if (result.errors) {
+                            for (const [key, error] of Object.entries(result.errors)) {
+                                document.getElementById(`${key}-error`).textContent = error;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error adding address:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            });
+        });
+
+
+
+
+
+        // Populate modal with address data
+        $('#editAddressModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var modal = $(this);
+
+            // Extract info from data-* attributes
+            var addressId = button.data('id');
+            var label = button.data('label');
+            var street = button.data('street');
+            var city = button.data('city');
+            var state = button.data('state');
+            var country = button.data('country');
+            var phone = button.data('phone');
+            var zip = button.data('zip');
+
+            // Populate the form fields with the extracted data
+            modal.find('#addressId').val(addressId);
+            modal.find('#editLabel').val(label);
+            modal.find('#editStreet').val(street);
+            modal.find('#editCity').val(city);
+            modal.find('#editState').val(state);
+            modal.find('#editCountry').val(country);
+            modal.find('#editPhone').val(phone);
+            modal.find('#editZip').val(zip);
+        });
+
+        // Handle form submission via AJAX
+        // Handle form submission via AJAX
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('editAddressForm');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const addressId = document.getElementById('addressId').value;
+                const label = document.getElementById('editLabel').value;
+                const street = document.getElementById('editStreet').value;
+                const city = document.getElementById('editCity').value;
+                const state = document.getElementById('editState').value;
+                const country = document.getElementById('editCountry').value;
+                const phoneNumber = document.getElementById('editPhone').value;
+                const zip = document.getElementById('editZip').value;
+
+                // Clear previous errors
+                document.getElementById('editLabel-error').textContent = '';
+                document.getElementById('editStreet-error').textContent = '';
+                document.getElementById('editCity-error').textContent = '';
+                document.getElementById('editState-error').textContent = '';
+                document.getElementById('editCountry-error').textContent = '';
+                document.getElementById('editPhone-error').textContent = '';
+                document.getElementById('editZip-error').textContent = '';
+
+                let hasError = false;
+
+                // Example validation
+                if (!street) {
+                    document.getElementById('editStreet-error').textContent = 'Street is required';
+                    hasError = true;
+                }
+                if (!city) {
+                    document.getElementById('editCity-error').textContent = 'City is required';
+                    hasError = true;
+                }
+                if (!state) {
+                    document.getElementById('editState-error').textContent = 'State is required';
+                    hasError = true;
+                }
+                if (!country) {
+                    document.getElementById('editCountry-error').textContent = 'Country is required';
+                    hasError = true;
+                }
+                if (!phoneNumber) {
+                    document.getElementById('editPhone-error').textContent = 'Phone Number is required';
+                    hasError = true;
+                }
+                if (!zip || zip.length !== 6 || !/^\d+$/.test(zip)) {
+                    document.getElementById('editZip-error').textContent = 'ZIP Code must be exactly 6 digits';
+                    hasError = true;
+                }
+
+                if (hasError) {
+                    return; // Stop form submission if errors are present
+                }
+
+                try {
+                    const response = await fetch(`/profile/address/update/${addressId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ label, street, city, state, country, phoneNumber, zip })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        window.location.href = '/profile/address'
+                        // Optionally, close the modal or reset the form
+                        $('#editAddressModal').modal('hide'); // Hide modal using Bootstrap
+                        form.reset(); // Reset form fields
+                    } else {
+                        // Handle backend validation errors
+                        if (result.errors) {
+                            for (const [key, error] of Object.entries(result.errors)) {
+                                document.getElementById(`${key}-error`).textContent = error;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error updating address:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            });
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<div class="col-2 sidebar">
+    <div class="logo">CellCity</div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin' ? 'active' : '' %>" href="/admin"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/users' ? 'active' : '' %>" href="/admin/users"><i class="fa-solid fa-users"></i>Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl.includes('/admin/products') ? 'active' : '' %>" href="/admin/products"><i class="fa-solid fa-sitemap"></i>Products</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/brands' ? 'active' : '' %>" href="/admin/brands"><i class="fa-solid fa-list"></i>Categories</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/orders' ? 'active' : '' %>" href="/admin/orders"><i class="fa-solid fa-cart-shopping"></i>Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/offers' ? 'active' : '' %>" href="/admin/offers"><i class="fa-solid fa-tag"></i>Offers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/banners' ? 'active' : '' %>" href="/admin/banners"><i class="fa-solid fa-file"></i>Banners</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/payments' ? 'active' : '' %>" href="/admin/payments"><i class="fa-solid fa-money-bill"></i>Payments</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= currentUrl === '/admin/coupons' ? 'active' : '' %>" href="/admin/coupons"><i class="fa-solid fa-ticket-simple"></i>Coupons</a>
+        </li>
+    </ul>
+</div>

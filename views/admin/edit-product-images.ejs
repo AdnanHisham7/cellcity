@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CellCity | Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 sidebar">
+                <div class="logo">CellCity</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users"><i class="fa-solid fa-users"></i>Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/products"><i
+                                class="fa-solid fa-sitemap"></i>Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/brands"><i class="fa-solid fa-list"></i>Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/orders"><i class="fa-solid fa-cart-shopping"></i>Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/offers"><i class="fa-solid fa-tag"></i>Offers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/banners"><i class="fa-solid fa-file"></i>Banners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/payments"><i class="fa-solid fa-money-bill"></i>Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/coupons"><i class="fa-solid fa-ticket-simple"></i>Coupons</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-10 content">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white mb-3">
+                    <div class="container-fluid">
+                        <!-- Search bar -->
+                        <!-- <form class="d-flex">
+                            <input class="form-control me-2" id="customSearch" type="text" placeholder="Search..."
+                                aria-label="Search">
+                        </form> -->
+
+                        <!-- Right-aligned buttons -->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <!-- Profile Icon -->
+                            <li class="nav-item">
+                                <a class="btn btn-outline-secondary" href="/admin/profile" role="button">
+                                    <i class="fa-regular fa-user"></i> Profile
+                                </a>
+                            </li>
+                            <!-- Logout Button -->
+                            <li class="nav-item ms-2">
+                                <button class="btn btn-outline-danger" id="logoutButton">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="main-content" style="margin-top: 70px;">
+                    <h3 class="sub-heading">Edit Images for <span style="color: rgba(181, 6, 6, 0.7);"><%= product.productName %></span></h3>
+                    <div class="container">
+                        <br><br>
+                        <!-- Display existing images with delete and edit options -->
+                        <div>
+                            <% variant.variantImages.forEach((image, index) => { %>
+                                <div>
+                                    <img src="<%= image.replace('uploads', '') %>" alt="<%= image %>"
+                                        style="max-width: 100px; height: auto;">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <form action="/admin/<%= product._id %>/delete-image/<%= variant._id %>" method="post" style="display: inline;">
+                                        <input type="hidden" name="image" value="<%= image %>">
+                                        <button type="submit">Delete</button>
+                                    </form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <form action="/admin/<%= product._id %>/change-image/<%= variant._id %>" method="post" enctype="multipart/form-data" style="display: inline;">
+                                        <input type="file" name="variantImage" accept="image/*" required>
+                                        <input type="hidden" name="oldImage" value="<%= image %>">
+                                        <button type="submit">Change</button>
+                                    </form>
+                                </div>
+                            <% }) %>
+                        </div>
+                
+                        <!-- Form to upload new images, hidden if there are already 3 images -->
+                        <% if (variant.variantImages.length < 3) { %>
+                            <form id="uploadForm" action="/admin/upload-images/<%= variant._id %>" method="post" enctype="multipart/form-data">
+                                <input type="file" name="variantImages" multiple accept="image/*">
+                                <button type="submit">Upload Images</button>
+                            </form>
+                        <% } %>
+                        <br>
+                        <a href="/admin/products/<%= product._id %>/variants"><button class="btn btn-primary">Back to Variants page</button></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+    
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error); // Display server-side error message
+                } else if (data.success) {
+                    window.location.href = `/admin/<%= product._id %>/edit-images/<%= variant._id %>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while uploading images.'); // General error message
+            });
+        });
+    </script>
+    
+    
+</body>
+
+</html>

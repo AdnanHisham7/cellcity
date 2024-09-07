@@ -1,0 +1,18 @@
+# 1.why using dotenv.config()?
+# Conifg.config will read your .env file, parse the contents.assign it io process env, and return an objectwith a parsed key contining the loaded content or an error key if it failed.
+
+# 2.const productSchema = new mongoose.Schema({
+#   productName: { type: String, required: true },
+#   brand: { type: String, required: true },
+#   productImages: [{ type: String, required: true }], 
+#   price: { type: Number, required: true },
+#   discount: { type: Number, default: 25 },
+#   stocks: { type: Number, required: true },
+#   color: { type: String, required: false },
+#   display: { type: String, required: true },
+#   ram: { type: String, required: true },
+#   description: { type: String, default: "" },
+#   storage: { type: String, required: true },
+#   status: { type: String, default: "active" },
+
+#   3.use toaster for shwoing "A" on th prfile for the uername "Adnan"

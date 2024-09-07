@@ -1,0 +1,72 @@
+    <div class="row">
+    <div class="col-2 sidebar">
+        <div class="logo">CellCity</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link <%= currentUrl === '/profile' ? 'active' : '' %>" href="/profile"><i
+                        class="fa-solid fa-chart-line"></i>My Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= currentUrl === '/profile/address' ? 'active' : '' %>" href="/profile/address"><i
+                        class="fa-solid fa-users"></i>Addresses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= currentUrl === '/orders' ? 'active' : '' %>" href="/orders"><i
+                        class="fa-solid fa-list"></i>Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= currentUrl === '/coupons' ? 'active' : '' %>" href="/coupons"><i
+                        class="fa-solid fa-cart-shopping"></i>Coupons</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= currentUrl === '/profile/resetPassword' ? 'active' : '' %>" href="/coupons"><i
+                        class="fa-solid fa-cart-shopping"></i>Reset Password</a>
+            </li>
+        </ul>
+
+    </div>
+    <div class="col-10">
+        <!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<div class="main-content" style="margin-top: 70px;">
+    <h3 class=" sub-heading mb-4">Users</h3>
+    <div class="container">
+        <div class="col-md-9">
+            <h4>Profile Details</h4>
+            <table class="table">
+                <tr>
+                    <th>Username:</th>
+                    <td><%= user.username %></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><%= user.email %></td>
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td><%= user.phoneNumber %></td>
+                </tr>
+            </table>
+            <a href="/profile/edit" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+</div>
+    </div>
+
+
