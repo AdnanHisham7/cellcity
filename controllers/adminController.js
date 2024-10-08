@@ -1,21 +1,23 @@
-const User = require('../models/userModel');    
+const User = require('../models/userModel');
 const Products = require('../models/productsModel');
+const Coupon = require('../models/couponModel');
+const Offer = require('../models/offerModel');
 const Brands = require('../models/brandsModel');
 const Variants = require('../models/variantsModel');
 const Order = require('../models/orderModel')
 const userOTPVerification = require('../models/userOtpVerification');
-
+const { PDFDocument } = require('pdf-lib');
 const path = require('path')
 const fs = require('fs')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const { model, overwriteMiddlewareResult } = require('mongoose');
 
 const adminAuth = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body)
         // Find the admin user
         const admin = await User.findOne({ email });
         if (!admin) {
@@ -30,7 +32,6 @@ const adminAuth = async (req, res) => {
             res.status(400).json({ error: 'Invalid email or password' });
         }
     } catch (error) {
-        console.error('Login error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
@@ -111,7 +112,6 @@ const sendForgotOTP = async (req, res) => {
         await sendForgotOTPVerificationEmail(user._id, email, res);
 
     } catch (error) {
-        console.error(error);
         res.render('admin/forgot', { error: 'Server error' });
     }
 };
@@ -216,13 +216,10 @@ const resetPassword = async (req, res) => {
 
         // Find the user by ID
         const user = await User.findById(userId);
-        console.log(user)
-        console.log(email)
         if (!user || user.email !== email) {
             return res.status(404).json({ error: 'User not found or email does not match' });
         }
 
-        // Set the new password (assuming password hashing is done in a pre-save hook)
         user.password = password;
         await user.save();
 
@@ -241,11 +238,42 @@ const logout = (req, res) => {
 
 const getAdminPanel = async (req, res) => {
     if (req.user) {
-        const users = await User.find({});
-        return res.render('admin/dashboard', { users, currentUrl: req.originalUrl });
+        try {
+            const users = await User.find({});
+            const orders = await Order.find(); // Fetch all orders for the initial graph
+            
+            // Fetch the best-selling product and brand
+            const bestProducts = await getBestSellingProduct();
+            const bestBrands = await getBestSellingBrand();
+
+            // Provide fallback if the arrays are empty
+            const bestProductName = bestProducts.length ? bestProducts[0].productName : 'No product found';
+            const bestBrandName = bestBrands.length ? bestBrands[0]._id : 'No brand found';
+
+            // Render the admin dashboard with all the data
+            return res.render('admin/dashboard', {
+                users,
+                orders,
+                bestProducts,
+                bestBrands,
+                bestProductName,
+                bestBrandName,
+                currentUrl: req.originalUrl
+            });
+        } catch (error) {
+            return res.status(500).render('admin/dashboard', {
+                error: 'An error occurred while loading the admin panel',
+                users: [],
+                orders: [],
+                bestProductName: 'N/A',
+                bestBrandName: 'N/A'
+            });
+        }
     }
-    res.render('admin/login', { error: null })
-}
+    res.render('admin/login', { error: null });
+};
+
+
 
 
 const getUsersPage = async (req, res) => {
@@ -294,22 +322,28 @@ const takeUserAction = async (req, res) => {
 
 const getProductsPage = async (req, res) => {
     try {
-        if (req.user) {
-            const products = await Products.find({})
-            const brands = await Brands.find({})
-            return res.render('admin/products', { products, brands, currentUrl: req.originalUrl })
+        
+        if (!req.user) {
+            return res.redirect('/admin');
         }
-        res.redirect('/admin')
-
+        
+        
+        // Fetch products sorted by last modified date (updatedAt)
+        const products = await Products.find({}).populate('brandId').sort({ updatedAt: -1 });
+        
+        const brands = await Brands.find({});
+        // Render the page
+        return res.render('admin/products', { products, brands, currentUrl: req.originalUrl });
+        
     } catch (error) {
-        res.status(500).send('Server Error');
+        return res.status(500).send('Server Error');
     }
 }
+
 
 const addProducts = async (req, res) => {
     try {
         const { productName, brand, description, highlights, batteryCapacity, display, processor } = req.body;
-
         // Validation errors object
         let errors = {};
 
@@ -329,15 +363,25 @@ const addProducts = async (req, res) => {
             return res.status(400).json(errors);
         }
 
-        // Create a new product
+        const brandDocument = await Brands.findOne({ brandName: brand });
+        // If no brand is found, return an error
+        if (!brandDocument) {
+            return res.status(400).json({ message: 'Brand not found' });
+        }
+
         const product = await Products.create({
-            productName, brand, description, highlights, batteryCapacity, display, processor
+            productName,
+            brandId: brandDocument._id, // Assign the ObjectId of the brand
+            description,
+            highlights,
+            batteryCapacity,
+            display,
+            processor
         });
 
         // Redirect to the products page
         res.redirect('/admin/products');
     } catch (error) {
-        console.error('Error creating product:', error);
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
@@ -345,7 +389,7 @@ const addProducts = async (req, res) => {
 
 const getProductDetails = async (req, res) => {
     try {
-        const product = await Products.findById(req.params.id);
+        const product = await Products.findById(req.params.id).populate('brandId');
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
@@ -357,24 +401,28 @@ const getProductDetails = async (req, res) => {
 
 const updateProductDetails = async (req, res) => {
     try {
-        console.log('hey sinamika')
         const productId = req.params.id;
         const { productName, brand, description, highlights, batteryCapacity, display, processor } = req.body;
+
+        const brandDocument = await Brands.findOne({ brandName: brand });
+        // If no brand is found, return an error
+        if (!brandDocument) {
+            return res.status(400).json({ message: 'Brand not found' });
+        }
+
 
         // Find the product and update it
         const updatedProduct = await Products.findByIdAndUpdate(
             productId,
-            { productName, brand, description, highlights, batteryCapacity, display, processor },  // Update fields
+            { productName, brandId:brandDocument._id, description, highlights, batteryCapacity, display, processor },  // Update fields
             { new: true }  // Return the updated document
         );
-
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
         res.json({ message: 'Product updated successfully!', product: updatedProduct });
     } catch (error) {
-        console.error('Error updating product:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
@@ -402,9 +450,8 @@ const getVariantsPage = async (req, res) => {
     try {
         if (req.user) {
             const productId = req.params.productId;
-            const product = await Products.findById(productId)
-            const variants = await Variants.find({ productId });
-
+            const product = await Products.findById(productId).populate('brandId')
+            const variants = await Variants.find({ productId }).sort({ updatedAt: -1 });
             return res.render('admin/variants', { product, variants, currentUrl: req.originalUrl })
         }
         res.redirect('/admin')
@@ -417,8 +464,22 @@ const getVariantsPage = async (req, res) => {
 const addVariant = async (req, res) => {
     try {
         const productId = req.params.productId;
-        const { color, storage, RAM, price, stocks } = req.body;
+        let { color, storage, RAM, price, stocks } = req.body;
         const variantImages = req.files.map(file => file.path);
+
+        // Helper function to capitalize the first letter of each word in a string
+        const formatColor = (str) => {
+            return str
+                .toLowerCase()  // Convert entire string to lowercase first
+                .split(' ')      // Split string into an array of words
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+                .join(' ');      // Join the array back into a string
+        };
+
+        // Apply color formatting
+        if (color) {
+            color = formatColor(color);
+        }
 
         // Validation errors object
         let errors = {};
@@ -445,10 +506,10 @@ const addVariant = async (req, res) => {
         // Redirect to the variants page for the product
         res.redirect(`/admin/products/${productId}/variants`);
     } catch (error) {
-        console.error('Error creating variant:', error);
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
+
 
 
 
@@ -466,7 +527,6 @@ const getVariantDetails = async (req, res) => {
         // Send both product and variant as JSON
         res.json({ product, variant });
     } catch (error) {
-        console.error('Error fetching details:', error);
         res.status(500).json({ message: 'Server Error' });
     }
 };
@@ -474,7 +534,6 @@ const getVariantDetails = async (req, res) => {
 
 const updateVariantDetails = async (req, res) => {
     try {
-        console.log(req.params)
         const { variantId } = req.params;
         const { color, storage, RAM, price, stocks } = req.body;
 
@@ -493,7 +552,6 @@ const updateVariantDetails = async (req, res) => {
         if (typeof RAM !== 'string' || RAM <= 0) {
             return res.status(400).json({ message: 'RAM must be a positive integer' });
         }
-        console.log(typeof price)
 
         if (typeof price !== 'string' || price <= 0) {
             return res.status(400).json({ message: 'Price must be a positive number' });
@@ -516,7 +574,6 @@ const updateVariantDetails = async (req, res) => {
 
         res.json({ message: 'Variant updated successfully!', variant: updatedVariant });
     } catch (error) {
-        console.error('Error updating variant:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
@@ -546,7 +603,6 @@ const editVariantImages = async (req, res) => {
 
         res.status(400).json({ error: 'No files uploaded.' });
     } catch (err) {
-        console.error('Error uploading images:', err);
         res.status(500).json({ error: 'Error uploading images' });
     }
 };
@@ -584,7 +640,6 @@ const changeVariantImage = async (req, res) => {
 
         res.redirect(`/admin/${productId}/edit-images/${variantId}`);
     } catch (error) {
-        console.error('Error changing image:', error);
         res.status(500).send('Internal Server Error');
     }
 };
@@ -648,16 +703,37 @@ const getBrandsPage = async (req, res) => {
 
 const addBrands = async (req, res) => {
     try {
-        const { brandName } = req.body;
-        console.log(`Received brand name: ${brandName}`); // Debugging log
+        let { brandName } = req.body;
+        // Validate the brand name
+        if (!brandName || typeof brandName !== 'string') {
+            return res.status(400).json({ message: 'Brand name is required and must be a string.' });
+        }
+        
+        if (brandName.length < 2) {
+            return res.status(400).json({ message: 'Brand name must be at least 2 characters long.' });
+        }
 
-        await Brands.create({ brandName });
-        res.redirect('/admin/brands');
+        
+        // Normalize the brand name
+        brandName = brandName.charAt(0).toUpperCase() + brandName.slice(1).toLowerCase();
+
+        // Check for existing brand name (case-insensitive)
+        const existingBrand = await Brands.findOne({ 
+            brandName: brandName.trim()
+        }).collation({ locale: 'en', strength: 2 });
+
+        if (existingBrand) {
+            return res.status(400).json({ message: 'Brand name already exists. Please choose a different name.' });
+        }
+        
+        await Brands.create({ brandName: brandName.trim() });
+        res.status(201).json({ message: 'Brand created successfully!' });
     } catch (error) {
-        console.error('Error creating brand:', error);
-        res.status(500).json({ message: 'Server Error', error: error.message });
+        res.status(500).json({ message: 'Server error. Please try again later.' });
     }
 };
+
+
 
 const getBrandDetails = async (req, res) => {
     try {
@@ -688,7 +764,6 @@ const updateBrandDetails = async (req, res) => {
 
         res.status(200).json(updatedBrand);
     } catch (error) {
-        console.error('Error updating brand:', error);
         res.status(500).json({ message: 'Failed to update brand' });
     }
 };
@@ -715,25 +790,26 @@ const takeBrandAction = async (req, res) => {
 const listAdminOrders = async (req, res) => {
     try {
         const orders = await Order.find({})
-            .populate('user', 'username email') // Populate user with username and email
+            .populate('user', 'username email')
             .populate({
                 path: 'items.variant',
                 populate: {
                     path: 'productId',
-                    model: 'Product', // Assuming the variant has a reference to a Product
-                    select: 'productName brand' // Select specific fields from the Product
+                    model: 'Product',
+                    select: 'productName brand'
                 }
             })
-            .sort({ createdAt: -1 }); // Sort by creation date, newest first
+            .sort({ createdAt: -1 }); 
 
         res.render('admin/adminOrderList', { orders, currentUrl: req.originalUrl });
     } catch (error) {
-        console.error('Error fetching orders:', error); // Log the error
         res.status(500).json({ message: 'Error fetching orders', error: error.message || error });
     }
 };
 
 const getOrderDetails = async (req, res) => {
+
+
     try {
         const order = await Order.findById(req.params.orderId)
             .populate('user', 'username email') // Populate user details
@@ -752,27 +828,514 @@ const getOrderDetails = async (req, res) => {
 
         res.render('admin/adminOrderDetails', { order, currentUrl: req.originalUrl });
     } catch (error) {
-        console.error('Error fetching order details:', error); // Log the error
         res.status(500).json({ message: 'Error fetching order details', error: error.message || error });
     }
 };
 
 const updateOrderStatus = async (req, res) => {
+
     const { orderId } = req.params;
     const { status } = req.body;
-
     try {
-        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+        const order = await Order.findById(orderId);
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
+
+        // Check the current status and enforce business rules
+        if (order.status === 'Cancelled' || order.status === 'Delivered') {
+            return res.status(400).json({ message: 'Cannot change status from ' + order.status });
+        }
+
+        // Proceed to update the status
+        order.status = status;
+        await order.save();
 
         res.redirect(`/admin/orders/${orderId}`);
     } catch (error) {
         res.status(500).json({ message: 'Error updating order status', error });
     }
 };
+
+
+
+// Get all coupons
+const getAllCoupons = async (req, res) => {
+    try {
+        const coupons = await Coupon.find();
+        if (!coupons || coupons.length === 0) {
+            return res.render('admin/coupons', { coupons: [], noCoupons: true, currentUrl: req.originalUrl });
+        }
+        res.render('admin/coupons', { coupons, noCoupons: false, currentUrl: req.originalUrl });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching coupons', error });
+    }
+};
+
+
+// Add Coupon
+const addCoupon = async (req, res) => {
+    const { code, percentage, minAmount, expirationDate } = req.body;
+
+    const errors = {};
+
+    // Validate coupon data
+    if (!code) errors.code = 'Coupon code is required';
+    if (!percentage || percentage < 0 || percentage > 100) errors.percentage = 'Percentage should be between 0 and 100';
+    if (!minAmount || minAmount <= 0) errors.minAmount = 'Max amount should be greater than 0';
+    if (!expirationDate) {
+        errors.expirationDate = 'Expiration date is required.';
+    } else {
+        const now = new Date();
+        const expiration = new Date(expirationDate);
+        if (expiration < now) {
+            errors.expirationDate = 'Expiration date must be in the future.';
+        }
+    }
+
+    // Return validation errors if any
+    if (Object.keys(errors).length > 0) {
+        return res.status(400).json(errors);
+    }
+
+    try {
+        // Check if the coupon with the given code already exists
+        const existingCoupon = await Coupon.findOne({ code });
+        if (existingCoupon) {
+            return res.status(400).json({ code: 'Coupon code already exists' });
+        }
+
+        // If coupon code is unique, proceed to create a new coupon
+        const newCoupon = new Coupon({
+            code,
+            percentage: parseFloat(percentage),
+            minAmount: parseFloat(minAmount),
+            expirationDate
+        });
+
+        await newCoupon.save();
+        res.redirect('/admin/coupons');
+    } catch (error) {
+
+        // Handle duplicate key error (E11000) or other errors
+        if (error.code === 11000) {
+            res.status(400).json({ code: 'Coupon code already exists' });
+        } else {
+            res.status(500).json({ general: 'Error creating coupon. Please try again later.' });
+        }
+    }
+};
+
+
+
+
+
+
+
+// Edit a coupon
+const editCoupon = async (req, res) => {
+    const { id: couponId } = req.params;
+    const { code, percentage, expirationDate } = req.body;
+
+    try {
+        const coupon = await Coupon.findByIdAndUpdate(couponId, {
+            code,
+            percentage,
+            expirationDate,
+        });
+
+        if (!coupon) {
+            return res.status(404).json({ message: 'Coupon not found' });
+        }
+
+        res.status(200).json({ message: 'Coupon updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating coupon', error });
+    }
+};
+
+
+const takeCouponAction = async (req, res) => {
+    try {
+        const couponId = req.params.couponId;
+        const coupon = await Coupon.findById(couponId);
+
+        if (!coupon) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Toggle product status
+        coupon.status = coupon.status === 'active' ? 'inactive' : 'active';
+        await coupon.save();
+
+        res.json({ status: coupon.status });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+}
+
+
+// Delete a coupon
+const deleteCoupon = async (req, res) => {
+    const { couponId } = req.params;
+
+    try {
+        await Coupon.findByIdAndDelete(couponId);
+        res.redirect('/admin/coupons');
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting coupon', error });
+    }
+};
+
+// Controller to get coupon details by ID
+const getCouponDetails = async (req, res) => {
+    try {
+        const { id } = req.params; // Get coupon ID from URL params
+        const coupon = await Coupon.findById(id); // Fetch the coupon from DB
+
+        if (!coupon) {
+            return res.status(404).json({ message: 'Coupon not found' });
+        }
+
+        // Return the coupon details as JSON
+        res.status(200).json(coupon);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching coupon details', error });
+    }
+};
+
+// Controller to update coupon details by ID
+const updateCouponDetails = async (req, res) => {
+    try {
+        const { id } = req.params; // Get coupon ID from URL params
+        const { code, percentage, minAmount, expirationDate } = req.body; // Get updated coupon data from request body
+
+        // Validate input data (this can also be done in the frontend as you have)
+        if (!code || percentage < 0 || minAmount < 0 || !expirationDate) {
+            return res.status(400).json({ message: 'Invalid data provided' });
+        }
+
+        // Find the coupon by ID and update it with new data
+        const updatedCoupon = await Coupon.findByIdAndUpdate(
+            id,
+            {
+                code,
+                percentage,
+                minAmount,
+                expirationDate
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedCoupon) {
+            return res.status(404).json({ message: 'Coupon not found' });
+        }
+
+        // Send the updated coupon as the response
+        res.status(200).json({ message: 'Coupon updated successfully', coupon: updatedCoupon });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating coupon', error });
+    }
+};
+
+const getOffersPage = async (req, res) => {
+    try {
+        // Fetch product offers (variants)
+        const variants = await Offer.find({ type: 'product' })
+            .populate({
+                path: 'typeId',
+                model: 'Variant',
+                populate: {
+                    path: 'productId',
+                    model: 'Product'
+                }
+            });
+
+        // Fetch brand offers
+        const brands = await Offer.find({ type: 'brand' })
+            .populate({
+                path: 'typeId',
+                model: 'Brands'
+            });
+
+        res.render('admin/offers', { variants, brands, currentUrl: req.originalUrl });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
+const getProductOffersPage = async (req, res) => {
+    try {
+        const offers = await Offer.find({ type: 'product' }).select('typeId');
+        const offerVariantIds = offers.map(offer => offer.typeId);
+        const variants = await Variants.find({
+            _id: { $nin: offerVariantIds }  // Exclude variants whose _id is in offerVariantIds
+        }).populate('productId');
+        res.render('admin/product-offers', { variants, currentUrl: req.originalUrl });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
+// Get Brand Offers Page
+const getBrandOffersPage = async (req, res) => {
+    try {
+        const offers = await Offer.find({ type: 'brand' }).select('typeId');
+        const offeredBrandIds = offers.map(offer => offer.typeId);
+        const brands = await Brands.find({
+            _id: { $nin: offeredBrandIds }  // Exclude brands whose _id is in offeredBrandIds
+        });
+
+        res.render('admin/brand-offers', { brands, currentUrl: req.originalUrl });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+const addOffer = async (req, res) => {
+    const { type, typeId, percentage } = req.body;
+
+    try {
+        const newOffer = new Offer({ type, typeId, percentage });
+        await newOffer.save();
+        res.status(201).json({ message: 'Offer added successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to add offer', error: err });
+    }
+};
+
+const removeOffer = async (req, res) => {
+    try {
+        const { typeId, offerType } = req.body;
+
+        const offer = await Offer.findOneAndDelete({ typeId, type: offerType });
+
+        if (!offer) {
+            return res.status(404).json({ success: false, message: 'Offer not found.' });
+        }
+
+        return res.json({ success: true, message: 'Offer removed successfully.' });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server error.' });
+    }
+};
+
+
+
+
+const generateReport = async (req, res) => {
+    const { reportType, startDate, endDate } = req.body;
+
+    let filter = {};
+
+    // Filter logic based on report type
+    switch (reportType) {
+        case 'daily':
+            filter = { createdAt: { $gte: new Date().setHours(0, 0, 0, 0) } };
+            break;
+        case 'weekly':
+            filter = { createdAt: { $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) } }; // Last 7 days
+            break;
+        case 'monthly':
+            filter = { createdAt: { $gte: new Date(new Date().setDate(1)) } }; // From start of the month
+            break;
+        case 'yearly':
+            filter = { createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) } }; // From start of the year
+            break;
+        case 'custom':
+            filter = { createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) } };
+            break;
+        default:
+            return res.status(400).json({ message: 'Invalid report type' });
+    }
+    
+    try {
+        const orders = await Order.find(filter)
+            .populate('user', 'username')
+            .sort({ createdAt: -1 })
+            .exec();
+
+        res.json({ orders });
+    } catch (error) {
+        res.status(500).json({ message: 'Error generating report' });
+    }
+};
+
+const getAllOrdersGraph = async (req, res) => {
+    try {
+        const orders = await Order.find();
+        res.json({ orders });
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching orders' });
+    }
+}
+
+
+const getOverallStats = async (req, res) => {
+    try {
+        // Total number of orders
+        const salesCount = await Order.countDocuments();
+        // Sum of total amounts from orders
+        const totalOrderAmount = await Order.aggregate([
+            { $group: { _id: null, total: { $sum: '$totalAmount' } } },
+        ]);
+
+        // Calculate total discount from used coupons
+        const totalDiscount = await Order.aggregate([
+            {
+                $match: { 'coupon.percentage': { $exists: true, $ne: null } }
+            },
+            {
+                $project: {
+                    discountAmount: {
+                        $multiply: ['$totalAmount', { $divide: ['$coupon.percentage', 100] }]
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalDiscount: { $sum: '$discountAmount' }
+                }
+            }
+        ]);
+
+
+
+        res.json({
+            salesCount,
+            totalOrderAmount: totalOrderAmount[0]?.total || 0,
+            totalDiscount: totalDiscount[0]?.totalDiscount || 0,
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching overall stats', error });
+    }
+};
+
+const getBestSellingProduct = async () => {
+    try {
+        const bestSellingProduct = await Order.aggregate([
+            { $unwind: "$items" },  // Unwind the items array to process each variant separately
+            {
+                $lookup: {
+                    from: 'variants',
+                    localField: 'items.variant',
+                    foreignField: '_id',
+                    as: 'variantDetails'
+                }
+            },  // Join with the Variants collection
+            { $unwind: "$variantDetails" },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'variantDetails.productId',
+                    foreignField: '_id',
+                    as: 'productDetails'
+                }
+            },  // Join with the Products collection
+            { $unwind: "$productDetails" },
+            {
+                $group: {
+                    _id: "$productDetails._id",  // Group by product ID
+                    productName: { $first: "$productDetails.productName" },  // Get the product name
+                    totalSold: { $sum: "$items.quantity" }  // Sum up the quantities sold
+                }
+            },
+            { $sort: { totalSold: -1 } },  // Sort by total sold in descending order
+            { $limit: 10 }  // Get the top-selling product
+        ]);
+
+       return bestSellingProduct
+
+    } catch (error) {
+        console.error('Error fetching best-selling product:', error);
+    }
+};
+
+const getBestSellingBrand = async () => {
+    try {
+        const bestSellingBrand = await Order.aggregate([
+            { $unwind: "$items" },  // Unwind the items array to process each variant separately
+            {
+                $lookup: {
+                    from: 'variants',
+                    localField: 'items.variant',
+                    foreignField: '_id',
+                    as: 'variantDetails'
+                }
+            },
+            { $unwind: "$variantDetails" },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'variantDetails.productId',
+                    foreignField: '_id',
+                    as: 'productDetails'
+                }
+            },
+            { $unwind: "$productDetails" },
+            {
+                $lookup: {
+                    from: 'brands',  // Make sure the collection name is correct
+                    localField: 'productDetails.brandId',  // Use brandId for the lookup
+                    foreignField: '_id',
+                    as: 'brandDetails'
+                }
+            },
+            { $unwind: "$brandDetails" }, // Unwind brand details to get the brand name
+            {
+                $group: {
+                    _id: "$brandDetails.brandName",  // Group by brand name
+                    totalSold: { $sum: "$items.quantity" }  // Sum up the quantities sold per brand
+                }
+            },
+            { $sort: { totalSold: -1 } },  // Sort by total sold in descending order
+            { $limit: 10 }  // Get the top-selling brands
+        ]);
+
+        return bestSellingBrand;
+    } catch (error) {
+        console.error('Error fetching best-selling brand:', error);
+    }
+};
+
+
+
+const getBestAnalytics = async (req,res) => {
+    if (req.user) {
+        try {
+            const users = await User.find({});
+            const orders = await Order.find(); // Fetch all orders for the initial graph
+            
+            // Fetch the best-selling product and brand
+            const bestProducts = await getBestSellingProduct();
+            const bestBrands = await getBestSellingBrand();
+            
+
+            // Render the admin dashboard with all the data
+            return res.render('admin/bestAnalytics', {
+                users,
+                orders,
+                bestProducts,
+                bestBrands,
+                currentUrl: req.originalUrl
+            });
+        } catch (error) {
+            return res.status(500).render('admin/dashboard', {
+                error: 'An error occurred while loading the admin panel',
+                users: [],
+                orders: [],
+                bestProductName: 'N/A',
+                bestBrandName: 'N/A'
+            });
+        }
+    }
+    res.render('admin/login', { error: null });
+}
+
 
 
 module.exports = {
@@ -811,4 +1374,21 @@ module.exports = {
     listAdminOrders,
     getOrderDetails,
     updateOrderStatus,
+    getAllCoupons,
+    addCoupon,
+    editCoupon,
+    takeCouponAction,
+    deleteCoupon,
+    getCouponDetails,
+    updateCouponDetails,
+    addOffer,
+    getProductOffersPage,
+    getBrandOffersPage,
+    getOffersPage,
+    removeOffer,
+    generateReport,
+    getAllOrdersGraph,
+    getOverallStats,
+    getBestAnalytics,
+    getBestSellingProduct
 };

@@ -116,30 +116,31 @@
 
 
         $(document).ready(function () {
-        // Initialize the DataTable
-        var table = $('.table').DataTable({
-            "pageLength": 7, // Show 5 rows at a time
-            "lengthChange": false, // Disable the option to change the number of rows shown
-            "ordering": true, // Enable column ordering
-            "info": true, // Disable info showing "Showing X of X entries"
-            "pagingType": "simple", // Simple pagination controls
-            "searching": true, // Disable the default search bar
-            "language": {
-                "paginate": {
-                    "previous": "Previous", // Customize the text
-                    "next": "Next" // Customize the text
-                }
-            },
-            "columnDefs": [
-                { "orderable": false, "targets": [2, -1] } // Disable ordering on the "Image" (3rd) and "Actions" (last) columns
-            ]
-        });
+            // Initialize the DataTable
+            var table = $('.table').DataTable({
+                "pageLength": 7, // Show 5 rows at a time
+                "lengthChange": false, // Disable the option to change the number of rows shown
+                "ordering": true, // Enable column ordering
+                "info": true,
+                 // Disable info showing "Showing X of X entries"
+                "pagingType": "simple", // Simple pagination controls
+                "searching": true, // Disable the default search bar
+                "language": {
+                    "paginate": {
+                        "previous": "Previous", // Customize the text
+                        "next": "Next" // Customize the text
+                    }
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": [2, -1] } // Disable ordering on the "Image" (3rd) and "Actions" (last) columns
+                ]
+            });
 
-        // Apply the search to the custom input field
-        $('#customSearch').on('keyup', function () {
-            table.search(this.value).draw();
+            // Apply the search to the custom input field
+            $('#customSearch').on('keyup', function () {
+                table.search(this.value).draw();
+            });
         });
-    });
 
 
         document.addEventListener('DOMContentLoaded', () => {

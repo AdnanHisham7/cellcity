@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        <%= product.productName %>
+    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: ">";
+        }        
+
+
+        .product-unavailabe{
+            font-size: 1rem;
+        }
+
+        .product-image-large {
+            max-width: 400px;
+            max-height: 400px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: #f9f9f9;
+            overflow: hidden;
+        }
+
+        .product-image-large img {
+            transition: transform 0.5s ease-in-out;
+            /* Smooth transition on hover and zoom out */
+            cursor: zoom-in;
+            /* Change cursor to zoom icon on hover */
+        }
+
+        .product-image-large img:hover {
+            transform: scale(1.3);
+            /* Adjust the scale as needed */
+            cursor: zoom-in;
+            /* Change cursor to zoom-out icon when zoomed in */
+        }
+
+        .product-subimages {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: #fff;
+        }
+
+        .product-subimages.active {
+            border-color: #007bff;
+        }
+
+        .add-review-heading{
+            color: white;
+            font-weight: bold;
+        }
+        
+        body {
+            background-color: #232323;
+            color: #ffffff !important;
+        }
+        .product-container {
+            background-color: #323232;
+            padding: 50px 30px;
+        }
+        .product-image-container {
+            position: relative;
+            padding: 5px;
+            /* border: 1px solid rgba(255, 255, 255, 0.1); */
+            display: flex;
+            justify-content: center;
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #ff0000;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .text-white{
+            color: rgb(231, 231, 231);
+        }
+
+        .wishlist-icon:hover {
+            color: #D9B600;
+        }
+
+        .thumbnails {
+            display: flex;
+            flex-direction: column;
+            margin-right: 15px;
+        }
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 1px solid #444;
+            margin-bottom: 10px;
+        }
+        
+        .main-image {
+            margin-bottom: 20px;
+            max-width: calc(100% - 85px);
+            height: auto;
+        }
+
+        .main-image:hover {
+            cursor: zoom-in;
+        }
+
+        .price {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .original-price {
+            margin-left: 12px;
+            margin-right: 10px;
+            font-size: 1rem;
+            text-decoration: line-through;
+            color: #6c757d;
+
+        }
+        .rating{
+            color: #ffc107;
+        }
+        .discount {
+            font-size: 1.2rem;
+            color: #28a745;
+        }
+
+        .login-review p{
+            color: rgba(255, 255, 255, 0.549) !important;
+        }
+
+        .product-specs {
+            list-style-type: disc; 
+            font-size: 0.87rem;
+            padding-left: 20px; 
+            color: #ccc; 
+        }
+
+        .product-specs li {
+            margin-bottom: 2px;
+        }
+
+
+        .quantity-input {
+            width: 50px;
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        
+        .color-variant {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            /* margin-right: 10px; */
+            cursor: pointer;
+        }
+
+        .delivery-info {
+            border: 1px solid rgba(255, 255, 255, 0.305) !important;
+            border-radius: 5px 5px 0px 0px;
+            padding: 15px;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        .return-info {
+            border: 1px solid rgba(255, 255, 255, 0.305) !important;
+            border-radius: 0px 0px 5px 5px;
+            padding: 15px;
+            max-width: 400px;
+            margin: 0;
+            border-top: none !important;
+        }
+        .delivery-icon {
+            font-size: 1.5rem;
+            margin-right: 20px;
+        }
+        .delivery-text p {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .delivery-text small {
+            color: #999;
+        }
+        .delivery-text small u {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #fff;
+        }
+
+
+        .primary-btn-shop-yellow {
+            display: inline-block;
+            height: 45px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            color: #000000;
+            background: #D9B600;
+            letter-spacing: 2px;
+            border: none !important;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+        .btn-custom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0;
+            height: 45px;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            color: #ffffff;
+            background: #090909;
+            letter-spacing: 2px;
+            border: none !important;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .btn-custom:hover {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0;
+            height: 45px;
+            font-size: 14.5px;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            color: #ffffff;
+            background: #090909;
+            letter-spacing: 2px;
+            border: none !important;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+        
+        .primary-btn-shop-yellow:hover {
+            display: inline-block;
+            height: 45px;
+            font-size: 14.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            color: #000000;
+            background: #D9B600;
+            letter-spacing: 2px;
+            border: none !important;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+
+        .product-description-heading{
+            color: white;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.126) !important;
+            border-radius: 5px 5px 0px 0px;
+            padding: 15px;
+            /* max-width: 400px; */
+            margin-bottom: 0;
+            margin-top: 20px;
+
+        }
+
+        .product-description{
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.126) !important;
+            border-radius: 0px 0px 5px 5px;
+            padding: 15px;
+            margin-bottom: 0;
+
+            /* max-width: 400px; */
+        }
+
+        .product-name{
+            color: white;
+            font-weight: bold;
+        }
+        
+        .reviews-heading{
+            color: white;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.126) !important;
+            border-radius: 5px 5px 0px 0px;
+            padding: 15px;
+            /* max-width: 400px; */
+            margin-bottom: 0;
+            margin-top: 20px;
+        }
+
+        .reviews-list{
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.126) !important;
+            border-radius: 0px 0px 5px 5px;
+            padding: 15px 15px 15px 30px;
+        }
+        .reviews-list-null{
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.126) !important;
+            border-radius: 0px 0px 5px 5px;
+            padding: 15px;
+        }
+
+        .review-date {
+            color: #aaa; /* Light gray for date */
+            font-size: 0.875rem;
+        }
+
+        .review-actions .btn-outline-secondary {
+            color: #D9B600;
+            border-color: #D9B600;
+        }
+
+        .review-actions .btn-outline-secondary:hover {
+            background-color: #D9B600;
+            color: #1c1e20;
+        }
+
+        .review-actions .btn-outline-danger {
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+
+        .review-actions .btn-outline-danger:hover {
+            background-color: #ff6b6b;
+            color: #1c1e20;
+        }
+
+        /* Add review form styles */
+
+        #addReviewForm select,
+        #addReviewForm textarea {
+            background-color: #333; /* Darker background for inputs */
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.126) ;
+        }
+
+        /* #addReviewForm .btn-primary {
+            background-color: #1c1e20;
+            color: #ffffff;
+            border: none;
+            font-weight: 700;
+            border-radius: 0 !important;
+            padding: 6px 12px;
+            letter-spacing: 2px;
+            
+        } */
+
+        /* #addReviewForm .btn-primary:hover {
+            background-color: #212121;
+        } */
+
+        .dark-white{
+            color: white !important;
+        }
+        .header__menu a{
+            text-decoration: none !important;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            background-color: #1c1e20; /* Dark background for modal */
+            color: #ffffff; /* White text */
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #D9B600;
+        }
+
+        .modal-title {
+            color: #ffffff;
+        }
+
+        .close {
+            color: #ffffff;
+        }
+
+        .modal-body .form-group label {
+            color: #ffffff;
+        }
+
+        .modal-body select,
+        .modal-body textarea {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #333;
+        }
+
+        .modal-footer .btn-primary {
+            background-color: #D9B600;
+            color: #1c1e20;
+            border: none;
+        }
+
+        .modal-footer .btn-primary:hover {
+            background-color: #ffc107;
+        }
+
+        .chosen-color{
+            color: white;
+        }
+
+        .review-comment{
+            color: #ccc;
+        }
+
+
+        .related-products .related-products-heading{
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .related-products .product-card {
+            border: 1px solid #dddddd6f;
+            max-width: 240px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .related-products .product-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #4b4949d4;
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .related-products a{
+            text-decoration: none !important;
+        }
+
+        .related-products .product-image {
+            height: 240px;
+            object-fit: cover;
+        }
+        .related-products .product-name {
+            color: rgba(255, 255, 255, 0.696);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px !important;
+        }
+        .related-products .product-price {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .related-products .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        .related-products .discount {
+            color: #388e3c;
+            font-size: 0.9rem;
+        }
+
+        .img-zoom-container {
+            position: relative;
+        }
+
+        .img-zoom-lens {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            width: 100px;  
+            height: 100px; 
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .img-zoom-result {
+            position: absolute; /* Set absolute positioning */
+            top: 17.5vw;             /* Adjust as needed to position it above the details section */
+            left: 50%;         /* Adjust this to position it to the right of the image or wherever needed */
+            z-index: 1;      /* High z-index to appear above other content */
+            /* Set the size of the result div: */
+            width: 400px;
+            height: 400px;
+        }
+
+        
+        @media (max-width: 576px) {
+            .related-products .product-card {
+                border: 1px solid #dddddd6f;
+                width: 260px !important;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="/img/icon/search.png" alt=""></a>
+            <a href="#"><img src="/img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, For every purchase above ₹10,000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a class="dark-white" href="/#faqs-section">FAQs</a>
+
+                                <p class="navbar-nav" id="authSection">
+                                    <!-- Placeholder for auth content -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="/images/cellCity.png" alt="" height="28"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="/cart">Shopping Cart</a></li>
+                            <!-- <li><a href="/blogs">Blogs</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="/wishlist"><img src="/img/icon/heart.png" alt=""></a>
+                        <a href="/wallet"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <div class="breadcrumb__links">
+                            <a href="/">Home</a>
+                            <a href="/shop">Shop</a>
+                            <span><%= product.productName %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+
+    
+
+   
+    <div class="container">
+        <div class="product-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-image-container">
+                        <div class="thumbnails">
+                            <% if (product.variants.length > 0 && variant.variantImages && variant.variantImages.length > 0) { %>
+                                <% variant.variantImages.forEach((image, index) => { %>
+                                    <img src="<%= image.replace('uploads', '') %>" alt="<%= product.productName %>"
+                                        class="img-fluid product-subimages thumbnail mb-2" data-src="<%= image.replace('uploads', '') %>">
+                                <% }); %>
+                            <% } else { %>
+                                <img src="/path/to/default-image.png" alt="Default Image">
+                            <% } %>
+                        </div>
+                        <% if (product.variants.length > 0 && variant.variantImages && variant.variantImages.length > 0) { %>
+                            <img id="largeImage" src="<%= variant.variantImages[0].replace('uploads', '') %>"
+                                alt="<%= product.productName %>" class="img-fluid main-image">
+                        <% } else { %>
+                            <img id="largeImage" src="/path/to/default-image.png" alt="Default Image" class="img-fluid">
+                        <% } %>
+                
+                        <!-- Wishlist icon implementation -->
+                        <% if(user != null) { %>
+                            <% const isInWishlist = user.wishlist.some(item => item._id.toString() === variant._id.toString()); %>
+                            
+                            <form action="/wishlist/<%= isInWishlist ? 'remove' : 'add' %>/<%= variant._id %>" method="POST" class="wishlist-form" id="wishlist-form">
+                                <i class="<%= isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %> wishlist-icon" style="cursor: pointer;"></i>
+                            </form>
+                            
+                        <% } else { %>
+                            <form action="/login" method="GET" class="wishlist-form">
+                                <i class="fa-regular fa-heart wishlist-icon" onclick="this.closest('.wishlist-form').submit();" style="cursor: pointer;"></i>
+                            </form>
+                        <% } %>
+                        <!-- Wishlist end -->
+                    </div>
+                </div>
+                
+                <div id="myresult" class="img-zoom-result"></div>
+
+                <div class="col-md-6 details-section">
+
+                    <h2 class="mb-3 product-name"><%= product.productName %> (<%= variant.color %>, <%= variant.storage %>) (<%= variant.RAM %> RAM)</h2>
+                    <div class="mb-3">
+                        <span class="rating">
+                            <%= '★'.repeat(Math.round(variant.overallRating)) %>
+                            <%= '☆'.repeat(5 - Math.round(variant.overallRating)) %>
+                        </span>
+                        <span>(<%= variant.reviews.length %> Reviews)</span>
+                        <span class="<%= product.variants.length > 0 && variant.stocks > 0 ? 'text-success' : 'text-danger' %> ms-2"><%= product.variants.length> 0 && variant.stocks > 0 ? 'In Stock' : 'Out of Stock' %></span>
+                    </div>
+
+
+                    <% if(variant.status === 'active' && variant.bestDiscount == 0){ %>
+                    <p class="price mb-0">₹<%= variant.price.toFixed(2) %></p>
+                    <% }else if(variant.status === 'active'){ %>
+                        <p class="price mb-0">₹<%= variant.finalPrice.toFixed(2) %><span class="original-price">₹<%= variant.price %></span> <span class="discount"><%= variant.bestDiscount %>% off</span></p>
+                    <% }else{ %>
+                        <p class="price mb-0">₹<%= variant.price.toFixed(2) %><span class="product-unavailabe text-danger ml-2">Unavailable</span></p>
+                    <% } %>    
+                    <ul class="product-specs mt-3">
+                        <% let highlightsArray = variant.productId.highlights.split(','); %>
+                        <% highlightsArray.forEach(highlight => { %>
+                            <li><%= highlight.trim() %></li>
+                        <% }); %>
+                    </ul>
+                    <div class="mb-3">
+                        <p class="mb-2 chosen-color"><b>Color:&nbsp;</b> <%= variant.color %></p>
+                        <div class="d-flex row">
+                            <% product.variants.forEach(function(currentVariant) { %>
+                                <a href="/shop/product/<%= currentVariant._id %>" class="variant-link">
+                                    <% if (currentVariant.variantImages &&
+                                    currentVariant.variantImages.length> 0) { %>
+                                    <img src="<%= currentVariant.variantImages[0].replace('uploads', '') %>" height="50" class="color-variant ml-2" width="50" alt="<%= currentVariant.color %> Variant">
+                                    <% } %>
+                                </a>
+                            <% }); %>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <% 
+                        const productLink = `http://yourwebsite.com/shop/product/${variant._id}`; 
+                        const productDetails = variant.bestDiscount > 0 
+                            ? `🎉 Amazing Offer! Check out the ${variant.productId.productName} (${variant.color}, ${variant.storage}) now with a fantastic **${variant.bestDiscount}% off!** 🌟 Grab it for just ₹${variant.finalPrice} and don't miss out! 👉 ${productLink}`
+                            : `🚀 Discover the ${variant.productId.productName} (${variant.color}, ${variant.storage}) for just ₹${variant.price}! Don't wait, elevate your experience today! 👉 ${productLink}`;
+
+                        const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(productDetails)}`; 
+                        %>
+                        <a href="<%= whatsappShareUrl %>" target="_blank" class="btn btn-custom">
+                            <i class="fa-solid fa-share-nodes"></i>&nbsp;Share Product
+                        </a>
+                        <form id="add-to-cart-form" action="/cart/add" method="POST">
+                            <input type="hidden" id="variantId" name="variantId" value="<%= variant._id %>">
+                            <button class="primary-btn-shop-yellow ml-2" type="submit">
+                                <i class="fa-solid fa-cart-shopping"></i>&nbsp; ADD TO CART
+                            </button>
+                        </form>
+
+                    </div>
+                    
+                    <div>
+                        <div class="d-flex align-items-center delivery-info">
+                            <i class="fa-solid fa-truck-fast delivery-icon"></i>
+                            <div class="delivery-text">
+                                <p class="mb-0">Free Delivery</p>
+                                <small>Enter your postal code for Delivery Availability</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center return-info">
+                            <i class="fa-solid fa-arrow-rotate-left delivery-icon"></i>
+                            <div class="delivery-text">
+                                <p class="mb-0">Return Delivery</p>
+                                <small>Free 30 Days Delivery Returns. <u>Details</u></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- product description -->
+                    <div class="row mt-4">
+                        <div class="col-12 product-description-section">
+                            <h3 class="product-description-heading">Product Description</h3>
+                            <p class="product-description"><%= product.description %></p>
+                        </div>
+                    </div>
+
+                    <!-- ratings and reviews  -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h3 class="reviews-heading" id="customer-reviews">Customer Reviews</h3>
+                            <% if (variant.reviews && variant.reviews.length > 0) { %>
+                                <ul class="reviews-list">
+                                    <% variant.reviews.forEach((review, index) => { %>
+                                        <li class="review-item">
+                                            <div class="review-author">
+                                                <strong><%= review.author.username %></strong>
+                                                <span class="review-date"><%= new Date(review.createdAt).toLocaleDateString() %></span>
+                                            </div>
+                                            <div class="review-rating">
+                                                <span class="rating">
+                                                    <% for (let i = 0; i < 5; i++) { %>
+                                                        <% if (i < review.rating) { %>
+                                                            ★
+                                                        <% } else { %>
+                                                            ☆
+                                                        <% } %>
+                                                    <% } %>
+                                                </span>
+                                            </div>
+                                            <p class="review-comment"><%= review.comment %></p>
+                    
+                                            <!-- Show Edit/Delete buttons if the review belongs to the logged-in user -->
+                                            <% if (user && user._id.toString() === review.author._id.toString()) { %>
+                                                <div class="review-actions">
+                                                    <button class="btn btn-sm btn-outline-secondary edit-review-btn" data-toggle="modal" 
+                                                            data-target="#editReviewModal"
+                                                            data-review-id="<%= review._id %>" 
+                                                            data-rating="<%= review.rating %>"
+                                                            data-comment="<%= review.comment %>">
+                                                        Edit
+                                                    </button>
+                                                    <form action="/shop/product/<%= variant._id %>/reviews/<%= review._id %>/delete" method="POST" class="d-inline">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            <% } else { %>
+                                <p class="reviews-list-null">No reviews yet. Be the first to review this product!</p>
+                            <% } %>
+                        </div>
+                    
+                        <!-- Add Review Section (Visible if user is logged in) -->
+                        <% if (user) { %>
+                        <div class="col-12 mt-4">
+                            <h4 class="add-review-heading">Add a Review</h4>
+                            <form id="addReviewForm" action="/shop/product/<%= variant._id %>/reviews" method="POST">
+                                <div class="form-group">
+                                    <label for="rating">Rating:</label>
+                                    <select name="rating" id="rating" class="form-control">
+                                        <option value="5">★★★★★ - 5</option>
+                                        <option value="4">★★★★☆ - 4</option>
+                                        <option value="3">★★★☆☆ - 3</option>
+                                        <option value="2">★★☆☆☆ - 2</option>
+                                        <option value="1">★☆☆☆☆ - 1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Your Review:</label>
+                                    <textarea name="comment" id="comment" rows="4" placeholder="Description..." class="form-control"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                            </form>
+                        </div>
+                        <% } else { %>
+                        <div class="col-12 mt-2 login-review">
+                            <p><a href="/login">Login</a> to leave a review.</p>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="related-products mt-5">
+                <h3 class="related-products-heading">Related Products</h3>
+                <div class="row">
+                    <% if (relatedVariants && relatedVariants.length > 0) { %>
+                        <% relatedVariants.forEach(relatedVariant => { %>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <a href="/shop/product/<%= relatedVariant._id %>">
+                                    <div class="product-card h-100">
+                                        <img src="<%= relatedVariant.variantImages[0].replace('uploads', '') %>" alt="<%= relatedVariant.productId.productName %>" class="product-image">
+                                        <% if (relatedVariant.productId) { %>
+                                        <div class="p-3">
+                                            <h5 class="product-name"><%= relatedVariant.productId.productName %> (<%= relatedVariant.color %>, <%= relatedVariant.storage %>)</h5>
+                                            <div class="row">
+                                                <% if (relatedVariant.bestDiscount === 0) { %>
+                                                    <p class="product-price mb-0 ml-3">₹<%= relatedVariant.finalPrice %></p>
+                                                <% } else { %>
+                                                    <p class="product-price mb-0 ml-3">₹<%= relatedVariant.finalPrice %></p>
+                                                    <p class="mb-0">
+                                                        <span class="original-price ml-3">₹<%= relatedVariant.price %></span>
+                                                        <span class="discount ml-1"><%= relatedVariant.bestDiscount %>% off</span>
+                                                    </p>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </a>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="text-white">No related products found.</p>
+                    <% } %>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+    <!-- Edit Review Modal -->
+    <div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog" aria-labelledby="editReviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editReviewModalLabel">Edit Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="editReviewForm" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="editRating">Rating:</label>
+                            <select name="rating" id="editRating" class="form-control" required>
+                                <option value="5">★★★★★ - 5</option>
+                                <option value="4">★★★★☆ - 4</option>
+                                <option value="3">★★★☆☆ - 3</option>
+                                <option value="2">★★☆☆☆ - 2</option>
+                                <option value="1">★☆☆☆☆ - 1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editComment">Your Review:</label>
+                            <textarea name="comment" id="editComment" rows="4" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Update Review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+   <!-- Footer Section Begin -->
+   <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="/images/cellCity-white.png" width="200px" alt=""></a>
+                        </div>
+                        <p>Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                        <a href="#"><img src="/img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Top Brands</h6>
+                        <ul>
+                            <li><a href="/shop?search=iphone">Apple</a></li>
+                            <li><a href="/shop?search=samsung">Samsung</a></li>
+                            <li><a href="/shop?search=xiaomi">Xiaomi </a></li>
+                            <li><a href="/shop?search=realme">Realme</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shopping Page</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Office Address</h6>
+                        <div class="footer__newslatter">
+                            <p>CellCity Pvt. Ltd<br> Kinfra Techno Industrial Park <br> Kakkanchery, Ramanatukkara <br> 673634, Calicut, India. <br> Email : info@cellCity.com <br> Phone: +91 9037532036 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            All rights reserved | CellCity Private Limited 
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Popper.js (Bootstrap requires this for tooltips and popovers) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+     <!-- Bootstrap JS and dependencies -->
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+   <!-- Js Plugins -->
+   <script src="/js/jquery-3.3.1.min.js"></script>
+   <script src="/js/bootstrap.min.js"></script>
+   <script src="/js/jquery.nice-select.min.js"></script>
+   <script src="/js/jquery.nicescroll.min.js"></script>
+   <script src="/js/jquery.magnific-popup.min.js"></script>
+   <script src="/js/jquery.countdown.min.js"></script>
+   <script src="/js/jquery.slicknav.js"></script>
+   <script src="/js/mixitup.min.js"></script>
+   <script src="/js/owl.carousel.min.js"></script>
+   <script src="/js/main.js"></script>
+
+   <!-- elevateZoom (Load after jQuery) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    
+    <!-- Include SweetAlert2 from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Select all wishlist forms
+        document.querySelectorAll('.wishlist-form').forEach(form => {
+            form.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const formAction = this.getAttribute('action'); // Get the form action (URL)
+                const formMethod = this.getAttribute('method'); // Get the form method (POST)
+
+                // Send the form data using fetch
+                fetch(formAction, {
+                    method: formMethod,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // SweetAlert based on the response status
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.title || 'Success',
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+
+                    } else if (data.status === 'warning') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Warning',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.querySelector('a[href="#customer-reviews"]').addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent the default anchor link behavior
+                
+                document.querySelector('#customer-reviews').scrollIntoView({
+                    behavior: 'smooth' // Scroll smoothly
+                });
+            });
+    </script>
+
+    
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            // "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "2000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+        // Function to submit review form with AJAX and show toastr notifications
+        document.getElementById('addReviewForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Get form data manually
+            const rating = document.getElementById('rating').value;
+            const comment = document.getElementById('comment').value;
+            const variantId = "<%= variant._id %>"; // Get variantId from template
+
+            // Build the JSON data to send
+            const reviewData = {
+                rating,
+                comment
+            };
+
+            // Send JSON data via fetch
+            fetch(`/shop/product/${variantId}/reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',  // Specify content type as JSON
+                },
+                body: JSON.stringify(reviewData),  // Stringify the JSON object
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server Response:', data);  // Log the full response
+                if (data.success) {
+                    toastr.success(data.message);
+
+                    setTimeout(() => 
+                        window.location.reload()
+                    ,1500)
+
+                } else {
+                    toastr.error(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);  // Log the error for better debugging
+                toastr.error('An unexpected error occurred.');
+            });
+        });
+
+
+        document.querySelectorAll('.review-actions form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete your review? This action cannot be undone.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const formAction = this.action; // Get the form action URL dynamically
+
+                        // Proceed with fetch request to delete review
+                        fetch(formAction, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    toastr.success(data.message);
+                                    setTimeout(() => window.location.reload(), 1500); // Reload after success
+                                } else {
+                                    toastr.error(data.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                toastr.error('An unexpected error occurred.');
+                            });
+                    }
+                });
+            });
+        });
+
+
+
+        document.getElementById('editReviewForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const rating = document.getElementById('editRating').value;
+            const comment = document.getElementById('editComment').value;
+            const formAction = this.action; // Get the form action URL dynamically
+
+            const reviewData = {
+                rating,
+                comment,
+            };
+
+            fetch(formAction, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        setTimeout(() => window.location.reload(), 1500); // Reload after success
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastr.error('An unexpected error occurred.');
+                });
+        });
+
+
+    </script>
+    
+
+    <script>
+        // JavaScript to pre-fill the modal with the review data
+        document.querySelectorAll('.edit-review-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const reviewId = this.dataset.reviewId;
+                const rating = this.dataset.rating;
+                const comment = this.dataset.comment;
+    
+                // Set the action URL dynamically
+                const form = document.getElementById('editReviewForm');
+                form.action = `/shop/product/<%= variant._id %>/reviews/${reviewId}/edit`;
+    
+                // Pre-fill the fields
+                document.getElementById('editRating').value = rating;
+                document.getElementById('editComment').value = comment;
+            });
+        });
+    </script>
+    
+    <script>
+        document.getElementById('add-to-cart-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+    
+            const form = event.target;
+            const variantId = document.getElementById('variantId').value;
+            console.log(variantId)
+            const cartData = {
+                variantId,
+            };
+    
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cartData),
+            });
+    
+            if (response.status === 401) {
+                
+                window.location.href = '/login';
+            } else if (response.ok) {
+                const data = await response.json(); // Assuming the backend sends JSON response
+                // Show SweetAlert with success message
+                Swal.fire({
+                    title: 'Success!',
+                    text: data.message, // Use the message from backend response
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Optionally redirect after closing the alert
+                    window.location.href = `/shop/product/${data.variantId}`; // Redirect to the product page
+                });
+            } else {
+                const errorData = await response.json();
+                // Show SweetAlert with error message
+                Swal.fire({
+                    title: errorData.title || 'Error!',
+                    text: errorData.message || 'An error occurred while adding the item to the cart.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
+    
+    <!-- Your custom script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.product-subimages').forEach(function (thumbnail) {
+                thumbnail.addEventListener('click', function () {
+                    // Remove the 'active' class from all subimages
+                    document.querySelectorAll('.product-subimages').forEach(function (img) {
+                        img.classList.remove('active');
+                    });
+
+                    // Add 'active' class to the clicked subimage
+                    this.classList.add('active');
+
+                    // Change the source of the large image
+                    const newSrc = this.getAttribute('data-src');
+                    console.log('New Source:', newSrc);
+                    document.getElementById('largeImage').setAttribute('src', newSrc);
+                });
+            });
+        });
+    </script>
+
+    <script>
+
+        const isLoggedIn = "<%= isLoggedIn %>" === "true";
+
+        const authSection = document.getElementById('authSection');
+        console.log('authSection shop',authSection)
+        console.log('isLoggedIn shop',isLoggedIn)
+        if (isLoggedIn) {
+            authSection.innerHTML = `
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle dark-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/profile">Profile</a></li>
+                        
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/wishlist">Wishlist</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/orders">Orders</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item" href="/reviews">Reviews</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button id="logoutButton" class="dropdown-item">Logout</button></li>
+                    </ul>
+                </li>
+            `;
+        } else {
+            authSection.innerHTML = `
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign In</a>
+                </li>
+            `;
+        }
+
+        //logout Logic
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+    </script>
+    <script>
+        function imageZoom(imgID, resultID) {
+        var img, lens, result, cx, cy;
+        img = document.getElementById(imgID);
+        result = document.getElementById(resultID);
+        
+        // Create lens
+        lens = document.createElement("DIV");
+        lens.setAttribute("class", "img-zoom-lens");
+        
+        // Insert lens into the image container
+        img.parentElement.insertBefore(lens, img);
+        
+        // Calculate the zoom ratio between the lens and the result container
+        cx = result.offsetWidth / lens.offsetWidth;
+        cy = result.offsetHeight / lens.offsetHeight;
+        
+        // Set background properties for the result DIV
+        result.style.backgroundImage = "url('" + img.src + "')";
+        result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+        
+        // Event listeners for zooming on hover
+        lens.addEventListener("mousemove", moveLens);
+        img.addEventListener("mousemove", moveLens);
+        
+        lens.addEventListener("touchmove", moveLens);
+        img.addEventListener("touchmove", moveLens);
+        
+        // Hide the zoom result by default
+        result.style.display = 'none';
+        
+        // Show zoom result on hover
+        img.addEventListener("mouseenter", function() {
+            result.style.display = 'block'; // Show zoom result
+        });
+        
+        img.addEventListener("mouseleave", function() {
+            result.style.display = 'none';  // Hide zoom result
+        });
+
+        function moveLens(e) {
+            var pos, x, y;
+            e.preventDefault();
+            
+            // Get cursor position relative to the image
+            pos = getCursorPos(e);
+            
+            // Calculate position for the lens
+            x = pos.x - (lens.offsetWidth / 2);
+            y = pos.y - (lens.offsetHeight / 2);
+            
+            // Ensure the lens stays within the image bounds
+            if (x > img.width - lens.offsetWidth) { x = img.width - lens.offsetWidth; }
+            if (x < 0) { x = 0; }
+            if (y > img.height - lens.offsetHeight) { y = img.height - lens.offsetHeight; }
+            if (y < 0) { y = 0; }
+            
+            // Move the lens
+            lens.style.left = x + "px";
+            lens.style.top = y + "px";
+            
+            // Move the background image of the result DIV to achieve the zoom effect
+            result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+        }
+
+        function getCursorPos(e) {
+            var a, x = 0, y = 0;
+            e = e || window.event;
+            a = img.getBoundingClientRect();
+            x = e.pageX - a.left;
+            y = e.pageY - a.top;
+            x = x - window.pageXOffset;
+            y = y - window.pageYOffset;
+            return {x: x, y: y};
+        }
+    }
+
+    // Call the function to initialize the zoom effect
+    imageZoom("largeImage", "myresult");
+
+    </script>
+    <!-- <script>
+        document.getElementById('largeImage').addEventListener('mouseleave', function() {
+        // Refresh the page when unhovering
+        window.location.reload();
+    });
+    </script> -->
+
+    
+</body>
+
+</html>

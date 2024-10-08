@@ -18,6 +18,11 @@ const cartSchema = new mongoose.Schema({
                 required: true,
                 default: 1,
                 min: 1
+            },
+            finalPrice: { // New field for final price after discounts
+                type: Number,
+                required: true,
+                default: 0
             }
         }
     ],

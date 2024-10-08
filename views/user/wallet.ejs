@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellcity | Profile</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <style>
+        .toast-top-center {
+            top: 50px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+
+        .toast {
+            min-width: 400px;
+        }
+
+        body {
+            background-color: #323232;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Modal Dark Theme */
+        .modal-content {
+            background-color: #1c1e20;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #2d2f31;
+        }
+
+        .modal-title {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .btn-close {
+            background-color: transparent;
+            border: none;
+            color: #ffffff;
+        }
+
+        .modal-body {
+            background-color: #25282B;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-control {
+            background-color: #323232;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .form-control::placeholder {
+            color: #a9b2bc;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #2d2f31;
+        }
+
+
+
+
+
+        .alert {
+            background-color: #2d2f31;
+            border: none;
+            color: #ffffff;
+        }
+
+        .alert-info {
+            background-color: #3c4044;
+        }
+
+        .alert-success {
+            background-color: #2d8d57;
+        }
+
+        .alert-danger {
+            background-color: #a94442;
+        }
+
+        .navbar {
+            background-color: #000;
+            padding: 0.5rem 1rem;
+            z-index: 1000;
+        }
+
+        .navbar-nav .nav-link {
+            margin-left: 20px;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .btn-outline-light {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .cart-badge {
+            background-color: #ffc107;
+            color: #000;
+            border-radius: 50%;
+            padding: 0.2em 0.5em;
+            font-size: 0.75em;
+            position: relative;
+            top: -10px;
+            left: -5px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background-color: #20c997;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .avatar-2 {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            background-color: #20c997;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .userame-name {
+            font-size: 25px;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        .username-icon {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: #25282B;
+            color: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            margin-top: 50px;
+            padding-top: 20px;
+            padding-left: 0;
+            padding-right: 0;
+            z-index: 1;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar .nav-link {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            padding-left: 33px;
+            color: #a9b2bc;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 8px;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgb(48, 48, 48);
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #424242;
+            color: white;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            /* Matches sidebar width */
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+
+        /* Profile and Address Card Styles */
+        .profile-card,
+        .address-card {
+            background-color: #242729;
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        /* Form Control Styles */
+        .form-control,
+        .form-select {
+            background-color: #323232;
+            border: none;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .form-control:disabled {
+            background-color: #444;
+            /* Darker background for disabled input */
+            color: #a9b2bc;
+            /* Lighter text color */
+            opacity: 1;
+            /* Ensure the input isn't semi-transparent */
+            border: 1px solid #555;
+            /* Subtle border for disabled input */
+            cursor: not-allowed;
+            /* Show "not-allowed" cursor */
+        }
+
+
+        .form-control::placeholder {
+            color: #a9b2bc;
+        }
+
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb-item,
+        .breadcrumb-item a {
+            color: #a9b2bc;
+        }
+
+        .breadcrumb-item.active {
+            color: white;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                height: auto;
+                position: relative;
+                width: 100%;
+                margin-bottom: 20px;
+                margin-top: -15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .profile-card,
+            .address-card {
+                padding: 15px;
+            }
+
+
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+
+            .sidebar h2 {
+                font-size: 1.25rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+            }
+        }
+
+        .wallet-balance {
+            background: linear-gradient(135deg, #000000, #2b2b2b);
+            /* Green gradient */
+            color: white;
+            /* White text to contrast with gradient */
+            border-radius: 12px;
+            /* Rounded corners */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .wallet-balance-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            /* Slightly faded white for title */
+        }
+
+        .wallet-balance-amount {
+            color: #ffc107 ;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <!-- <i class="fas fa-heart-pulse me-2"></i> -->
+                CELLCITY
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop">
+                            <i class="fas fa-box-open me-1"></i>
+                            PRODUCTS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <i class="fas fa-shopping-cart me-1"></i>
+                            CART
+                            <span class="cart-badge">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlist">
+                            <i class="fas fa-heart me-1"></i>
+                            WISHLIST
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <div class="avatar nav-link">
+                            <%= user.username[0].toUpperCase() %>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Main Layout -->
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 70px;">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4 col-sm-12 sidebar">
+                <div class="d-flex username-icon">
+                    <div class="avatar-2">
+                        <%= user.username[0].toUpperCase() %>
+                    </div>
+                    <div class="userame-name">
+                        <%= user.username %>
+                    </div>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile' ? 'active' : '' %>" href="/profile"><i
+                                class="fa-solid fa-chart-line"></i>My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/address' ? 'active' : '' %>"
+                            href="/profile/address"><i class="fa-solid fa-users"></i>Addresses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl.includes('/orders') ? 'active' : '' %>" href="/orders"><i
+                                class="fa-solid fa-list"></i>Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/coupons' ? 'active' : '' %>" href="/coupons"><i
+                                class="fa-solid fa-ticket-simple"></i>Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/wishlist' ? 'active' : '' %>" href="/wishlist"><i
+                                class="fa-solid fa-heart"></i>Wishlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/wallet' ? 'active' : '' %>" href="/wallet"><i
+                                class="fa-solid fa-wallet"></i>Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/reviews' ? 'active' : '' %>" href="/reviews"><i class="fa-regular fa-comments"></i>Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/profile/resetPassword' ? 'active' : '' %>"
+                            href="/profile/resetPassword"><i class="fa-solid fa-rotate-left"></i>Reset Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout"><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9 col-md-8 col-sm-12 main-content">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/profile">User</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                    </ol>
+                </nav>
+
+        <!-- Wallet Section Begin -->
+        <section class="wallet-section py-5">
+            <div class="container">
+                <div class="row justify-content-start">
+                    <div class="col-md-8">
+                        <div class="col-lg-8 col-md-12 p-0">
+                            <div class="wallet-balance mb-4 text-start p-4 shadow-sm rounded">
+                                <h3 class="wallet-balance-title">Wallet Balance</h3>
+                                <h3 class="wallet-balance-amount">₹<%= walletBalance.toFixed(2) %>
+                                </h3>
+                            </div>
+                        </div>
+                        
+
+
+                        <!-- Wallet Transactions Table -->
+                        <div class="table-responsive">
+                            <table id="walletTransactions" class="table table-bordered table-hover table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% transactionHistory.forEach(function(transaction) { %>
+                                        <tr>
+                                            <td>
+                                                <%= transaction.date.toDateString().slice(4) %>
+                                            </td>
+                                            <td>
+                                                <%= transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)
+                                                    %>
+                                            </td>
+                                            <td>₹<%= transaction.amount.toFixed(2) %>
+                                            </td>
+                                            <td>
+                                                <%= transaction.description || 'N/A' %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Wallet Section End -->
+    </div>
+
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#walletTransactions').DataTable({
+                "pageLength": 5,            
+                "paging": true,              // Enable paging
+                "searching": false,           // Enable search box
+                "ordering": true,            // Enable column ordering
+                "order": [[0, 'desc']],      // Default ordering by the first column (Date) in descending order
+                "info": true,// Show table info (e.g., "Showing 1 to 5 of 10 entries")
+                "lengthChange": false        // Disable ability to change page length from UI
+            });
+        });
+
+    </script>
+    </body>
+
+    </html>

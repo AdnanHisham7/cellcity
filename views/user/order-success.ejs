@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+    <style>
+        .confirmation-container {
+            background-color: #323232;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            color: white;
+        }
+
+        .confirmation-title{
+            color: white;
+            font-weight: bold;
+        }
+
+        .confirmation-subtitle{
+            color: rgba(255, 255, 255, 0.529);
+            
+        }
+
+        body{
+            background-color: #25282B;
+            color: white !important;
+        }
+        .confirmation-box {
+            background-color: #323232;
+            text-align: center;
+            color: white;
+            width: 100%;
+        }
+
+        .checkmark-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+        }
+        .checkmark {
+            color: #4CAF50;
+            font-size: 3rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            padding: 12px 22px;
+            border-radius: 0;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="/img/icon/search.png" alt=""></a>
+            <a href="#"><img src="/img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">₹0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, For every purchase above ₹10,000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a href="/#faqs-section">FAQs</a>
+
+                                <p class="navbar-nav" id="authSection">
+                                    <!-- Placeholder for auth content -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="/images/cellCity.png" alt="" height="28"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="/cart">Shopping Cart</a></li>
+                            <!-- <li><a href="/blogs">Blogs</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="/wishlist"><img src="/img/icon/heart.png" alt=""></a>
+                        <a href="/wallet"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+
+    <div class="container confirmation-container">
+        <div class="confirmation-box">
+            <div class="checkmark-circle">
+                <div class="checkmark">✓</div>
+            </div>
+            <h4 class="confirmation-title mb-3">Your order is successfully placed</h4>
+            <p class="confirmation-subtitle mb-4">Click the button below check the order and track the order</p>
+            <a href="/orders"><button class="btn btn-primary">VIEW ORDERS →</button></a>
+        </div>
+
+
+    </div>
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="/images/cellCity-white.png" width="200px" alt=""></a>
+                        </div>
+                        <p>Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                        <a href="#"><img src="/img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Top Brands</h6>
+                        <ul>
+                            <li><a href="/shop?search=iphone">Apple</a></li>
+                            <li><a href="/shop?search=samsung">Samsung</a></li>
+                            <li><a href="/shop?search=xiaomi">Xiaomi </a></li>
+                            <li><a href="/shop?search=realme">Realme</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shopping Page</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Office Address</h6>
+                        <div class="footer__newslatter">
+                            <p>CellCity Pvt. Ltd<br> Kinfra Techno Industrial Park <br> Kakkanchery, Ramanatukkara <br> 673634, Calicut, India. <br> Email : info@cellCity.com <br> Phone: +91 9037532036 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            All rights reserved | CellCity Private Limited 
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // Function to trigger confetti effect
+        function runConfetti() {
+            var duration = 1 * 1000; // 3 seconds of confetti
+            var end = Date.now() + duration;
+            // var colors = ['#bb0000', '#ffffff', '#0000bb', '#00bb00'];
+
+            // Create a continuous explosion effect
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 100,
+                    origin: { x: 0 },
+                    // colors: colors
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 100,
+                    origin: { x: 1 },
+                    // colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+
+        // Trigger confetti when the page is loaded
+        window.onload = function () {
+            runConfetti();
+        };
+    </script>
+</body>
+
+</html>

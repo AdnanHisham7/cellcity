@@ -38,9 +38,26 @@ const {
     listAdminOrders,
     getOrderDetails,
     updateOrderStatus,
+    getAllCoupons,
+    addCoupon,
+    editCoupon,
+    takeCouponAction,
+    deleteCoupon,
+    getCouponDetails,
+    updateCouponDetails,
+    getOffersPage,
+    getProductOffersPage,
+    getBrandOffersPage,
+    addOffer,
+    removeOffer,
+    generateReport,
+    getAllOrdersGraph,
+    getOverallStats,
+    getBestAnalytics,
 } = require('../controllers/adminController');
 
 const { authMiddleware } = require('../middleware/auth');
+const { generateInvoicePDF } = require('../controllers/userController');
 
 // Admin routes
 router.get('/login', authMiddleware, getAdminLoginPage);
@@ -55,7 +72,6 @@ router.post('/resetPassword', resetPassword);
 
 router.get('/logout', logout);
 
-router.get('/', authMiddleware, getAdminPanel);
 
 router.get('/users', authMiddleware, getUsersPage);
 router.get('/users/:id', authMiddleware, getUserDetails);
@@ -97,4 +113,30 @@ router.post('/brands/action/:brandId', authMiddleware, takeBrandAction);
 router.get('/orders', listAdminOrders);
 router.get('/orders/:orderId', getOrderDetails);
 router.post('/orders/:orderId/status', updateOrderStatus);
+
+
+router.get('/coupons',authMiddleware, getAllCoupons);
+router.get('/coupons/:id', authMiddleware, getCouponDetails);
+router.put('/coupons/:id', authMiddleware, updateCouponDetails);
+
+router.post('/coupons/add', addCoupon);
+router.put('/coupons/:id', authMiddleware, editCoupon);
+router.post('/coupons/edit/:couponId', editCoupon);
+router.post('/coupons/action/:couponId', authMiddleware, takeCouponAction);
+router.get('/coupons/delete/:couponId', deleteCoupon);
+
+router.get('/offers', getOffersPage);
+router.post('/add-offer', addOffer)
+router.get('/product-offers', getProductOffersPage);
+router.get('/brand-offers', getBrandOffersPage);
+
+router.post('/remove-offer', removeOffer);
+
+
+router.get('/', authMiddleware, getAdminPanel);
+router.post('/dashboard/generate-report',generateReport)
+router.get('/fetch-all-orders', getAllOrdersGraph)
+router.get('/overall-stats', getOverallStats);
+router.get('/best-analytics', getBestAnalytics );
+
 module.exports = router;

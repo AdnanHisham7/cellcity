@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="CellCity - Your trusted online smartphone store. Find the best deals on the latest smartphones with top-notch features, competitive prices, and fast shipping.">
+    <meta name="keywords" content="smartphones, online store, best smartphone deals, buy smartphones, CellCity, mobile phones">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CellCity - Best Smartphones at Affordable Prices</title>
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="CellCity - Buy the Latest Smartphones Online">
+    <meta property="og:description" content="Discover the best smartphones at CellCity. Shop top brands and get fast delivery, amazing deals, and excellent customer service.">
+    <meta property="og:type" content="website">
+
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+     <!-- Optional: Add some CSS for styling -->
+     <style>
+        body{
+            background-color:#25282B;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        .faq .faq__title {
+            font-size: 2rem ;
+            font-weight: bold ;
+            margin-bottom: 20px ;
+            color: #e0e0e0 ; /* Light gray for better contrast */
+        }
+
+        .faq .card-header {
+            background-color: #1c1c1c ; /* Dark background */
+            border-bottom: 1px solid #333 ; /* Subtle border */
+        }
+
+        .faq .btn-link {
+            text-decoration: none ;
+            font-size: 1.1rem ;
+            font-weight: 500 ;
+            color: #bbbbbb ; /* Soft light gray for link */
+        }
+
+        .faq .btn-link:hover {
+            color: #ffffff ; /* White on hover for clarity */
+        }
+
+        .faq .card-body {
+            font-size: 1rem ;
+            line-height: 1.5 ;
+            color: #c0c0c0 ; /* Medium gray text for readability */
+        }
+
+        .faq .card {
+            border: 1px solid #1c1c1c ; /* Subtle border for card */
+            margin-bottom: 10px ;
+        }
+
+        .faq .card-header h5 {
+            margin-bottom: 0 ;
+            color: #e0e0e0 ; /* Light gray for card titles */
+        }
+
+        .faq .accordion .card-header .btn {
+            text-align: left;
+            width: 100%;
+            color: #e0e0e0 ; /* Consistent light text */
+            background-color: #1c1c1c ; /* Slightly lighter dark background */
+        }
+
+        .faq .accordion .card-body {
+            padding: 20px ;
+            background-color: #1c1c1c ; /* Dark background for card content */
+        }
+                
+        .product-card {
+            border: 1px solid #dddddd6f;
+            /* max-width: 260px; */
+            
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #4b4949d4;
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+        .product-image {
+            height: 258px;
+            object-fit: cover;
+        }
+        .product-name {
+            color: rgba(255, 255, 255, 0.696);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px !important;
+        }
+        .product-price {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        .discount {
+            color: #388e3c;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 576px) {
+            .product-card {
+            border: 1px solid #dddddd6f;
+            width: 260px !important;
+            margin-left: 110px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="sw"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, For every purchase above ₹10,000</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, For every purchase above ₹10,000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a href="/#faqs-section">FAQs</a>
+
+                                <p class="navbar-nav" id="authSection">
+                                    <!-- Placeholder for auth content -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="images/cellCity.png" alt="" height="28"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li  class="active"><a href="/">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="/cart">Shopping Cart</a></li>
+                            <!-- <li><a href="/blogs">Blogs</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                        <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__items set-bg" data-setbg="images/cellCity-banner-01.png">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <% 
+                                    const currentDate = new Date();
+                                    const options = { year: 'numeric', month: 'long' };
+                                    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+                                %>
+                                <h6>New Arrivals: <%= formattedDate %></h6>
+                                <h2>Explore the Latest in Mobile Technology</h2>
+                                <p>Discover our newest range of smartphones and accessories designed to keep you connected with the latest innovations. Shop our newest arrivals and enjoy cutting-edge technology at unbeatable prices.</p>
+                                <div class="row">
+                                    <a href="/shop" class="primary-btn">Shop Now <span class="arrow_right"></span></a>
+                                    <a href="/shop" class="primary-btn-yellow">Explore <span class="arrow_right"></span></a>
+                                </div>
+                                
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="hero__items set-bg" data-setbg="images/cellCity-banner-02.png">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h6>Special Offers</h6>
+                                <h2>Top Deals on Best-Selling Smartphones</h2>
+                                <p>Don’t miss out on our exclusive deals and discounts on top-rated smartphones. Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                                <a href="/special-offers" class="primary-btn">View Offers <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+    <br><br>
+
+    <!-- Product Section Start -->
+    <section class="product spad" style="background-color: #25282B;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="filter__controls">
+                        <ul>
+                            <li data-filter=".best">Best Sellers</li>
+                            <li class="active" data-filter="*">All</li>
+                            <li data-filter=".new">New Arrivals</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                <% if(variants){ %>
+                <div class="row product__filter ">
+                    <% 
+                    const displayedProductIds = new Set(); // Initialize a Set to track displayed productIds
+                    variants.forEach(variant => { 
+                        const currentDate = new Date();
+                        const createdDate = new Date(variant.createdAt);
+                        const isNew = (currentDate - createdDate) <= 1 * 24 * 60 * 60 * 1000; // Check if created within last 1 day(s)
+                        const isBest = bestSellingProducts.some(product => product._id.equals(variant.productId._id)); // Check if the variant is a best-seller
+                        
+                        // Check if the productId has already been displayed
+                        if (!displayedProductIds.has(variant.productId._id)) {
+                            displayedProductIds.add(variant.productId._id); // Add the productId to the Set
+            
+                            let classNames = 'col-lg-3 col-md-4 col-sm-6 mix';
+                            if (isNew) classNames += ' new';
+                            if (isBest) classNames += ' best';
+                    %>
+                    <div class="mb-4 <%= classNames %>">
+                        <a href="/shop/product/<%= variant._id %>">
+                            <div class="product-card h-100">
+                                <img class="img-fluid" src="<%= variant.variantImages[0].replace('uploads', '') %>" alt="POCO M6 Pro 5G" class="product-image w-100">
+                                <% if(variant.productId){ %>
+                                <div class="p-3">
+                                    <h5 class="product-name"><%= variant.productId.productName %>  (<%= variant.color %>,<%= variant.storage %>)</h5>
+                                    <div class="row">
+                                        <% if(variant.bestDiscount == 0){ %>
+                                            <p class="product-price mb-0 ml-3">₹<%= variant.finalPrice.toFixed(2) %></p>
+                                            
+                                        <% }else{ %>
+                                            <p class="product-price mb-0 ml-3">₹<%= variant.finalPrice.toFixed(2) %></p>
+                                            <p class="mb-0">
+                                                <span class="original-price ml-3">₹<%= variant.price %></span>
+                                                <span class="discount ml-1"><%= variant.bestDiscount %>% off</span>
+                                            </p>
+                                        <% } %>
+                                        
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </a>
+                    </div>
+                    <% 
+                            } // End of if condition checking for duplicate productId
+                        }); // End of forEach loop
+                        %>
+                </div>
+            </div>
+                <% } %>
+    
+            </div>
+        </div>
+        
+    </section>
+    <!-- Product Section End -->
+
+
+
+    <!-- FAQ Section Begin -->
+    <section class="faq spad" id="faqs-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="faq__title text-center">Frequently Asked Questions</h2>
+                    <div class="accordion" id="faqAccordion">
+                        <div class="card">
+                            <div class="card-header" id="faqHeading1">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq1" aria-expanded="true" aria-controls="collapseFaq1">
+                                        1. What types of smartphones do you sell?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq1" class="collapse show" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    We sell a wide range of smartphones from top brands, including the latest models with various specifications to meet your needs.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="faqHeading2">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq2" aria-expanded="false" aria-controls="collapseFaq2">
+                                        2. Do you offer any warranties on the smartphones?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Yes, all smartphones come with a manufacturer’s warranty. Warranty details vary by brand and model, so please check the product page for specific information.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="faqHeading3">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq3" aria-expanded="false" aria-controls="collapseFaq3">
+                                        3. How do I track my order?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Once your order is placed, you will receive a tracking number via email. You can use this number to track your order on our website under the “My Orders” section.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="faqHeading4">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq4" aria-expanded="false" aria-controls="collapseFaq4">
+                                        4. What payment methods do you accept?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq4" class="collapse" aria-labelledby="faqHeading4" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    We accept payments via credit/debit cards, net banking, UPI, Razorpay, and Cash on Delivery (COD) for eligible orders below Rs 1000.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="faqHeading5">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq5" aria-expanded="false" aria-controls="collapseFaq5">
+                                        5. Can I return my smartphone after purchase?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq5" class="collapse" aria-labelledby="faqHeading5" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Yes, we offer a 7-day return policy on all smartphones. Please ensure that the product is in its original condition.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="faqHeading6">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaq6" aria-expanded="false" aria-controls="collapseFaq6">
+                                        6. How long does delivery take?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFaq6" class="collapse" aria-labelledby="faqHeading6" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Delivery typically takes 3-5 business days. You will receive a tracking number once the item is shipped.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ Section End -->
+
+
+
+    
+   
+    
+    
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="images/cellCity-white.png" width="200px" alt=""></a>
+                        </div>
+                        <p>Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Top Brands</h6>
+                        <ul>
+                            <li><a href="/shop?search=iphone">Apple</a></li>
+                            <li><a href="/shop?search=samsung">Samsung</a></li>
+                            <li><a href="/shop?search=xiaomi">Xiaomi </a></li>
+                            <li><a href="/shop?search=realme">Realme</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shopping Page</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Office Address</h6>
+                        <div class="footer__newslatter">
+                            <p>CellCity Pvt. Ltd<br> Kinfra Techno Industrial Park <br> Kakkanchery, Ramanatukkara <br> 673634, Calicut, India. <br> Email : info@cellCity.com <br> Phone: +91 9037532036 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            All rights reserved | CellCity Private Limited 
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <!-- Use a form to submit the search query -->
+            <form action="/shop" method="GET" class="search-model-form">
+                <input type="text" id="search-input" name="search" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+
+        const isLoggedIn = "<%= isLoggedIn %>" === "true";
+
+        const authSection = document.getElementById('authSection');
+        console.log('authSection',authSection)
+        console.log('isLoggedIn',isLoggedIn)
+        if (isLoggedIn) {
+            authSection.innerHTML = `
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/profile">Profile</a></li>
+                        
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/wishlist">Wishlist</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/orders">Orders</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item" href="/reviews">Reviews</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button id="logoutButton" class="dropdown-item">Logout</button></li>
+                    </ul>
+                </li>
+            `;
+        } else {
+            authSection.innerHTML = `
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign In</a>
+                </li>
+            `;
+        }
+
+        //logout Logic
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        document.querySelector('a[href="#faqs-section"]').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default anchor link behavior
+            
+            document.querySelector('#faqs-section').scrollIntoView({
+                behavior: 'smooth' // Scroll smoothly
+            });
+        });
+
+    </script>
+</body>
+
+</html>

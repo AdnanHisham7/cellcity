@@ -41,6 +41,7 @@ app.use(session({
 app.use(flash());
 // Pass flash messages to views
 app.use((req, res, next) => {
+    res.locals.error_msg = req.flash('error');
     res.locals.messages = req.flash();
     next();
 });
@@ -66,5 +67,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port http://localhost:${PORT}`);
 });

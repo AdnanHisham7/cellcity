@@ -1,18 +1,18 @@
 <%- include('../layouts/admin/header') %>
 
-    <div class="container my-5">
-        <h2 class="mb-4">All Orders</h2>
-        <div class="table-responsive">
-            <table class="table">
+    <div class="main-content" style="margin-top: 70px;">
+        <h3 class="sub-heading">Categories</h3>
+        <div class="container">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">User</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Total Amount</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Actions</th>
+                        <th>Order ID</th>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Total Amount</th>
+                        <th>payment</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +28,7 @@
                             <td>₹<%= order.totalAmount %>
                             </td>
                             <td>
-                                <%= order.items.length %>
+                                <%= order.paymentMethod %>
                             </td>
                             <td>
                                 <%= order.createdAt.toDateString() %>

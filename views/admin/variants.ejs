@@ -5,67 +5,71 @@
         <div class="container">
             <div>
 
-
-                <div class="row">
-                    <!-- Product Images -->
-                    <div class="col-md-6 d-flex">
-                        <% variants.slice(0, 1).forEach(variant=> { %>
-                            <% if (variant.variantImages && variant.variantImages.length> 0) { %>
-                                <img src="<%= variant.variantImages[0].replace('uploads', '') %>" alt="Variant Image"
-                                    style="max-width: 600px; height: auto;">
-                                <% } else { %>
-                                    <p>No image available</p>
-                                    <% } %>
-                                        <% }) %>
-                    </div>
-                    <div class="col-md-6 product-details">
-                        <br><br><br>
-                        <h2>
-                            <%= product.productName %>
-                        </h2>
-                        <p><strong>Brand:</strong>
-                            <%= product.brand %>
-                        </p>
-                        <p><strong>Description:</strong>
-                            <%= product.description %>
-                        </p>
-                        <p><strong>Highlights:</strong>
-                            <%= product.highlights %>
-                        </p>
-                        <p><strong>Battery Capacity:</strong>
-                            <%= product.batteryCapacity %>
-                        </p>
-                        <p><strong>Display:</strong>
-                            <%= product.display %>
-                        </p>
-                        <p><strong>Processor:</strong>
-                            <%= product.processor %>
-                        </p>
-                        <p><strong>Rating:</strong>
-                            <%= product.rating %>
-                        </p>
-                        <p><strong>Status:</strong>
-                            <%= product.status %>
-                        </p>
-
-                        <!-- Display Reviews -->
-                        <div class="product-reviews">
-                            <h4>Reviews</h4>
-                            <% if (product.reviews && product.reviews.length> 0) { %>
-                                <ul>
-                                    <% product.reviews.forEach(function(review) { %>
-                                        <li>
-                                            <%= review %>
-                                        </li>
-                                        <% }) %>
-                                </ul>
-                                <% } else { %>
-                                    <p>No reviews available</p>
-                                    <% } %>
+                <% if(variants.length > 0) {%>
+                    <div class="row">
+                        <!-- Product Images -->
+                        <div class="col-md-6 d-flex">
+                            <% variants.slice(0, 1).forEach(variant=> { %>
+                                <% if (variant.variantImages && variant.variantImages.length> 0) { %>
+                                    <img src="<%= variant.variantImages[0].replace('uploads', '') %>" alt="Variant Image"
+                                        style="max-width: 500px; height: 500px; margin-top: 70px;">
+                                    <% } else { %>
+                                        <p>No image available</p>
+                                        <% } %>
+                                            <% }) %>
                         </div>
+                        <div class="col-md-6 product-details">
+                            <br><br><br>
+                            <h2>
+                                <%= product.productName %>
+                            </h2>
+                            <p><strong>Brand:</strong>
+                                <%= product.brandId.brandName %>
+                            </p>
+                            <p><strong>Description:</strong>
+                                <%= product.description %>
+                            </p>
+                            <p><strong>Highlights:</strong>
+                                <%= product.highlights %>
+                            </p>
+                            <p><strong>Battery Capacity:</strong>
+                                <%= product.batteryCapacity %>
+                            </p>
+                            <p><strong>Display:</strong>
+                                <%= product.display %>
+                            </p>
+                            <p><strong>Processor:</strong>
+                                <%= product.processor %>
+                            </p>
+                            <p><strong>Rating:</strong>
+                                <%= product.rating %>
+                            </p>
+                            <p><strong>Status:</strong>
+                                <%= product.status %>
+                            </p>
+    
+                            <!-- Display Reviews -->
+                            <div class="product-reviews">
+                                <h4>Reviews</h4>
+                                <% if (product.reviews && product.reviews.length> 0) { %>
+                                    <ul>
+                                        <% product.reviews.forEach(function(review) { %>
+                                            <li>
+                                                <%= review %>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+                                    <% } else { %>
+                                        <p>No reviews available</p>
+                                        <% } %>
+                            </div>
+                        </div>
+    
                     </div>
-
-                </div>
+                <% }else{ %>
+                    No Variants added yet
+                <% }%>
+                
                 <br><br><br>
 
 
@@ -184,6 +188,7 @@
                                         <label for="storage" class="form-label">Storage</label>
                                         <select class="form-control" name="storage" id="storage">
                                             <option value="" selected disabled>Select Storage</option>
+                                            <option value="512GB">512GB</option>
                                             <option value="256GB">256GB</option>
                                             <option value="128GB">128GB</option>
                                             <option value="64GB">64GB</option>
@@ -198,6 +203,8 @@
                                         <label for="RAM" class="form-label">RAM</label>
                                         <select class="form-control" name="RAM" id="RAM">
                                             <option value="" selected disabled>Select RAM</option>
+                                            <option value="16GB">16GB</option>
+                                            <option value="12GB">12GB</option>
                                             <option value="8GB">8GB</option>
                                             <option value="6GB">6GB</option>
                                             <option value="4GB">4GB</option>
@@ -306,6 +313,7 @@
                                         <label for="storage" class="form-label">Storage</label>
                                         <select class="form-control" name="storage" id="storage">
                                             <option value="">Select Storage Capacity</option>
+                                            <option value="512GB">512GB</option>
                                             <option value="256GB">256GB</option>
                                             <option value="128GB">128GB</option>
                                             <option value="64GB">64GB</option>
@@ -319,7 +327,9 @@
                                         <select class="form-control" name="RAM" id="RAM">
                                             <option value="">Select RAM</option>
                                             <option value="16GB">16GB</option>
+                                            <option value="12GB">12GB</option>
                                             <option value="8GB">8GB</option>
+                                            <option value="6GB">6GB</option>
                                             <option value="4GB">4GB</option>
                                             <option value="2GB">2GB</option>
                                         </select>
@@ -393,7 +403,7 @@
                     "pageLength": 5, // Show 5 rows at a time
                     "lengthChange": false, //option to change the number of rows shown
                     "ordering": true, // Enable column ordering
-                    "info": true, // Disable info showing "Showing X of X entries"
+                    "info": true,
                     "pagingType": "simple", // Simple pagination controls
                     "searching": true, // Disable the default search bar
                     "language": {

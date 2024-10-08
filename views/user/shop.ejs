@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CellCity - Shop Now</title>
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <style>
+
+        body {
+            background-color: #1c1e20;
+            color: white;
+        }
+        .product-card {
+            padding: 20px 0px;
+            background-color: #1c1e20;
+            /* margin-bottom: 20px; */
+            transition: all ease 0.5s;
+        }
+
+        .product-card:hover {
+            background-color: #313131;
+        }
+
+        .product-card .text-danger{
+            color: rgb(208, 19, 19) !important;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            object-fit: cover !important;
+        }
+        .product-image-container {
+            position: relative;
+            padding: 5px; /* Small padding to give the image some breathing space */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle, professional border */
+            /* border-radius: 8px; */
+            background-color:   #ffffff; 
+            /* background-color: #2a2a2a;  */
+            display: flex; /* Ensure the image is centered */
+            justify-content: center; /* Center the image horizontally */
+            align-items: center; /* Center the image vertically */
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;  /* Adjust based on your preference */
+            right: 10px;  /* Adjust based on your preference */
+            font-size: 24px;  /* Adjust size as per your need */
+            color: #ff0000;  /* Red color for the heart */
+            cursor: pointer;  /* Cursor changes to pointer to indicate it's clickable */
+            z-index: 10;  /* Ensure it stays on top of the image */
+        }
+
+        /* Hover effect for wishlist icon */
+        .wishlist-icon:hover {
+            color: #D9B600;  /* Change color on hover to match your theme */
+        }
+
+        .product-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .product-rating {
+            color: #ffc107;
+        }
+        .product-price {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .product-original-price {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+        .product-unavailabe{
+            color: #ce2e02;
+        }
+        .product-discount {
+            color: #28a745;
+        }
+
+        .product-specs {
+            list-style-type: disc; 
+            font-size: 0.87rem;
+            padding-left: 20px; 
+            color: #ccc; 
+        }
+
+        .product-specs li {
+            margin-bottom: 2px;
+        }
+
+        .product-divider {
+            border: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+        }
+
+
+        .search-container {
+            width: 100%;
+            margin-left: 280px;
+            max-width: 1000px;
+            padding: 20px;
+            background-color: #1c1e20;
+            border-radius: 8px;
+            margin-top: -80px;
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .search-input {
+            color: rgba(255, 255, 255, 0.763);
+            background-color: #1c1e20;
+            border: 1px solid #585858;
+            border-radius: 8px 0 0 8px;
+            padding: 10px 15px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+            width: 100%;
+        }
+
+        .search-input:focus {
+            border-color: #D9B600;
+        }
+
+        .btn-search {   
+            background-color: #D9B600;
+            border: none;
+            color: white !important;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-search:hover {
+            background-color: #D9B600;
+        }
+
+        .btn-search i {
+            margin-right: 0;
+        }
+
+        .results-count {
+            margin-top: 15px;
+        }
+
+        .filter-applied{
+            background-color: rgba(138, 138, 138, 0.212);
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin-left: 40px;
+            margin-top: 10.1px;
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 400; 
+        }
+
+        .results-text {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        /* Hide the default checkbox */
+        .to-dark input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #d9b5008e; /* Border color for unchecked state */
+            background-color: #1c1e20; /* Background color for unchecked state */
+            border-radius: 3px; /* Optional: Rounded corners */
+            position: relative;
+        }
+
+        /* Checked state with custom tick mark */
+        .to-dark input[type="checkbox"]:checked {
+            background-color: #d9b500d2; /* Background color for checked state */
+            border: none;
+        }
+
+        .to-dark input[type="checkbox"]:checked::before {
+            content: "\2713"; /* Unicode character for check mark */
+            font-size: 12px;
+            color: #1c1e20; /* Color of the tick mark */
+            position: absolute;
+            top: 0;
+            left: 2px; /* Adjust the position of the check mark */
+        }
+
+
+       .to-dark select, input[type="checkbox"] {
+            background-color: #1c1e20;
+            color: #ffffff;
+        }
+
+        .to-dark select option {
+            background-color: #1c1e20;
+            color: #ffffff;
+        }
+
+        .to-dark .card {
+            background-color: #1c1e20;
+            color: #ffffff;
+        }
+
+        .to-dark .card-heading a {
+            color: #D9B600; /* Highlight accent color for clickable items */
+        }
+
+        .to-dark .card-heading a:hover {
+            color: #D9B600; /* Highlight accent color for clickable items */
+        }
+
+        .to-dark .card-body {
+            background-color: #1c1e20;
+            color: #ffffff;
+        }
+
+        .to-dark .shop__sidebar__tags a {
+            /* background-color: #D9B600;  */
+            color: #1c1e20;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .to-dark .shop__sidebar {
+            background-color: #1c1e20;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            border: 1px solid #d9b50020;
+        }
+
+        .to-dark .shop__sidebar__tags a:hover {
+            background-color: #ffffff;
+            color: #1c1e20;
+        }
+
+        .to-dark ul li {
+            margin-bottom: 10px;
+        }
+
+        .to-dark ul li input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .to-dark ul li label {
+            color: #ffffff;
+        }
+
+        .to-dark .sorting-options {
+            background-color: #1c1e20;
+            color: #ffffff;
+            /* border: 1px solid #D9B600; */
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .to-dark .sorting-options .list{
+            background-color: #2f2f2f;
+            color: #ffffff !important;
+            /* border: 1px solid #D9B600; */
+                border-radius: 5px;
+        }
+
+        .to-dark .sorting-options .disabled{
+            background-color: #2f2f2f !important;
+            color: #7d7d7d !important;
+            /* border: 1px solid #D9B600; */
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 0;
+            border-radius: 5px;
+        }
+        
+        /* select tag styling */
+        .to-dark .current{
+            color: rgb(255, 255, 255);
+            background-color: #1c1e20;
+        }
+
+        .to-dark .nice-select{
+            color: rgb(255, 255, 255);
+            background-color: #201c1c;
+        }
+
+        .to-dark .option{
+            color: rgb(255, 255, 255);
+        }
+
+        .to-dark .option:hover{
+            background-color: rgb(63, 63, 63);
+            color: rgb(255, 255, 255);
+        }
+
+        /* Pagination container */
+        .pagination-container {
+            background-color: #1c1e20 !important; /* Dark background */
+            padding: 10px !important;
+            border-radius: 8px !important;
+        }
+
+        /* Pagination links */
+        .pagination .page-link {
+            background-color: #1c1e20 !important; /* Dark background for links */
+            color: #ffffff !important; /* White text */
+            border: 1px solid #D9B600 !important; /* Accent color for borders */
+            padding: 8px 12px !important;
+            margin: 0 5px !important;
+            border-radius: 4px !important;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for pagination links */
+        .pagination .page-link:hover {
+            background-color: #D9B600 !important; /* Accent color on hover */
+            color: #1c1e20 !important; /* Dark text on hover */
+            border-color: #D9B600 !important; /* Keep border consistent */
+        }
+
+        /* Active page */
+        .pagination .page-item.active .page-link {
+            background-color: #D9B600 !important; /* Accent color for active page */
+            color: #1c1e20 !important; /* Dark text for active page */
+            border-color: #D9B600 !important;
+        }
+
+        /* Disabled pagination items */
+        .pagination .page-item.disabled .page-link {
+            background-color: #333 !important; /* Slightly lighter dark for disabled items */
+            color: #777 !important; /* Disabled text color */
+            border-color: #444 !important; /* Disabled border */
+        }
+
+        /* Pagination container alignment */
+        .pagination {
+            justify-content: center !important;
+        }
+
+        @media (max-width: 992px){
+            .search-container {
+                margin-left: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, For every purchase above ₹10,000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a href="/#faqs-section">FAQs</a>
+
+                                <p class="navbar-nav" id="authSection">
+                                    <!-- Placeholder for auth content -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="images/cellCity.png" alt="" height="28"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li class="active"><a href="/shop">Shop</a></li>
+                            <li><a href="/cart">Shopping Cart</a></li>
+                            <!-- <li><a href="/blogs">Blogs</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <div class="breadcrumb__links">
+                            <a href="/">Home</a>
+                            <span>Shop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="col-lg-3">
+
+            </div>
+            <div class="col-lg-9">
+                <div class="search-container row d-flex flex-column align-items-center mb-2">
+                    <div class="search-box">
+                        <form action="/shop" method="GET" class="d-flex">
+                            <input type="text" name="search" class="form-control search-input"
+                                placeholder="Search for products..." value="<%= query.search || '' %>">
+                            <button type="submit" class="btn btn-search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex" style="margin-left: 300px;">
+                    <div class="results-count mt-3">
+                        <span class="results-text">
+                            <% if(databaseVariants.length != totalResults){ %>
+                                <%= totalResults %> Results found
+                            <% } %>
+                        </span>
+                    </div>
+                    <div class="filter-applied" id="filter-applied-container" style="display: none;">
+                        <div id="filter-applied">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="container">
+            <div class="row">
+
+                <!-- Sidebar Section -->
+                <div class="col-lg-3">
+                     <div class="to-dark">Sort By:
+                        <div class="sorting-options" style="margin-bottom: 100px;">
+                            <form id="sorting-form" action="#" method="GET"
+                                onsubmit="event.preventDefault(); submitSortingForm();">
+                                <!-- <label for="sort-by">Sort By:</label> -->
+                                <select id="sort-by" name="sortBy" onchange="submitSortingForm()">
+                                    <option value="" selected disabled>Choose an Option</option>
+                                    <!-- Default disabled option -->
+                                    <option value="price-asc">Price: Low to High</option>
+                                    <option value="price-desc">Price: High to Low</option>
+                                    <option value="name-asc">Product Name: A to Z</option>
+                                    <option value="name-desc">Product Name: Z to A</option>
+                                </select>
+                            </form>
+                        </div>
+
+                        <div class="shop__sidebar">
+                            <div class="shop__sidebar__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <!-- Brands Filter -->
+                                    <div class="card mb-3">
+                                        <div class="card-heading">
+                                            <a data-toggle="" data-target="">Brands</a>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <% const selectedBrandsArray=(query.selectedBrands && typeof
+                                                    query.selectedBrands==='string' ) ? JSON.parse(query.selectedBrands) :
+                                                    []; %>
+
+                                                    <form id="filter-form" action="#" method="GET"
+                                                        onsubmit="event.preventDefault(); submitFilterForm();">
+                                                        <ul>
+                                                            <li>
+                                                                <input type="checkbox" name="brands" value="all"
+                                                                    onchange="submitFilterForm()"> All Brands
+                                                            </li>
+                                                            <% brands.forEach(brand=> { %>
+                                                                <li>
+                                                                    <input type="checkbox" name="brands"
+                                                                        value="<%= brand._id %>"
+                                                                        onchange="submitFilterForm()"
+                                                                        <%=selectedBrandsArray.includes(brand._id.toString())
+                                                                        ? 'checked' : '' %> />
+                                                                    <%= brand.brandName %>
+                                                                </li>
+                                                                <% }) %>
+
+                                                        </ul>
+                                                    </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Price Filter -->
+                                    <div class="card mb-3">
+                                        <div class="card-heading">
+                                            <a data-toggle="" data-target="">Filter Price</a>
+                                        </div>
+                                        <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                              <div class="card-body">
+                                                <div class="shop__sidebar__price">
+                                                    <ul>
+                                                        <li><input type="checkbox" name="priceRange" value="0-50"
+                                                                onchange="priceFilter()"> $0.00 - $50.00</li>
+                                                        <li><input type="checkbox" name="priceRange" value="50-100"
+                                                                onchange="priceFilter()"> $50.00 - $100.00</li>
+                                                        <li><input type="checkbox" name="priceRange" value="100-150"
+                                                                onchange="priceFilter()"> $100.00 - $150.00</li>
+                                                        <li><input type="checkbox" name="priceRange" value="150-200"
+                                                                onchange="priceFilter()"> $150.00 - $200.00</li>
+                                                        <li><input type="checkbox" name="priceRange" value="200-250"
+                                                                onchange="priceFilter()"> $200.00 - $250.00</li>
+                                                        <li><input type="checkbox" name="priceRange" value="250+"
+                                                                onchange="priceFilter()"> $250.00+</li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tags Filter -->
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a data-toggle="" data-target="">Tags</a>
+                                        </div>
+                                        <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="shop__sidebar__tags">
+                                                    <a href="#">Gaming</a>
+                                                    <a href="#">High Performance</a>
+                                                    <a href="#">Battery Life</a>
+                                                    <a href="#">Quality Camera</a>
+                                                    <a href="#">256GB ROM</a>
+                                                    <a href="#">16GB RAM</a>
+                                                    <a href="#">Refresh Rate</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div class="col-lg-9">
+                    <div class="shop__product__option">
+                        <!-- Product Sort & Filter (if needed) -->
+                    </div>
+                    <div id="product-list">
+                        <% variants.forEach(variant=> { %>
+                            <div class="product-card">
+                                <div class="row ml-4">
+                                    <div class="col-4 product-image-container">
+                                        <img src="<%= variant.variantImages[0]?.replace('uploads', '') %>" alt="Product Image" class="product-image">
+
+                                        <!-- wishlist -->
+                                        <% if(user != null) { %>
+                                            <% const isInWishlist = user.wishlist.some(item => item._id.toString() === variant._id.toString()); %>
+                                            
+                                            <form action="/wishlist/<%= isInWishlist ? 'remove' : 'add' %>/<%= variant._id %>" method="POST" class="wishlist-form" id="wishlist-form">
+                                                <i class="<%= isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %> wishlist-icon" 
+                                                    style="cursor: pointer;"></i>
+                                            </form>
+                                        <% } else { %>
+                                            <form action="/login" method="GET" class="wishlist-form" id="wishlist-form">
+                                                <i class="fa-regular fa-heart wishlist-icon" style="cursor: pointer;"></i>
+                                            </form>
+                                        <% } %>
+                                        <!-- wishlist end -->
+
+
+
+
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="/shop/product/<%= variant._id %>" class="product-link-wrapper">
+                                            <h2 class="product-title"><%= variant.productId.productName %> (<%= variant.color %>, <%=
+                                                variant.storage %>)</h2>
+                                            <div class="product-rating">
+                                                <span>★★★★☆</span>
+                                                <span class="text-muted">(150 Reviews) | </span>
+                                                <% if(variant.stocks == 0){ %>
+                                                    <span class="text-danger ml-2">Insufficient Stock</span>
+                                                <% }else{ %>
+                                                    <span class="text-success ml-2">In Stock</span>
+                                                <% } %>
+                                            </div>
+                                            <div class="mt-2">
+                                                <% if(variant.status === 'active' && variant.bestDiscount == 0){ %>
+                                                    <span class="product-price">₹<%= variant.price %></span>
+                                                <% }else if(variant.status === 'active'){ %>
+                                                    <span class="product-price">₹<%= variant.finalPrice %></span>
+                                                    <span class="product-original-price ml-2">₹<%= variant.price %></span>
+                                                    <span class="product-discount ml-2"><%= variant.bestDiscount %>% off</span>
+                                                <% }else{ %>
+                                                    <span class="product-price">₹<%= variant.price %></span>
+                                                    <span class="product-unavailabe ml-2">Unavailable</span>
+                                                <% } %>
+                                                
+                                            </div>
+                                            <ul class="product-specs mt-3">
+                                                <% let highlightsArray = variant.productId.highlights.split(','); %>
+                                                <% highlightsArray.forEach(highlight => { %>
+                                                    <li><%= highlight.trim() %></li>
+                                                <% }); %>
+                                            </ul>
+                                            
+                                            <div class="row mt-4 ml-2">
+                                                <% 
+                                                const productLink = `http://yourwebsite.com/shop/product/${variant._id}`; 
+                                                const productDetails = variant.bestDiscount > 0 
+                                                    ? `🎉 Amazing Offer! Check out the ${variant.productId.productName} (${variant.color}, ${variant.storage}) now with a fantastic **${variant.bestDiscount}% off!** 🌟 Grab it for just ₹${variant.finalPrice} and don't miss out! 👉 ${productLink}`
+                                                    : `🚀 Discover the ${variant.productId.productName} (${variant.color}, ${variant.storage}) for just ₹${variant.price}! Don't wait, elevate your experience today! 👉 ${productLink}`;
+
+                                                const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(productDetails)}`; 
+                                                %>
+                                                
+                                                <a href="<%= whatsappShareUrl %>" target="_blank" class="primary-btn-shop">
+                                                    <i class="fa-solid fa-share-nodes"></i>&nbsp;Share Product
+                                                </a>
+                                                <form id="add-to-cart-form" action="/cart/add" method="POST">
+                                                    <input type="hidden" id="variantId" name="variantId" value="<%= variant._id %>">
+                                                    <button class="primary-btn-shop-yellow ml-2" type="submit">
+                                                        <i class="fa-solid fa-cart-shopping"></i>&nbsp; ADD TO CART
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            
+                                    </a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <hr class="product-divider">
+
+                        <% }) %>
+                    </div>
+                    <!-- pagination -->
+                    <div class="pagination-container mt-4">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <% if (currentPage > 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>">Previous</a>
+                                    </li>
+                                <% } %>
+    
+                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a class="page-link" href="?page=<%= i %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+    
+                                <% if (currentPage < totalPages) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>">Next</a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="images/cellCity-white.png" width="200px" alt=""></a>
+                        </div>
+                        <p>Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Top Brands</h6>
+                        <ul>
+                            <li><a href="/shop?search=iphone">Apple</a></li>
+                            <li><a href="/shop?search=samsung">Samsung</a></li>
+                            <li><a href="/shop?search=xiaomi">Xiaomi </a></li>
+                            <li><a href="/shop?search=realme">Realme</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shopping Page</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Office Address</h6>
+                        <div class="footer__newslatter">
+                            <p>CellCity Pvt. Ltd<br> Kinfra Techno Industrial Park <br> Kakkanchery, Ramanatukkara <br> 673634, Calicut, India. <br> Email : info@cellCity.com <br> Phone: +91 9037532036 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            All rights reserved | CellCity Private Limited 
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+     
+      <!-- Bootstrap JS and dependencies -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Include SweetAlert2 from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        const isLoggedIn = "<%= isLoggedIn %>" === "true";
+
+        const authSection = document.getElementById('authSection');
+        console.log('authSection shop',authSection)
+        console.log('isLoggedIn shop',isLoggedIn)
+        if (isLoggedIn) {
+            authSection.innerHTML = `
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/profile">Profile</a></li>
+                        
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/wishlist">Wishlist</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/orders">Orders</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item" href="/reviews">Reviews</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button id="logoutButton" class="dropdown-item">Logout</button></li>
+                    </ul>
+                </li>
+            `;
+        } else {
+            authSection.innerHTML = `
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign In</a>
+                </li>
+            `;
+        }
+
+        //logout Logic
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+    </script>
+
+    <script>
+        function submitFilterForm() {
+            const selectedBrands = [];
+            const checkboxes = document.querySelectorAll('input[name="brands"]');
+
+            checkboxes.forEach((checkbox) => {
+                // Check if the checkbox is checked and has a non-empty value
+                if (checkbox.checked && checkbox.value) {
+                    selectedBrands.push(checkbox.value);
+                }
+            });
+
+            // Handle "All Brands" checkbox
+            const allBrandsChecked = Array.from(checkboxes).some(checkbox => checkbox.value === "all" && checkbox.checked);
+            if (allBrandsChecked) {
+                selectedBrands.length = 0; // Clear selected brands if "All Brands" is checked
+            }
+
+            // Create the query string for the selected brands
+            const brandsQueryString = encodeURIComponent(JSON.stringify(selectedBrands));
+
+            // Alert for debugging
+            // alert('Selected Brands: ' + JSON.stringify(selectedBrands) + '\nQuery String: ' + brandsQueryString);
+
+            // Redirect to the shop page with the selected filters
+            window.location.href = `/shop?selectedBrands=${brandsQueryString}`;
+        }
+
+
+        function submitSortingForm() {
+            const sortSelect = document.getElementById('sort-by');
+            if (sortSelect.value !== "") { // Only submit if a valid option is selected
+                document.getElementById('sorting-form').submit(); // Submit the form
+            }
+
+
+            const selectedBrands = [];
+            const checkboxes = document.querySelectorAll('input[name="brands"]');
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked && checkbox.value) {
+                    selectedBrands.push(checkbox.value);
+                }
+            });
+
+            const brandsQueryString = encodeURIComponent(JSON.stringify(selectedBrands));
+            const sortBy = document.getElementById('sort-by').value;
+
+            // Redirect to the shop page with the selected filters and sorting
+            window.location.href = `/shop?selectedBrands=${brandsQueryString}&sortBy=${sortBy}`;
+        }
+
+
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Set the selected option in the dropdown based on the URL parameter
+        function setSelectedSortOption() {
+            console.log('ufgfguyhdifgsdhfsdghfgsdhfgb')
+            const sortBy = getQueryParam('sortBy');
+            const sortSelect = document.getElementById('sort-by');
+
+            // If the URL contains a sortBy parameter, set the appropriate option
+            if (sortBy) {
+                sortSelect.value = sortBy;
+                document.getElementById('filter-applied-container').style.display = 'block'
+                if(sortBy === 'price-asc'){
+                    document.getElementById('filter-applied').innerHTML = `Price in Ascending&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+
+                }else if(sortBy === 'price-desc'){
+                    document.getElementById('filter-applied').innerHTML = `Price in Descending&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                }else if(sortBy === 'name-asc'){
+                    document.getElementById('filter-applied').innerHTML = `Aa-Zz&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                }else if(sortBy === 'name-desc'){
+                    document.getElementById('filter-applied').innerHTML = `Zz-Aa&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                }
+            } else {
+                // Default to "Choose" if no sortBy is provided
+                sortSelect.value = "";
+            }
+        }
+
+
+
+        $(document).ready(function () {
+            // Initialize MixItUp
+            var mixer = mixitup('#product-list', {
+                selectors: {
+                    target: '.product__item'
+                },
+                animation: {
+                    duration: 300 // Adjust duration if needed
+                }
+            });
+
+        });
+
+        function sortProducts() {
+            const sortBy = document.getElementById('sort-price').value;
+            window.location.href = `/shop?sortBy=${sortBy}`;
+        }
+
+
+        setSelectedSortOption();
+
+
+    </script>
+    <script>
+        document.querySelectorAll('.wishlist-form').forEach(form => {
+            form.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const formAction = this.getAttribute('action'); // Get the form action (URL)
+                const formMethod = this.getAttribute('method'); // Get the form method (POST)
+
+                // Send the form data using fetch
+                fetch(formAction, {
+                    method: formMethod,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // SweetAlert based on the response status
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.title || 'Success',
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: true
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+
+                    } else if (data.status === 'warning') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Warning',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+       document.querySelectorAll('#add-to-cart-form').forEach((form) => {
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const variantId = form.querySelector('input[name="variantId"]').value;
+                console.log(variantId)
+                const cartData = {
+                    variantId,
+                };
+
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(cartData),
+                });
+
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                } else if (response.ok) {
+                    const data = await response.json(); // Assuming the backend sends JSON response
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message, // Use the message from backend response
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
+                } else {
+                    const errorData = await response.json();
+                    Swal.fire({
+                        title: errorData.title || 'Error!',
+                        text: errorData.message || 'An error occurred while adding the item to the cart.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        
+
+
+    </script>
+
+</body>
+
+</html>
+
+<!-- function applyFilters() {
+    const sortBy = document.getElementById('sortBy').value;
+    const brandFilters = Array.from(document.querySelectorAll('.brand-filter:checked')).map(el => el.value);
+
+    let queryString = `?sortBy=${sortBy}`;
+    if (brandFilters.length > 0) {
+        queryString += `&brands=${brandFilters.join(',')}`;
+    }
+
+    window.location.href = `/shop${queryString}`;
+}
+
+function sortProducts() {
+    const sortBy = document.getElementById('sortBy').value;
+    window.location.href = `/shop?sortBy=${sortBy}`;
+} -->

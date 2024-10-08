@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        .toast-top-center {
+            top: 50px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+
+        .toast {
+            min-width: 400px;
+        }
+
+
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-control input[type="number"] {
+            width: 50px;
+            color: rgb(0, 0, 0);
+            background-color: #D9B600;
+            text-align: center;
+            border: none;
+            outline: none;
+        }
+
+        .quantity-control button {
+            padding: 0 10px;
+            color: white;
+            background-color: #323232;
+            border: 1px solid #D9B600;
+            cursor: pointer;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .quantity-control button:hover {
+            background-color: #000000 !important;
+            border: 1px solid #D9B600;
+        }
+
+        .quantity-control button:disabled {
+            cursor: not-allowed;
+            background-color: #f9f9f9;
+        }
+
+        .quantity-control button:hover:not(:disabled) {
+            background-color: #ccc;
+        }
+
+        .shopping-cart{
+            background-color: #323232;
+        }
+
+        
+        .primary-btn a{
+	        color: white !important;
+        }
+
+        .remove-btn{
+            background-color: #d91d0082;
+            color: white;
+            border-radius: 0;
+        }
+
+        .remove-btn:hover{
+            color:white;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">₹0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, For every purchase above ₹10,000</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a href="/#faqs-section">FAQs</a>
+
+                                <p class="navbar-nav" id="authSection">
+                                    <!-- Placeholder for auth content -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="images/cellCity.png" alt="" height="28"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li class="active"><a href="/cart">Shopping Cart</a></li>
+                            <!-- <li><a href="/blogs">Blogs</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <div class="price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <div class="breadcrumb__links">
+                            <a href="/">Home</a>
+                            <a href="/shop">Shop</a>
+                            <span>Shopping Cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <% if (cart && cart.items.length> 0) { %>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% cart.items.forEach(item=> { %>
+                                        <tr>
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <img src="<%= item.variant.variantImages[0].replace('uploads', '') %>"
+                                                        alt="" height="100">
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <h6>
+                                                        <%= item.variant.productId.productName %>
+                                                    </h6>
+                                                    <h5>₹<%= item.finalPrice.toFixed(2) %>
+                                                    </h5>
+                                                    <% if (item.finalPrice < item.variant.price) { %>
+                                                        
+                                                        <p class="offer-info">You saved: ₹<%= (item.variant.price -
+                                                                item.finalPrice).toFixed(2) %>
+                                                        </p>
+                                                        <% } %>
+                                                </div>
+                                            </td>
+                                            <td class="quantity__item">
+                                                <div class="quantity-control">
+                                                    <form id="form-<%= item.variant._id %>" onsubmit="return false;">
+                                                        <input type="hidden" name="quantity"
+                                                            id="quantity-<%= item.variant._id %>"
+                                                            value="<%= item.quantity %>">
+                                                        <button type="button"
+                                                            onclick="updateQuantity('<%= item.variant._id %>', 'decrease')"
+                                                            <%=item.quantity===0 ? 'disabled' : '' %>>-</button>
+                                                        <input type="number"
+                                                            id="display-quantity-<%= item.variant._id %>"
+                                                            value="<%= item.quantity %>" disabled>
+                                                        <button type="button"
+                                                            onclick="updateQuantity('<%= item.variant._id %>', 'increase')">+</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price" data-variant="<%= item.variant._id %>">₹<%=
+                                                    (item.finalPrice * item.quantity).toFixed(2) %>
+                                            </td>
+                                            <td class="cart__close">
+                                                <form action="/cart/remove/<%= item.variant._id %>" method="POST" class="remove-form">
+                                                    <button type="submit" class="btn remove-btn">remove</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="primary-btn">
+                                <a href="/shop">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <% if (messages.info) { %>
+                        <div class="alert alert-info">
+                            <%= messages.info %>
+                        </div>
+                        <% } %>
+                            <% if (messages.success) { %>
+                                <div class="alert alert-success">
+                                    <%= messages.success %>
+                                </div>
+                                <% } %>
+                                    <% if (messages.error) { %>
+                                        <div class="alert alert-danger">
+                                            <%= messages.error %>
+                                        </div>
+                                        <% } %>
+                                            <div class="cart__total">
+                                                <h6>Cart total</h6>
+                                                <ul>
+                                                    <li style="display: none;">Subtotal <span>₹<%= cart.items.reduce((acc, item)=> acc +
+                                                                (item.variant.price * item.quantity), 0).toFixed(2)
+                                                                %></span></li>
+                                                    <li>Subtotal <span>₹<%= cart.items.reduce((acc, item)=> acc +
+                                                                (item.finalPrice * item.quantity), 0).toFixed(2)
+                                                                %></span></li>
+                                                </ul>
+                                                <form id="checkout-form" action="/checkout" method="POST">
+                                                    <a href="#" class="primary-btn"
+                                                        onclick="proceedToCheckout(event)">Proceed to Checkout</a>
+                                                </form>
+                                            </div>
+                </div>
+            </div>
+            <% } else { %>
+                <p class="text-white">Your cart is empty.</p>
+                <a href="/shop" class="primary-btn">Continue Shopping</a>
+                <% } %>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="images/cellCity-white.png" width="200px" alt=""></a>
+                        </div>
+                        <p>Find the perfect phone for you at prices that can't be beaten. Hurry, these offers won’t last long!</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Top Brands</h6>
+                        <ul>
+                            <li><a href="/shop?search=iphone">Apple</a></li>
+                            <li><a href="/shop?search=samsung">Samsung</a></li>
+                            <li><a href="/shop?search=xiaomi">Xiaomi </a></li>
+                            <li><a href="/shop?search=realme">Realme</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/shop">Shopping Page</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Office Address</h6>
+                        <div class="footer__newslatter">
+                            <p>CellCity Pvt. Ltd<br> Kinfra Techno Industrial Park <br> Kakkanchery, Ramanatukkara <br> 673634, Calicut, India. <br> Email : info@cellCity.com <br> Phone: +91 9037532036 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            All rights reserved | CellCity Private Limited 
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+     <!-- Bootstrap JS and dependencies -->
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all remove forms
+            const removeForms = document.querySelectorAll('.remove-form');
+     
+            removeForms.forEach((form) => {
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault(); // Prevent default form submission
+     
+                    const variantId = form.action.split('/').pop(); // Extract the variant ID from the form action
+                    const confirmation = await Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'Do you really want to remove this item from your cart?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, remove it!',
+                        cancelButtonText: 'No, keep it!'
+                    });
+     
+                    if (confirmation.isConfirmed) {
+                        // If the user confirmed, submit the form
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            // "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "2000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+
+        function updateQuantity(variantId, action) {
+            const quantityInput = document.getElementById(`quantity-${variantId}`);
+            const displayQuantityInput = document.getElementById(`display-quantity-${variantId}`);
+            let currentQuantity = parseInt(quantityInput.value);
+            const maxQuantity = 10; // Limit the quantity to 10
+
+            fetch(`/product/variant/${variantId}/stock`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching stock information');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const availableStock = data.stocks;
+
+                    // Handle increase and decrease actions
+                    if (action === 'increase') {
+                        if (currentQuantity < availableStock) {
+                            currentQuantity++;
+                        } else {
+                            toastr.warning(`Cannot increase. Only ${availableStock} items available in stock.`);
+                        }
+                    } else if (action === 'decrease' && currentQuantity > 1) {
+                        currentQuantity--;
+                    }
+
+                    // Log current quantities for debugging
+                    console.log('currentQuantity', currentQuantity);
+                    console.log('availableStock', availableStock);
+                    console.log('maxQuantity', maxQuantity);
+
+                    // Ensure currentQuantity does not exceed availableStock
+                    if (currentQuantity > availableStock) {
+                        console.log(`Only ${availableStock} items available in stock. Current: ${currentQuantity}`);
+                        toastr.warning(`Only ${availableStock} items available in stock.`);
+                        currentQuantity = availableStock; // Adjust to available stock
+                    }
+
+                    // Ensure currentQuantity does not exceed maxQuantity
+                    if (currentQuantity > maxQuantity) {
+                        console.log(`Quantity limit reached. Max: ${maxQuantity}, Current: ${currentQuantity}`);
+                        toastr.warning('Quantity limit reached for the product.');
+                        currentQuantity = maxQuantity; // Adjust to max quantity
+                    }
+
+                    // Update the hidden input and the displayed quantity
+                    quantityInput.value = currentQuantity;
+                    displayQuantityInput.value = currentQuantity;
+
+                    // Perform the AJAX update
+                    return fetch(`/cart/update/${variantId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ quantity: currentQuantity })
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.message);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (result.success) {
+                        // Debugging: Log the result
+                        console.log(result);
+
+                        // Update the price and totals dynamically
+                        const cartPriceElement = document.querySelector(`.cart__price[data-variant="${variantId}"]`);
+                        const subtotalElement = document.querySelector('.cart__total ul li:nth-child(1) span');
+                        const totalElement = document.querySelector('.cart__total ul li:nth-child(2) span');
+
+                        // Check if elements exist before updating
+                        if (cartPriceElement) {
+                            cartPriceElement.innerText = `₹${(result.updatedItem.finalPrice * currentQuantity)}`;
+                        } else {
+                            console.error(`Cart price element not found for variant: ${variantId}`);
+                        }
+
+                        if (subtotalElement) {
+                            subtotalElement.innerText = `₹${result.subtotal}`;
+                        } else {
+                            console.error('Subtotal element not found.');
+                        }
+
+                        if (totalElement) {
+                            totalElement.innerText = `₹${result.total}`;
+                        } else {
+                            console.error('Total element not found.');
+                        }
+
+                        // toastr.success('Cart updated successfully.');
+                    } else {
+                        toastr.error('Error updating cart: ' + result.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastr.error(`Error updating cart: ${error.message}`);
+                });
+        }
+
+
+
+        function proceedToCheckout(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // If checkout is successful, redirect to the checkout page
+                        window.location.href = data.redirectUrl;
+                    } else {
+                        // Show toastr error message
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during checkout:', error);
+                    toastr.error('An error occurred during checkout. Please try again.');
+                });
+        }
+    </script>
+    <script>
+
+        const isLoggedIn = "<%= isLoggedIn %>" === "true";
+
+        const authSection = document.getElementById('authSection');
+        console.log('authSection',authSection)
+        console.log('isLoggedIn',isLoggedIn)
+        if (isLoggedIn) {
+            authSection.innerHTML = `
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/profile">Profile</a></li>
+                        
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/wishlist">Wishlist</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/orders">Orders</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item" href="/reviews">Reviews</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button id="logoutButton" class="dropdown-item">Logout</button></li>
+                    </ul>
+                </li>
+            `;
+        } else {
+            authSection.innerHTML = `
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Sign In</a>
+                </li>
+            `;
+        }
+
+        //logout Logic
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        document.querySelector('a[href="#faqs-section"]').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default anchor link behavior
+            
+            document.querySelector('#faqs-section').scrollIntoView({
+                behavior: 'smooth' // Scroll smoothly
+            });
+        });
+
+    </script>
+</body>
+
+</html>
+
+<!-- function applyFilters() {
+    const sortBy = document.getElementById('sortBy').value;
+    const brandFilters = Array.from(document.querySelectorAll('.brand-filter:checked')).map(el => el.value);
+
+    let queryString = `?sortBy=${sortBy}`;
+    if (brandFilters.length > 0) {
+        queryString += `&brands=${brandFilters.join(',')}`;
+    }
+
+    window.location.href = `/shop${queryString}`;
+}
+
+function sortProducts() {
+    const sortBy = document.getElementById('sortBy').value;
+    window.location.href = `/shop?sortBy=${sortBy}`;
+} -->
