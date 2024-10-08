@@ -1,0 +1,286 @@
+<%- include('../layouts/admin/header') %>
+    <div class="container" style="margin-top: 80px;">
+        <div>
+        <h2>Manage Offers</h2>
+
+        </div>
+        <div class="btn-group mb-3" role="group" aria-label="Offer Types"></div>
+            <a href="/admin/product-offers" class="btn btn-primary">Add Product Offer</a>
+            
+            <a href="/admin/brand-offers" class="btn btn-primary">Add Brand Offer</a>
+        </div>
+        <br>
+
+        <div id="offerContent">
+            <!-- Content for selected offer type will be loaded here -->
+        </div>
+
+        <div class="container row">
+            <div class="col-lg-7">
+                <h3>Offered Products</h3>
+                
+                <table id="variantsTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>IMAGE</th>
+                            <th>PRODCUT</th>
+                            <th>PRICE</th>
+                            <th>OFFER</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% variants.forEach(variant=> { %>
+                            <tr>
+                                <td>
+                                    <% if (variant.typeId.variantImages.length> 0) { %>
+                                        <img src="<%= variant.typeId.variantImages[0].replace('uploads', '') %>"
+                                            alt="<%= variant.typeId.variantImages[0] %>"
+                                            style="max-width: 100px; height: auto;">
+                                        <% } else { %>
+                                            <img src="" alt="Default Image" style="max-width: 100px; height: auto;">
+                                            <% } %>
+
+                                </td>
+                                <td>
+                                    <%= variant.typeId.productId.productName %>
+                                </td>
+                                <td>
+                                    <%= variant.typeId.price %>
+                                </td>
+
+
+                                <td>
+                                    <%= variant.percentage %>%
+                                </td>
+
+
+                                <td>
+                                    <button type="button" class="custom-button" data-type="product"
+                                        data-typeid="<%= variant.typeId._id %>" data-bs-toggle="modal"
+                                        data-bs-target="#removeOfferModal">Remove Offer</button>
+
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-5">
+                <h3>Offered Brands</h3>
+                
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>STATUS</th>
+                            <th>OFFER</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% brands.forEach(brand=> { %>
+                            <tr>
+                                <td>
+                                    <%= brand.typeId.brandName %>
+                                </td>
+                                <td class="<%= brand.typeId.status === 'active' ? 'text-success' : 'text-danger' %>">
+                                    <%= brand.typeId.status %>
+                                </td>
+                                <td>
+                                    <%= brand.percentage %>%
+                                </td>
+                                <td>
+                                    <button type="button" class="custom-button" data-type="brand"
+                                        data-typeid="<%= brand.typeId._id %>" data-bs-toggle="modal"
+                                        data-bs-target="#removeOfferModal">Remove Offer</button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutConfirmationModal" tabindex="-1" aria-labelledby="logoutConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmationModalLabel">Logout Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogoutButton">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove Offer Confirmation Modal -->
+    <div class="modal fade" id="removeOfferModal" tabindex="-1" aria-labelledby="removeOfferModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeOfferModalLabel">Remove Offer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to remove this offer?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmRemoveOfferButton">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set the placeholder attribute of the input field
+            const subHeadingElement = document.querySelector('.sub-heading');
+            if (subHeadingElement) {
+                const subHeadingText = subHeadingElement.textContent;
+                const searchInput = document.getElementById('customSearch');
+                if (searchInput) {
+                    searchInput.placeholder = `Search ${subHeadingText}...`;
+                } else {
+                    console.error('Search input not found.');
+                }
+            } else {
+                console.error('Sub-heading element not found.');
+            }
+
+            // Initialize the DataTable
+            $(document).ready(function () {
+                var table = $('.table').DataTable({
+                    "pageLength": 5, // Show 5 rows at a time
+                    "lengthChange": false, // Option to change the number of rows shown
+                    "ordering": true, // Enable column ordering
+                    "info": true, // Show info
+                    "searching": true, // Enable search bar
+                    "language": {
+                        "paginate": {
+                            "previous": "Previous", // Customize text
+                            "next": "Next" // Customize text
+                        }
+                    },
+                    "columnDefs": [
+                        { "orderable": false, "targets": [-1] } // Disable ordering on the last column
+                    ]
+                });
+
+                // Apply the search to the custom input field
+                $('#customSearch').on('keyup', function () {
+                    table.search(this.value).draw();
+                });
+            });
+
+            // Event listener for the modal
+            $('#percentageModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var type = button.data('type'); // Extract info from data-* attributes
+                var typeId = button.data('typeid'); // Extract info from data-* attributes
+
+                var modal = $(this);
+                modal.find('#offerType').val(type);
+                modal.find('#offerTypeId').val(typeId);
+            });
+
+            // Form submission for adding offers
+            $('#offerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    type: $('#offerType').val(),
+                    typeId: $('#offerTypeId').val(),
+                    percentage: $('#percentage').val(),
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/add-offer', // Your route to add offer
+                    data: formData,
+                    success: function (response) {
+                        // alert(response.message);
+                        $('#percentageModal').modal('hide');
+                        location.reload(); // Reload the page or update the table accordingly
+                    },
+                    error: function (error) {
+                        alert('Error adding offer: ' + error.responseJSON.message);
+                    }
+                });
+            });
+
+            let selectedTypeId = null;
+            let selectedOfferType = null;
+
+            // Event listener for removing offers
+            const removeOfferButtons = document.querySelectorAll('.custom-button');
+            const confirmRemoveButton = document.getElementById('confirmRemoveOfferButton');
+
+            removeOfferButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    selectedTypeId = this.getAttribute('data-typeid');
+                    selectedOfferType = this.getAttribute('data-type'); // Either 'product' or 'brand'
+                });
+            });
+
+            confirmRemoveButton.addEventListener('click', function () {
+                fetch(`/admin/remove-offer`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ typeId: selectedTypeId, offerType: selectedOfferType })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // alert('Offer removed successfully.');
+                            location.reload(); // Reload the page to reflect the changes
+                        } else {
+                            alert('Failed to remove offer.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                const removeOfferModal = new bootstrap.Modal(document.getElementById('removeOfferModal'));
+                removeOfferModal.hide();
+            });
+        });
+
+
+    </script>
+
+
+    </body>
+
+    </html>

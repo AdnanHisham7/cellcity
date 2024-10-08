@@ -71,7 +71,80 @@
             color: #dc3545;
         }
 
-        
+        .wallet-balance {
+            width: 500px;
+            background: linear-gradient(135deg, #4caf50, #81c784);
+            /* Green gradient */
+            color: white;
+            /* White text to contrast with gradient */
+            border-radius: 12px;
+            /* Rounded corners */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .wallet-balance-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            /* Slightly faded white for title */
+        }
+
+        .wallet-balance-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .referral-code-section {
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .referral-code-box {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 30px;
+            transition: box-shadow 0.3s, transform 0.3s;
+            text-align: center;
+        }
+
+        .referral-code-box:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .referral-code-box h5 {
+            font-size: 1.5rem;
+            color: #00796b;
+        }
+
+        .btn-success {
+            background-color: #00796b;
+            border-color: #00796b;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #004d40;
+            transform: translateY(-2px);
+        }
+
+
+        @media (max-width: 768px) {
+            .wallet-balance {
+                padding: 15px;
+            }
+
+            .wallet-balance-amount {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -162,10 +235,24 @@
                         <a class="nav-link <%= currentUrl === '/coupons' ? 'active' : '' %>" href="/coupons"><i
                                 class="fa-solid fa-cart-shopping"></i>Coupons</a>
                     </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link <%= currentUrl === '/wishlist' ? 'active' : '' %>" href="/wishlist"><i
+                            class="fa-solid fa-cart-shopping"></i>Wishlist</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link <%= currentUrl === '/wallet' ? 'active' : '' %>" href="/wallet"><i
+                            class="fa-solid fa-cart-shopping"></i>Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentUrl === '/reviews' ? 'active' : '' %>" href="/reviews"><i class="fa-regular fa-comments"></i>Reviews</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link <%= currentUrl === '/profile/resetPassword' ? 'active' : '' %>"
-                            href="/resetPassword/<%= user.email %>/<%= user._id%>"><i
-                                class="fa-solid fa-cart-shopping"></i>Reset Password</a>
+                            href="/profile/resetPassword"><i class="fa-solid fa-cart-shopping"></i>Reset Password</a>
+                    </li>
+
+                    <li class="nav-item"></li>
+                    <a class="nav-link" href="/logout"><i class="fa-solid fa-cart-shopping"></i>Logout</a>
                     </li>
                 </ul>
             </div>

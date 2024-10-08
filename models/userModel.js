@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Define a transaction schema for wallet history
+const transactionSchema = new mongoose.Schema({
+    type: { type: String, enum: ['deposit', 'withdrawal', 'purchase'], required: true },  // Type of transaction
+    amount: { type: Number, required: true },  // Amount of the transaction
+    date: { type: Date, default: Date.now },  // Date of transaction
+    description: { type: String },  // Optional description (e.g., "Purchased Product X")
+});
+
 // Define an address schema
 const addressSchema = new mongoose.Schema({
     street: { type: String, required: true },
@@ -9,7 +17,7 @@ const addressSchema = new mongoose.Schema({
     country: { type: String, required: true },
     phoneNumber: { type: String },
     zip: { type: String, required: true },
-    label: { type: String, unique:true }  // e.g., "Home", "Office"
+    label: { type: String }  // e.g., "Home", "Office"
 }, {
     timestamps: true
 });
@@ -27,8 +35,13 @@ const userSchema = new mongoose.Schema({
             return !this.googleId;  // Password required only if not a Google user
         }
     },
-    phoneNumber : { type: Number, required:false},
+    phoneNumber: { type: Number, required: false },
     addresses: [addressSchema],  // Array of address objects
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Variant' }],
+    walletBalance: { type: Number, default: 0 },  // User's wallet balance
+    transactionHistory: [transactionSchema],
+    referralCode: { type: String, unique: true },
+    referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     status: { type: String, default: "active" },

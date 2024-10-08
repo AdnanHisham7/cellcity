@@ -14,6 +14,8 @@ const tempUserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    referralCode: { type: String, unique: true },
+
 });
 
 const TempUser = mongoose.model('TempUser', tempUserSchema);

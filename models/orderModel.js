@@ -13,15 +13,22 @@ const orderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
     items: [{
         variant: { type: mongoose.Schema.Types.ObjectId, ref: 'Variant', required: true },
-        quantity: { type: Number, required: true }
+        quantity: { type: Number, required: true },
+        price: { type: Number, required:true },
+        priceAfterDiscount: { type: Number },
     }],
     totalAmount: { type: Number, required: true },
+    amountAfterDiscount: { type: Number },
     shippingAddress: { type: addressSchema, required: true },
+    deliveryCharge: { type: Number },
     paymentMethod: { type: String, required: true },
-    status: { type: String, enum: ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'], default: 'Pending' },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-});
+    paymentStatusFailed: { type: Boolean, default: false },
+    coupon: {
+        code: String,
+        percentage: Number
+    },
+    status: { type: String, enum: ['Pending', 'Confirmed', 'Returned', 'Delivered', 'Cancelled', 'Failed'], default: 'Pending' },
+},{ timestamps: true });
 
 // Update `updatedAt` field before saving
 orderSchema.pre('save', function(next) {

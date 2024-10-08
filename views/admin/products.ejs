@@ -25,7 +25,7 @@
                                 <%= product.productName %>
                             </td>
                             <td>
-                                <%= product.brand %>
+                                <%= product.brandId.brandName %>
                             </td>
                             <td>
                                 <%= product.display%>
@@ -94,7 +94,7 @@
                                         <option selected disabled>Select</option>
                                         <% brands.forEach(brand => { %>
                                             <% if (brand.status == 'active') { %>
-                                                <option value="<%= brand.brandName %>"><%= brand.brandName %></option>
+                                                <option><%= brand.brandName %></option>
                                             <% } %>
                                         <% }) %>
                                     </select>
@@ -292,8 +292,9 @@
                 "lengthChange": false, //option to change the number of rows shown
                 "ordering": true, // Enable column ordering
                 "info": true, // Disable info showing "Showing X of X entries"
-                "pagingType": "simple", // Simple pagination controls
-                "searching": true, // Disable the default search bar
+                // "pagingType": "simple", // Simple pagination controls
+                "searching": true,
+                "order": [[5, 'desc']], // Disable the default search bar
                 "language": {
                     "paginate": {
                         "previous": "Previous", // Customize the text
@@ -385,7 +386,7 @@
 
                             // Populate the form with product details
                             productDetailsForm.querySelector('#productName').value = product.productName;
-                            productDetailsForm.querySelector('#brand').value = product.brand;
+                            productDetailsForm.querySelector('#brand').value = product.brandId.brandName;
                             productDetailsForm.querySelector('#description').value = product.description;
                             productDetailsForm.querySelector('#highlights').value = product.highlights;
                             productDetailsForm.querySelector('#batteryCapacity').value = product.batteryCapacity;
@@ -521,7 +522,6 @@
                 if (hasError) {
                     return;
                 }
-
                 try {
                     const response = await fetch(`/admin/products/${formData.get('productId')}`, {
                         method: 'PUT',

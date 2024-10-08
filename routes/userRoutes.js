@@ -28,10 +28,7 @@ const {
     getUserProfile,
     updateProfile,
     getCartPage,
-    getEditProfilePage,
     getAddressPage,
-    getEditAddressPage,
-    getAddAddressPage,
     updateAddress,
     removeAddress,
     addAddress,
@@ -47,7 +44,30 @@ const {
     placeOrder,
     cancelOrder,
     listUserOrders,
-    getOrderDetails
+    getOrderDetails,
+    getWishlist,
+    addToWishlist,
+    removeFromWishlist,
+    applyCoupon,
+    removeCoupon,
+    verifyPayment,
+    createRazorpayOrder,
+    orderSuccessPage,
+    getWalletPage,
+    getCouponsPage,
+    returnOrder,
+    paymentFailedPost,
+    paymentFailedGet,
+    retryPayment,
+    updateRazorPayOrder,
+    retryOrderSuccessPage,
+    generateInvoicePDF,
+    addAddressCheckout,
+    addReview,
+    editReview,
+    deleteReview,
+    getReviewsPage
+    
 } = require('../controllers/userController');
 
 
@@ -77,8 +97,8 @@ router.get('/signup', getRegisterPage);
 router.post('/signup', registerUser);
 
 router.get('/', authMiddleware, getHomePage);
-router.get('/shop', getShopPage);
-router.get('/shop/product/:id', getProductDetailsPage);
+router.get('/shop',authMiddleware, getShopPage);
+router.get('/shop/product/:id', authMiddleware, getProductDetailsPage);
 
 // router.get('/cart', authMiddleware, getCartPage)
 
@@ -98,12 +118,9 @@ router.post('/verifyOTP', verifyOTP);
 router.post('/resendOTP', resendOTPVerification);
 
 router.get('/profile', authMiddleware, getUserProfile);
-router.get('/profile/edit', authMiddleware, getEditProfilePage);
 router.post('/profile/edit', authMiddleware, updateProfile);
 
 router.get('/profile/address', authMiddleware, getAddressPage);
-router.get('/profile/address/edit/:addressId', authMiddleware,getEditAddressPage );
-router.get('/profile/address/add',authMiddleware, getAddAddressPage)
 router.post('/profile/address/add',authMiddleware, addAddress)
 router.put('/profile/address/update/:addressId', authMiddleware, updateAddress);
 
@@ -111,21 +128,57 @@ router.post('/profile/address/remove/:addressId', authMiddleware, removeAddress)
 router.get('/profile/resetPassword', authMiddleware, getUserResetPasswordPage);
 router.post('/profile/resetPassword', authMiddleware, userResetPassword);
 
+
 router.post('/cart/add', authMiddleware, addToCart);
-router.get('/cart', authMiddleware, listCartProducts)
+router.get('/cart', authMiddleware, listCartProducts);
+router.post('/cart/update/:variantId', authMiddleware, updateCartItemQuantity);
+router.get('/product/variant/:variantId/stock',authMiddleware, checkVariantStocks)
 router.post('/cart/remove/:variantId', authMiddleware, removeFromCart)
+
 router.get('/checkout', authMiddleware, getCheckoutPage)
 router.post('/checkout', authMiddleware, proceedToCheckout)
 
-router.post('/cart/update/:variantId', authMiddleware, updateCartItemQuantity);
 
 
 router.post('/order/submit', authMiddleware, placeOrder);
 router.get('/orders', authMiddleware, listUserOrders);
 router.get('/orders/:orderId', authMiddleware, getOrderDetails);
 router.post('/orders/:orderId/cancel', authMiddleware, cancelOrder);
+router.post('/profile/address/addFromCheckout', authMiddleware, addAddressCheckout);
 
-router.get('/product/variant/:variantId/stock',authMiddleware, checkVariantStocks)
 
+
+router.get('/wishlist', authMiddleware, getWishlist); // View Wishlist
+router.post('/wishlist/add/:productId', authMiddleware, addToWishlist); // Add to Wishlist
+router.post('/wishlist/remove/:productId', authMiddleware, removeFromWishlist);
+
+
+router.post('/applyCoupon', authMiddleware, applyCoupon);
+router.post('/removeCoupon', authMiddleware, removeCoupon);
+
+
+router.get('/wallet',authMiddleware, getWalletPage)
+router.get('/coupons',authMiddleware, getCouponsPage)
+
+router.post('/orders/:orderId/return',authMiddleware, returnOrder);
+
+router.post('/verify-payment',authMiddleware, verifyPayment);
+router.post('/create-razorpay-order',authMiddleware, createRazorpayOrder);
+router.get('/order-success',authMiddleware, orderSuccessPage)
+router.get('/order-success/:orderId',authMiddleware, retryOrderSuccessPage)
+router.post('/order-failed',paymentFailedPost) 
+router.get('/order-failed', authMiddleware, paymentFailedGet) 
+router.get('/retry-payment/:orderId', retryPayment)
+router.post('/update-razorpay-order', updateRazorPayOrder)
+
+
+router.get('/download-invoice/:orderId',authMiddleware, generateInvoicePDF)
+
+
+// add edit delete reviews
+router.post('/shop/product/:variantId/reviews', authMiddleware, addReview)
+router.post('/shop/product/:variantId/reviews/:reviewId/edit', authMiddleware, editReview)
+router.post('/shop/product/:variantId/reviews/:reviewId/delete', authMiddleware, deleteReview);
+router.get('/reviews', authMiddleware, getReviewsPage);
 
 module.exports = router;

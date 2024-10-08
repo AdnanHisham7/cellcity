@@ -1,198 +1,490 @@
 <%- include('../layouts/admin/header') %>
 
     <div class="main-content" style="margin-top: 70px;">
-        <h3 class="sub-heading mb-4">Dashboard</h3>
-        <div class="container">
-            <!-- <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>USER ID</th>
-                                    <th>NAME</th>
-                                    <th>EMAIL</th>
-                                    <th>REGISTRATION DATE</th>
-                                    <th>STATUS</th>
-                                    <th>ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% users.forEach(user => { %>
-                                    <% if(user.role !== 'admin') { %>
-                                        <tr data-user-id="<%= user._id %>">
-                                            <td><%= user._id %></td>
-                                            <td><%= user.username %></td>
-                                            <td><%= user.email %></td>
-                                            <td>
-                                                <%= new Date(user.createdAt).toLocaleDateString('en-GB', {
-                                                    day: '2-digit',
-                                                    month: '2-digit',
-                                                    year: 'numeric'
-                                                }) %> 
-                                                <%= new Date(user.createdAt).toLocaleTimeString('en-GB', {
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                }) %>
-                                            </td>
-                                            <% if(user.status == 'active'){%>
-                                                <td class="text-success" ><%= user.status %></td>
-                                                <%}else{%>
-                                                <td class="text-danger" ><%= user.status %></td>
-                                           <% } %>
-                                            
-                                            <td>
-                                                <button type="button" class="custom-button toggle-status"
-                                                    data-user-id="<%= user._id %>" data-status="<%= user.status %>">
-                                                    Change
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <% } %>
-                                <% }) %>
-                            </tbody>
-                        </table> -->
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
+        <h3 class="sub-heading">Dashboard</h3>
 
-    <!-- User Details Modal -->
-    <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userDetailsModalLabel">User Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Statistics Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stat-box stat-box-1" id="salesCount">
+                    Overall Sales Count: <span id="salesCountValue">0</span>
                 </div>
-                <div class="modal-body">
-                    <div id="userDetailsContent">
-                        <!-- User details will be injected here via JavaScript -->
+                <div class="stat-box stat-box-2" id="totalOrderAmount">
+                    Overall Order Amount: <span id="totalOrderAmountValue">0</span>
+                </div>
+                <div class="stat-box stat-box-3" id="totalDiscount">
+                    Overall Discount: <span id="totalDiscountValue">0</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Graph Section -->
+        <section class="dashboard-section">
+            <div class="dashboard-container">
+                <h3 class="dashboard-title">Sales Data Graph</h3>
+                <canvas id="salesChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Best Selling Section -->
+            <section class="best-selling-section">
+                <div class="best-selling-container">
+                    <div class="stat-box stat-box-4" id="bestSellingProduct">
+                        Best-Selling Product: <span id="bestSellingProductValue">
+                            <%= bestProductName %>
+                        </span>
+                    </div>
+                    <div class="stat-box stat-box-5" id="bestSellingBrand">
+                        Best-Selling Brand: <span id="bestSellingBrandValue">
+                            <%= bestBrandName %>
+                        </span>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </section>
+
+            <!-- Link to toggle more analytics -->
+            <div>
+                <a class="more-analytics-link" data-toggle="collapse" href="#moreAnalytics" role="button"
+                    aria-expanded="false" aria-controls="moreAnalytics">
+                    More Analytics
+                </a>
+            </div>
+
+            <!-- Collapse content that shows top 10 products and brands -->
+            <div class="collapse" id="moreAnalytics">
+                <div class="analytics-section">
+                    <!-- Flex container for side-by-side layout -->
+                    <div class="analytics-flex-container">
+                        <!-- Best-Selling Products Section -->
+                        <div class="analytics-box">
+                            <h4 class="analytics-header">Top 10 Best-Selling Products</h4>
+                            <ul class="analytics-list" id="bestSellingProducts">
+                                <% bestProducts.forEach(product=> { %>
+                                    <li>
+                                        <span class="item-name">
+                                            <%= product.productName %>
+                                        </span>: Sold <%= product.totalSold %> times
+                                    </li>
+                                    <% }) %>
+                                        <% if (bestProducts.length===0) { %>
+                                            <li>No products sold yet.</li>
+                                            <% } %>
+                            </ul>
+                        </div>
+
+                        <!-- Best-Selling Brands Section -->
+                        <div class="analytics-box">
+                            <h4 class="analytics-header">Top 10 Best-Selling Brands</h4>
+                            <ul class="analytics-list" id="bestSellingBrands">
+                                <% bestBrands.forEach(brand=> { %>
+                                    <li>
+                                        <span class="item-name">
+                                            <%= brand._id %>
+                                        </span>: Sold <%= brand.totalSold %> times
+                                    </li>
+                                    <% }) %>
+                                        <% if (bestBrands.length===0) { %>
+                                            <li>No brands sold yet.</li>
+                                            <% } %>
+                            </ul>
+                        </div>
+
+                        <!-- Empty Space Box -->
+                        <div class="empty-box"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Status Change</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to change the status of this user?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmAction">Confirm</button>
+            <!-- Report Section -->
+            <div class="report-section">
+                <h1 class="dashboard-title">Sales Report Generator</h1>
+                <form id="reportForm" class="report-form">
+                    <div class="form-group">
+                        <label for="reportType" class="form-label">Select Report Type:</label>
+                        <select id="reportType" name="reportType" class="form-select" required>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="custom">Custom Date</option>
+                        </select>
+                    </div>
+                    <div class="form-group custom-date-group" id="customDateFields" style="display:none;">
+                        <label for="startDate" class="form-label">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" class="form-input"><br><br>
+
+                        <label for="endDate" class="form-label">End Date:</label>
+                        <input type="date" id="endDate" name="endDate" class="form-input">
+                    </div>
+                    <b><div id="error-message" class="text-danger" style="display: none;"></div></b><br>
+                    <button type="submit" class="btn generate-report-btn">Generate Report</button>
+                </form>
+            </div>
+
+
+            <!-- Sales Report Section -->
+            <div id="reportTableContainer" style="display: none; margin-top: 20px;">
+                <h3 class="dashboard-title">Sales Report</h3>
+                <table id="reportTable" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User</th>
+                            <th>Total Amount</th>
+                            <th>Discount</th>
+                            <th>Final Amount</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportData"></tbody>
+                </table>
+                <div class="button-group">
+                    <button id="downloadPdf" class="btn btn-primary downloadPdfbtn">Download PDF</button>
+                    <button id="downloadExcel" class="btn btn-success downloadExcelbtn">Download Excel</button>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
+    </div>
+    </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- jQuery, Chart.js, jsPDF, and SheetJS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@latest"></script>
+
+    <!-- Your existing JavaScript logic here -->
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userDetailsModal = new bootstrap.Modal(document.getElementById('userDetailsModal'));
-            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-            const userDetailsContent = document.getElementById('userDetailsContent');
-            let userIdToToggle = null;
+        $(document).ready(function () {
+            fetchOverallStats()
+            fetchOverallOrders();
 
-            // Handle row clicks to show user details modal
-            document.querySelectorAll('tr').forEach(row => {
-                row.addEventListener('click', async (event) => {
-                    if (event.target.closest('.toggle-status')) {
-                        return; // Skip row click handling for action buttons
-                    }
-
-                    const userId = row.getAttribute('data-user-id');
-
-                    if (userId) {
-                        try {
-                            const response = await fetch(`/admin/users/${userId}`);
-                            const user = await response.json();
-
-                            userDetailsContent.innerHTML = `
-                                <p><strong>Name:</strong> ${user.username}</p>
-                                <p><strong>Email:</strong> ${user.email}</p>
-                                <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
-                                <p><strong>Created At:</strong> ${new Date(user.createdAt).toLocaleString()}</p>
-                                <p><strong>Status:</strong> ${user.status}</p>
-                                <p><strong>Admin:</strong> ${user.isAdmin ? 'Yes' : 'No'}</p>
-                            `;
-                            userDetailsModal.show(); // Show the user details modal
-                        } catch (error) {
-                            console.error('Error fetching user details:', error);
-                        }
-                    }
-                });
+            $('#reportType').change(function () {
+                $('#customDateFields').toggle($(this).val() === 'custom');
             });
 
-            // Handle action button clicks to show confirmation modal
-            document.querySelectorAll('.toggle-status').forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Prevent row click event
-                    userIdToToggle = this.getAttribute('data-user-id');
-                    confirmationModal.show(); // Show the confirmation modal
-                });
-            });
+            // Handle form submission for generating a report
+            $('#reportForm').on('submit', function (e) {
+                e.preventDefault();
 
-            // Handle confirmation action
-            document.getElementById('confirmAction').addEventListener('click', async () => {
-                if (userIdToToggle) {
-                    try {
-                        const response = await fetch(`/admin/users/action/${userIdToToggle}`, {
-                            method: 'POST'
-                        });
-                        const result = await response.json();
+                $('#error-message').hide().text('');
 
-                        if (response.ok) {
-                            // Update the status in the table
-                            const row = document.querySelector(`tr[data-user-id="${userIdToToggle}"]`);
-                            if (row) {
-                                const statusCell = row.querySelector('td:nth-child(5)');
-                                statusCell.innerText = result.status;
-                                if (result.status === 'active') {
-                                    statusCell.classList.remove('text-danger');
-                                    statusCell.classList.add('text-success');
-                                } else {
-                                    statusCell.classList.remove('text-success');
-                                    statusCell.classList.add('text-danger');
-                                }
-                            }
-                        } else {
-                            console.error('Error toggling user status:', result.message);
-                        }
-                    } catch (error) {
-                        console.error('Error toggling user status:', error);
-                    } finally {
-                        confirmationModal.hide(); // Hide the confirmation modal
+                const reportType = $('#reportType').val();
+                const startDate = $('#startDate').val();
+                const endDate = $('#endDate').val();
+
+
+
+                // Validate the start and end dates
+                if (reportType === 'custom') {
+                    if (!startDate || !endDate) {
+                        $('#error-message').text('Please fill in both start and end dates.').show();
+                        return;
+                    }
+
+                    if (new Date(endDate) < new Date(startDate)) {
+                        $('#error-message').text('End date cannot be before start date.').show();
+                        return; 
                     }
                 }
-            });
-        });
 
-        //logout Logic
-        document.getElementById('logoutButton').addEventListener('click', async () => {
-            try {
-                await fetch('/admin/logout', {
-                    method: 'GET',
-                    credentials: 'include' // Ensure cookies are sent with the request
+
+                // Fetch the report data from the server based on the selected date range
+                $.ajax({
+                    url: '/admin/dashboard/generate-report',
+                    method: 'POST',
+                    data: { reportType, startDate, endDate },
+                    success: function (response) {
+                        displayReport(response.orders); // Display the report data (if needed)
+                        updateGraph(response.orders);   // Update the chart with the filtered data
+                    },
+                    error: function (error) {
+                        console.error('Error generating report:', error);
+                    }
                 });
-                localStorage.removeItem('token'); // Clear the token from local storage
-                window.location.href = '/admin'; // Redirect to login page
-            } catch (error) {
-                console.error('Logout error:', error);
+            });
+            async function fetchOverallStats() {
+                try {
+                    const response = await fetch('/admin/overall-stats');
+                    const data = await response.json();
+
+                    document.getElementById('salesCountValue').textContent = data.salesCount;
+                    document.getElementById('totalOrderAmountValue').textContent = data.totalOrderAmount;
+                    document.getElementById('totalDiscountValue').textContent = data.totalDiscount;
+                } catch (error) {
+                    console.error('Error fetching overall stats:', error);
+                }
             }
+            // Function to fetch all orders and display the graph on page load
+            function fetchOverallOrders() {
+                $.ajax({
+                    url: '/admin/fetch-all-orders',  // Replace with the correct endpoint
+                    method: 'GET',
+                    success: function (response) {
+                        const orders = response.orders;
+                        generateGraph(orders);  // Ensure the chart renders on page load with all orders
+                    },
+                    error: function (error) {
+                        console.error('Error fetching overall orders:', error);
+                    }
+                });
+            }
+
+            // Function to generate the sales graph
+            // Function to generate the sales graph
+            function generateGraph(orders) {
+                const labels = [];
+                const data = [];
+
+                // Group orders by date
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt).toLocaleDateString();
+                    if (labels.indexOf(date) === -1) {
+                        labels.push(date);
+                        data.push(order.totalAmount || 0);
+                    } else {
+                        const index = labels.indexOf(date);
+                        data[index] += order.totalAmount || 0;
+                    }
+                });
+
+                // Render Chart.js graph
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Sales',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.4)', // Light fill
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(255, 255, 255, 1)', // White point fill
+                            pointBorderColor: 'rgba(75, 192, 192, 1)',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            fill: true,
+                            tension: 0.5, // Smooth curves
+                            animation: {
+                                duration: 1000,
+                                easing: 'easeInOutExpo',
+                            },
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    },
+                                    color: '#333'
+                                },
+                                ticks: {
+                                    color: '#666',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Total Amount ($)',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    },
+                                    color: '#333'
+                                },
+                                beginAtZero: true,
+                                ticks: {
+                                    color: '#666',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            tension: {
+                                duration: 1000,
+                                easing: 'easeInOutQuad',
+                                from: 0.1,
+                                to: 0.5,
+                                loop: true
+                            }
+                        },
+                        elements: {
+                            point: {
+                                radius: 5,
+                                hoverRadius: 7,
+                                hoverBorderWidth: 3
+                            }
+                        }
+                    }
+                });
+            }
+
+
+
+
+
+            function updateGraph(orders) {
+                // Prepare data for the new graph
+                const labels = [];
+                const data = [];
+
+                // Group orders by date
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt).toLocaleDateString();
+                    if (!labels.includes(date)) {
+                        labels.push(date);
+                        data.push(order.totalAmount || 0);
+                    } else {
+                        const index = labels.indexOf(date);
+                        data[index] += order.totalAmount || 0;
+                    }
+                });
+
+                // Get the existing chart instance
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                const chart = Chart.getChart('salesChart');
+
+                if (chart) {
+                    // Update existing chart
+                    chart.data.labels = labels;
+                    chart.data.datasets[0].data = data;
+                    chart.update(); // Refresh the chart
+                } else {
+                    // If no chart exists, create a new one
+                    generateGraph(orders);
+                }
+            }
+
+
+
+            // Function to display the report in a table
+            function displayReport(orders) {
+                const reportData = $('#reportData');
+                reportData.empty(); // Clear any existing rows
+
+                if (orders.length > 0) {
+                    orders.forEach(order => {
+                        const discount = order.coupon?.percentage ? (order.totalAmount * order.coupon.percentage / 100) : 0;
+                        const finalAmount = order.totalAmount - discount;
+
+                        const row = `
+                <tr>
+                    <td>${order._id}</td>
+                    <td>${order.user.username}</td>
+                    <td>${order.totalAmount.toFixed(2)}</td>
+                    <td>${discount.toFixed(2)}</td>
+                    <td>${finalAmount.toFixed(2)}</td>
+                    <td>${order.status}</td>
+                    <td>${order.paymentMethod}</td>
+                    <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+                </tr>
+            `;
+                        reportData.append(row);
+                    });
+                    $('#reportTableContainer').show(); // Show the table and buttons
+                } else {
+                    $('#reportTableContainer').hide();
+                    $('#error-message').text('No data found for the selected range.').show();
+                }
+            }
+
+
+            // Function to generate the sales graph with overall data on page load
+            function generateGraph(orders) {
+                const labels = [];
+                const data = [];
+
+                // Group orders by date
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt).toLocaleDateString();
+
+                    if (labels.indexOf(date) === -1) {
+                        labels.push(date);
+                        data.push(order.totalAmount || 0); // Add total amount for the first occurrence of this date
+                    } else {
+                        const index = labels.indexOf(date);
+                        data[index] += order.totalAmount || 0; // Accumulate the total amount for the same date
+                    }
+                });
+
+                // Render Chart.js graph
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Sales',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true
+                    }
+                });
+            }
+
+
+            // Download table as PDF
+            $('#downloadPdf').click(function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Convert HTML table to PDF using autoTable
+                doc.autoTable({
+                    html: '#reportTable',
+                    theme: 'striped'
+                });
+
+                // Save the generated PDF to Downloads
+                doc.save('sales_report.pdf');
+            });
+
+            // Download table as Excel
+            $('#downloadExcel').click(function () {
+                const table = document.getElementById('reportTable');
+                const workbook = XLSX.utils.table_to_book(table, { sheet: 'Sales Report' });
+
+                // Export to Excel (.xlsx)
+                XLSX.writeFile(workbook, 'sales_report.xlsx');
+            });
+
         });
     </script>
-
-    </body>
-
-    </html>

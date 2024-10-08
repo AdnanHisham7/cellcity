@@ -6,17 +6,18 @@ body {
   display: flex;
   color: #000000;
   font-size: 14px;
-  font-family: "Poppins", sans-serif!important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .login-container {
-  width: 460px!important;
+  width: 460px !important;
   padding: 50px 40px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   min-height: 70vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .login-container h2 {
   margin-bottom: 20px;
   text-align: start;
@@ -76,7 +77,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 160vh;
   width: 16.6667%;
   /* This is 2 columns out of 12 (col-2) */
   background-color: #f8f9fa;
@@ -93,9 +94,9 @@ body {
   margin-bottom: 20px;
 }
 
-.alert-danger{
+.alert-danger {
   color: rgb(253, 100, 100);
-  background-color: transparent!important;
+  background-color: transparent !important;
 }
 
 .nav-link {
@@ -277,11 +278,11 @@ body {
   vertical-align: middle;
 }
 
-td a{
+td a {
   text-decoration: none;
 }
 
-td button{
+td button {
   margin-bottom: 5px;
 }
 
@@ -340,4 +341,368 @@ td button{
 
 .input-error {
   border-color: red;
+}
+
+.table {
+  width: 100% !important;
+  /* Full width table */
+  margin-top: 20px !important;
+  border-collapse: collapse !important;
+}
+
+.table th,
+.table td {
+  padding: 12px !important;
+  text-align: left !important;
+  border: 1px solid #dee2e6 !important;
+  /* Light border for table cells */
+}
+
+.table-dark {
+  background-color: #343a40 !important;
+  /* Dark background for thead */
+  color: white !important;
+  /* White text for thead */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2 !important;
+  /* Light gray for odd rows */
+}
+
+.button-group {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 20px !important;
+}
+
+.button-group .btn {
+  margin: 0 5px !important;
+  /* Spacing between buttons */
+}
+
+
+
+
+
+
+.stats-section, 
+.best-selling-section, 
+.dashboard-section {
+  margin-bottom: 30px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.best-selling-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.stat-box {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  flex: 1;
+  margin: 0 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.stat-box span {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+/* Adjusted box styles for specific stat boxes */
+.stat-box-1 {
+  background: linear-gradient(135deg, #a3c1e0, #4b8da8, #2f4c57);
+}
+
+.stat-box-2 {
+  background: linear-gradient(135deg, #c1c5d9, #5a7f66, #3b3b3b);
+}
+
+.stat-box-3 {
+  background: linear-gradient(135deg, #d4c300, #7d5c2c, #3e3b30);
+}
+
+.stat-box-4 {
+  background: linear-gradient(135deg, #52557a, #47496f);
+}
+
+.stat-box-5 {
+  background: linear-gradient(135deg, #cc9a65, #aa663f);
+}
+
+
+/* Centering the form and container */
+.dashboard-section .report-section {
+  display: flex !important;
+  margin-top: 50px;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: start !important; /* Full viewport height */
+  background-color: #f4f4f4 !important; /* Subtle background for contrast */
+}
+
+/* Title styling */
+.dashboard-section .dashboard-title {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  margin-bottom: 30px !important;
+}
+
+/* Styling the form */
+.dashboard-section .report-form {
+  background-color: #fff !important;
+  padding: 30px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow for depth */
+  max-width: 400px !important; /* Limit the width for a minimalist look */
+  width: 100% !important;
+}
+
+/* Form group styling */
+.dashboard-section .form-group {
+  margin-bottom: 20px !important;
+}
+
+/* Label styling */
+.dashboard-section .form-label {
+  display: block !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  /* margin-bottom: 10px !important; */ 
+  color: #333 !important;
+}
+
+/* Input and select styling */
+.dashboard-section .form-select,
+.dashboard-section .form-input {
+  width: 100% !important;
+  margin: 0!important;
+  padding: 10px !important;
+  font-size: 1rem !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+  background-color: #fff !important;
+  transition: border-color 0.3s ease !important;
+}
+
+/* Hover and focus effects */
+.dashboard-section .form-select:focus,
+.dashboard-section .form-input:focus {
+  border-color: #333 !important;
+  outline: none !important;
+}
+
+/* Button styling */
+.dashboard-section .generate-report-btn {
+  width: 100% !important;
+  padding: 12px !important;
+  background-color: #333 !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.dashboard-section .generate-report-btn:hover {
+  background-color: #555 !important;
+}
+
+
+
+/* Download buttons */
+.downloadExcelbtn, .downloadPdfbtn {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.downloadExcelbtn {
+  background-color: green;
+  color: white;
+}
+
+.downloadPdfbtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.downloadExcelbtn:hover {
+  background-color: darkgreen; /* Darker green on hover */
+}
+
+.downloadPdfbtn:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+
+/* General link style */
+.more-analytics-link {
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.more-analytics-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Flex container for side-by-side layout */
+.analytics-flex-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between; /* Evenly distribute space */
+  gap: 20px; /* Adds space between the sections */
+}
+
+/* Box styling with width control */
+.analytics-box {
+  width: 32%; /* Each box takes up roughly 4 columns out of 12 (33.33% minus a bit for spacing) */
+  padding: 20px;
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Soft corners */
+  background-color: #f9f9f9; /* Light background color for contrast */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Minimal shadow for depth */
+  transition: box-shadow 0.3s ease;
+}
+
+/* Hover effect for interactivity */
+.analytics-box:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Header styling */
+.analytics-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* List styling */
+.analytics-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.analytics-list li {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  color: #555; /* Subtle text color */
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Last item border fix */
+.analytics-list li:last-child {
+  border-bottom: none;
+}
+
+/* Empty box to take up remaining space (4 out of 12) */
+.empty-box {
+  width: 32%; /* This empty box will fill the remaining space */
+  background-color: transparent; /* Keeps it visually invisible */
+}
+
+
+.toast {
+  border-radius: 12px !important;  /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;  /* Drop shadow */
+  margin-top: 20px !important;
+  border: none!important;
+  font-weight: bold !important;   /* Bold text */
+}
+
+
+.toast-success .toast-message:before {
+  display: none!important;
+}
+
+
+.toast-success {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(0, 90, 22) !important;
+}
+
+
+.suggestions {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.no-suggestions {
+  padding: 8px;
+  text-align: center;
+  color: #888;
+}
+
+
+
+@media (max-width: 768px) {
+  .analytics-flex-container {
+      flex-direction: column; /* Stacks the sections vertically on smaller screens */
+  }
+
+  .analytics-box {
+      margin-bottom: 20px; /* Adds space between stacked sections */
+  }
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .dashboard-section .report-form {
+      padding: 20px !important;
+  }
+
+  .dashboard-section .dashboard-title {
+      font-size: 1.5rem !important;
+  }
+
+  .dashboard-section .form-select,
+  .dashboard-section .form-input {
+      font-size: 0.9rem !important;
+  }
 }
