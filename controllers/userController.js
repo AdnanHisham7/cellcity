@@ -1143,7 +1143,8 @@ const listCartProducts = async (req, res) => {
             });
 
         if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
+            return res.render('user/cart', { cart, isLoggedIn });
+
         }
 
         const productIds = cart.items.map(item => item.variant._id);
@@ -2773,7 +2774,7 @@ const getReviewsPage = async (req, res) => {
     
 
         if (!variantsWithReviews || variantsWithReviews.length === 0) {
-          return res.render('user/userReviews', { userReviews: [] });
+          return res.render('user/userReviews', { userReviews: [], user, currentUrl:req.originalUrl });
         }
     
         const userReviews = variantsWithReviews.map(variant => {
