@@ -97,23 +97,38 @@ const authUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        // Find the user by email
         const user = await User.findOne({ email });
-        if (user.googleId) {
-            return res.status(400).json({ error: 'Continue the process using Google' });
-        }
-        if (!user || !await user.matchPassword(password)) { // Adjust password checking
+
+        // Check if user exists
+        if (!user) {
+
             return res.status(400).json({ error: 'Invalid username or password' });
         }
 
-        const token = jwt.sign({ id: user._id, role: "user" }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Check if the user is trying to log in using Google
+        if (user.googleId) {
+
+            return res.status(400).json({ error: 'Continue the process using Google' });
+        }
+
+        // Check password validity
+        if (!await user.matchPassword(password)) {
+            return res.status(400).json({ error: 'Invalid username or password' });
+        }
+        // Generate JWT token
+       const token = jwt.sign({ id: user._id, role: "user" }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true }); // Store token in a cookie
-        res.json({ token }); // Send token in response (optional)
+
+        // Send success response
+        res.status(200).json({ token }); // Send token in response (optional)
 
     } catch (err) {
         console.error('Login error:', err);
-        res.status(500).json({ error: 'Server error ayo' });
+        res.status(500).json({ error: 'Server error' });
     }
 };
+
 
 const logout = (req, res) => {
     if (req.session.passport) {
@@ -122,8 +137,6 @@ const logout = (req, res) => {
                 return res.status(500).send('Failed to destroy session');
             }
         })
-    } else {
-        console.log('suiiiiiiiiiii')
     }
     res.clearCookie('token', { httpOnly: true });
     res.redirect('/login');
@@ -142,7 +155,6 @@ const sendOTPVerificationEmail = async (userId, email, res) => {
         const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
         const saltRounds = 10;
         const hashedOTP = await bcrypt.hash(otp, saltRounds);
-        console.log("this is the otp", otp)
         const mailOptions = {
             from: `"CellCity" <${process.env.AUTH_EMAIL}>`,
             to: email,
@@ -241,7 +253,6 @@ const verifyOTP = async (req, res) => {
                             await newUser.save();
                             await tempUser.deleteOne();
                             await userOTPVerification.deleteMany({ userId });
-                            console.log("OTP successfully verified");
                             return res.json({ success: true, redirectUrl: '/login' });
                         }
                     }
@@ -261,7 +272,6 @@ const generateReferralCode = () => {
 const resendOTPVerification = async (req, res) => {
     try {
         const { userId, email } = req.body;
-        console.log('NEE ETHADA', email, userId)
         // Ensure both userId and email are available
         if (!userId || !email) {
             throw new Error("User ID or email is missing");
@@ -366,7 +376,6 @@ const getHomePage = async (req, res) => {
 
 const getShopPage = async (req, res) => {
     try {
-
         let isLoggedIn = false;
         if (req.user && req.user.role === 'user') {
             isLoggedIn = true;
@@ -376,14 +385,12 @@ const getShopPage = async (req, res) => {
         const limit = 6;  // Results per page
         const skip = (page - 1) * limit;  // Calculate the skip value for pagination
 
-        let user
-        if(req.user){
+        let user;
+        if (req.user) {
             user = await User.findById(req.user.id).populate('wishlist');
-        }else{
-            user = null
+        } else {
+            user = null;
         }
-
-        
 
         let selectedBrandsArray = [];
         if (selectedBrands) {
@@ -398,12 +405,37 @@ const getShopPage = async (req, res) => {
         }
 
         const filterConditions = {};
+
+        // Apply brand filter
         if (selectedBrandsArray.length > 0) {
             const products = await Products.find({ brandId: { $in: selectedBrandsArray } });
             const productIds = products.map(product => product._id);
             filterConditions.productId = { $in: productIds };
         }
 
+        // Apply price range filter
+        if (priceRange && priceRange !== '[]') {
+            try {
+                // Ensure the priceRange is properly decoded and parsed
+                const decodedPriceRange = JSON.parse(decodeURIComponent(priceRange));
+                
+                if (Array.isArray(decodedPriceRange)) {
+                    const priceConditions = decodedPriceRange.map((range) => {
+                        const [min, max] = range.split('-');
+                        return { price: { $gte: parseInt(min), $lte: max ? parseInt(max) : Infinity } };
+                    });
+                    filterConditions.$or = priceConditions;
+                } else {
+                    console.error('Invalid priceRange format: Expected an array.');
+                }
+            } catch (error) {
+                console.error('Error parsing priceRange:', error);
+            }
+        }
+        
+        
+
+        // Apply search filter
         if (search) {
             const searchRegex = new RegExp(search, 'i');
             const productsWithName = await Products.find({ productName: { $regex: searchRegex } });
@@ -411,15 +443,16 @@ const getShopPage = async (req, res) => {
             filterConditions.productId = { $in: productIds };
         }
 
-        // Fetch variants with pagination
+        // Fetch filtered variants with pagination
         const variantsQuery = Variants.find(filterConditions)
             .populate({
                 path: 'productId',
                 populate: { path: 'brandId', model: 'Brands' }
             })
             .skip(skip)
-            .limit(limit);  // Pagination logic: Skip and Limit
+            .limit(limit);
 
+        // Apply sorting
         if (sortBy === 'price-asc') {
             variantsQuery.sort({ price: 1 });
         } else if (sortBy === 'price-desc') {
@@ -428,43 +461,36 @@ const getShopPage = async (req, res) => {
 
         let variants = await variantsQuery;
 
+        // Apply name sorting manually (since MongoDB doesn't support sorting by populated fields)
         if (sortBy === 'name-asc') {
             variants = variants.sort((a, b) => a.productId.productName.localeCompare(b.productId.productName));
         } else if (sortBy === 'name-desc') {
             variants = variants.sort((a, b) => b.productId.productName.localeCompare(a.productId.productName));
         }
 
+        // Fetch brands and total results
         const brands = await Brands.find({});
-        const totalResults = await Variants.countDocuments(filterConditions);  // Total number of results
+        const totalResults = await Variants.countDocuments(filterConditions);
 
-        // Log result counts for debugging
+        // Calculate best offer for each variant
         const databaseVariants = await Variants.find({})
+
         for (let variant of variants) {
             const product = variant.productId;
-
-            // Fetch offers for the brand and product
             const offers = await Offer.find({
                 $or: [
                     { type: 'product', typeId: variant._id },
                     { type: 'brand', typeId: product.brandId }
                 ]
             });
-
-            // Calculate best discount
             const brandOffer = offers.find(offer => offer.type === 'brand' && offer.typeId.equals(product.brandId));
             const productOffer = offers.find(offer => offer.type === 'product' && offer.typeId.equals(variant._id));
 
-            const brandDiscount = brandOffer ? brandOffer.percentage : 0;
-            const productDiscount = productOffer ? productOffer.percentage : 0;
-            const bestDiscount = Math.max(brandDiscount, productDiscount);
-
-            // Calculate final price after discount
+            const bestDiscount = Math.max(brandOffer?.percentage || 0, productOffer?.percentage || 0);
             const discountMultiplier = (100 - bestDiscount) / 100;
             variant.finalPrice = variant.price * discountMultiplier;
-            variant.bestDiscount = bestDiscount; 
+            variant.bestDiscount = bestDiscount;
         }
-
-        const shuffledRelatedVariants = variants.sort(() => Math.random() - 0.5);
 
         res.render('user/shop', {
             user,
@@ -472,8 +498,8 @@ const getShopPage = async (req, res) => {
             query: req.query,
             selectedBrands: selectedBrandsArray,
             brands,
-            variants:shuffledRelatedVariants,
             databaseVariants,
+            variants,
             totalResults,
             isLoggedIn,
             currentPage: parseInt(page),
@@ -483,6 +509,7 @@ const getShopPage = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
 
 
 
@@ -657,7 +684,6 @@ const getForgotPage = async (req, res) => {
 
 const sendForgotOTP = async (req, res) => {
     const { email } = req.body;
-    console.log('Initiating forgot OTP process for:', email); // Add this line
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -673,10 +699,7 @@ const sendForgotOTP = async (req, res) => {
 };
 
 const getForgotOTPPage = (req, res) => {
-    console.log("Entering getForgotOTPPage"); // Add this line
-    console.log("This is forgot OTP");
     const { userId, email } = req.query;
-    console.log("Received userId:", userId, "and email:", email);
     if (!userId || !email) {
         return res.status(400).json({ error: 'Missing user ID or email' });
     }
@@ -686,7 +709,6 @@ const getForgotOTPPage = (req, res) => {
 const forgotVerifyOTP = async (req, res) => {
     try {
         let { userId, otp } = req.body;
-        console.log('Verifying OTP for:', { userId, otp });
 
         // Ensure userId is treated as a string, not as an object
         userId = userId.toString();
@@ -697,7 +719,6 @@ const forgotVerifyOTP = async (req, res) => {
 
         // Query with userId as a string
         const userOTPVerificationRecords = await userOTPVerification.find({ userId });
-        console.log('Fetched OTP records:', userOTPVerificationRecords);
 
         if (userOTPVerificationRecords.length <= 0) {
             throw new Error("Account record doesn't exist or has been verified already");
@@ -709,14 +730,12 @@ const forgotVerifyOTP = async (req, res) => {
         const hashedOTP = latestOTPRecord.otp;
         const user = await User.findById(userId);
         const email = user.email;
-        console.log(`my email is ::::::::::::::::::${email}`)
 
         if (expiresAt < Date.now()) {
             await userOTPVerification.deleteMany({ userId });
             throw new Error("Code has expired. Please request again");
         }
 
-        console.log('Comparing OTP:', otp, 'with hash:', hashedOTP);
         const validOTP = await bcrypt.compare(otp, hashedOTP);
 
         if (!validOTP) {
@@ -724,13 +743,10 @@ const forgotVerifyOTP = async (req, res) => {
             throw new Error("Invalid code passed. Check your inbox");
         }
 
-        console.log('OTP is valid. Proceeding with password reset.');
-
         // Pass email in the redirect URL and ensure it is encoded
         res.json({ success: true, redirectUrl: `/resetPassword?userId=${userId}&email=${encodeURIComponent(email)}` });
 
     } catch (error) {
-        console.log(`Error message is ${error.message}`);
         res.status(400).json({ error: error.message });
     }
 };
@@ -740,7 +756,6 @@ const forgotVerifyOTP = async (req, res) => {
 const getResetPasswordPage = (req, res) => {
     try {
         const { userId, email } = req.query;
-        console.log('Received userId:', userId, 'and email:', email); // Add this line
         if (!userId || !email) {
             return res.status(400).json({ error: 'Missing user ID or email' });
         }
@@ -794,8 +809,6 @@ const resetPassword = async (req, res) => {
 
 const getOTPPage = async (req, res) => {
     const { userId, email } = req.query;
-    console.log('This is Normal OTP')
-    console.log(req.query)
     return res.render('user/OTP', { userId, email, error: null });
 };
 
@@ -1358,6 +1371,10 @@ const getCheckoutPage = async (req, res) => {
 
 
 const proceedToCheckout = async (req, res) => {
+    if(!req.user){
+        return res.redirect('/login')
+    }
+    
     const userId = req.user.id;
 
     try {
@@ -1421,7 +1438,9 @@ const createRazorpayOrder = async (req, res) => {
     const { paymentMethod, shippingAddress } = req.body;
     let { amount } = req.body;
     amount = Number(amount);
-
+    if (req.session.coupon == undefined && amount > 500000 ) {
+        return res.status(500).json({message:`Transaction amount exceeds the limit of ₹5,00,000.` })
+    }
 
     if (req.session.coupon) {
         const coupon = await Coupon.findOne({ code: req.session.coupon.code });
@@ -1441,8 +1460,6 @@ const createRazorpayOrder = async (req, res) => {
         if (coupon.users.includes(userId)) {
             return res.status(500).json({message:`Coupon has already used!`})
         }
-        
-        await Coupon.findOneAndUpdate({ code: req.session.coupon.code }, { $addToSet: { users: userId } });
     }
     const discountPercentage = req.session.coupon ? req.session.coupon.percentage : 0;
     const discount = (amount * discountPercentage) / 100;
@@ -1466,14 +1483,9 @@ const createRazorpayOrder = async (req, res) => {
         receipt: "order_rcptid_11",
     };
 
+
     try {
-        // Attempt to create a Razorpay order
-        const order = await razorpay.orders.create(options);
-
-        if (!order || !order.id) {
-            throw new Error('Razorpay order creation failed.');
-        }
-
+        
         const cart = await Cart.findOne({ user: userId })
             .populate({
                 path: 'items.variant',
@@ -1539,6 +1551,8 @@ const createRazorpayOrder = async (req, res) => {
             };
         });
 
+        
+
 
         let deliveryChargeChecker = totalAmount; // Initialize with totalAmount
         let deliveryCharge = 0;
@@ -1547,6 +1561,20 @@ const createRazorpayOrder = async (req, res) => {
         }
         const finalAmount = deliveryChargeChecker + deliveryCharge;
 
+        if (Math.round(Number(options.amount) / 100) > 500000 ) {
+            return res.status(500).json({message:`Transaction amount exceeds the limit of ₹5,00,000.` })
+        }
+
+
+        const order = await razorpay.orders.create(options);
+
+        if (!order || !order.id) {
+            throw new Error('Razorpay order creation failed.');
+        }
+
+        if(req.session.coupon){
+            await Coupon.findOneAndUpdate({ code: req.session.coupon.code }, { $addToSet: { users: userId } });
+        }
 
         const newOrder = new Order({
             user: userId,
@@ -1569,11 +1597,6 @@ const createRazorpayOrder = async (req, res) => {
             }
 
             await variant.save();
-        }
-
-
-        if (totalAmount > 500000 ) {
-            return res.status(500).json({message:`Transaction amount exceeds the limit of ₹5,00,000.` })
         }
 
         await newOrder.save();
@@ -1976,6 +1999,10 @@ const getOrderDetails = async (req, res) => {
 
 const getWishlist = async (req, res) => {
     try {
+
+        if(!req.user){
+            return res.redirect('/login')
+        }
         // Find the user and populate the wishlist with product details
         const user = await User.findById(req.user.id)
             .populate({
@@ -1986,9 +2013,7 @@ const getWishlist = async (req, res) => {
                     select: 'productName' // Only select the fields you need (e.g., productName)
                 }
             });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+       
         // Pass populated wishlist to the view
         res.render('user/wishlist', { variants: user.wishlist, currentUrl: req.originalUrl, user });
     } catch (error) {
@@ -2437,9 +2462,9 @@ const updateRazorPayOrder = async (req, res) => {
 };
 
 
-const fetchOrderDetails = async (orderId, userId) => {
+const fetchOrderDetails = async (orderId) => {
     try {
-        const order = await Order.findOne({ _id: orderId, user: userId })
+        const order = await Order.findOne({ _id: orderId })
             .populate({
                 path: 'items.variant',
                 model: 'Variant',
@@ -2455,7 +2480,6 @@ const fetchOrderDetails = async (orderId, userId) => {
                 model: 'users',  
                 select: 'username', 
             });
-
         return order;
     } catch (error) {
         throw new Error('Error fetching order details');
@@ -2464,11 +2488,9 @@ const fetchOrderDetails = async (orderId, userId) => {
 
 const generateInvoicePDF = async (req, res) => {
     const { orderId } = req.params;
-    const userId = req.user.id;
-
     try {
         // Fetch the order details using the helper function
-        const order = await fetchOrderDetails(orderId, userId);
+        const order = await fetchOrderDetails(orderId);
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }

@@ -5,7 +5,6 @@ const flash = require('connect-flash');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const nocache = require('nocache');
-// const flash = require('connect-flash');
 const cookieParser = require('cookie-parser'); // token cookie
 // Import routes
 const userRoutes = require('./routes/userRoutes');
@@ -27,37 +26,19 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    // cookie: { secure: true }
   }))
 
-
-// app.use(flash());
-// app.use((req, res, next) => {
-//       res.locals.error = req.flash('error');
-//       next();
-//   });
-
-
-app.use(flash());
 // Pass flash messages to views
+app.use(flash());
 app.use((req, res, next) => {
     res.locals.error_msg = req.flash('error');
     res.locals.messages = req.flash();
     next();
 });
 
-
-
 // Routes
 app.use('/admin', adminRoutes);
 app.use('/', userRoutes);
-
-
-// Root route (optional)
-app.get('/', (req, res) => {
-    console.log('aaaaaaaaaaaaaa')
-    res.send('API is running...');
-});
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

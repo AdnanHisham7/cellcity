@@ -21,6 +21,34 @@
 
         <!-- Graph Section -->
         <section class="dashboard-section">
+
+            <!-- Report Section -->
+            <div class="report-section">
+                <h1 class="dashboard-title">Sales Report Generator</h1>
+                <form id="reportForm" class="report-form">
+                    <div class="form-group">
+                        <label for="reportType" class="form-label">Select Report Type:</label>
+                        <select id="reportType" name="reportType" class="form-select" required>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="custom">Custom Date</option>
+                        </select>
+                    </div>
+                    <div class="form-group custom-date-group" id="customDateFields" style="display:none;">
+                        <label for="startDate" class="form-label">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" class="form-input"><br><br>
+
+                        <label for="endDate" class="form-label">End Date:</label>
+                        <input type="date" id="endDate" name="endDate" class="form-input">
+                    </div>
+                    <b><div id="error-message" class="text-danger" style="display: none;"></div></b><br>
+                    <button type="submit" class="btn generate-report-btn">Generate Report</button>
+                </form>
+            </div><br>
+
+
             <div class="dashboard-container">
                 <h3 class="dashboard-title">Sales Data Graph</h3>
                 <canvas id="salesChart" width="400" height="200"></canvas>
@@ -95,31 +123,7 @@
                 </div>
             </div>
 
-            <!-- Report Section -->
-            <div class="report-section">
-                <h1 class="dashboard-title">Sales Report Generator</h1>
-                <form id="reportForm" class="report-form">
-                    <div class="form-group">
-                        <label for="reportType" class="form-label">Select Report Type:</label>
-                        <select id="reportType" name="reportType" class="form-select" required>
-                            <option value="daily">Daily</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
-                            <option value="yearly">Yearly</option>
-                            <option value="custom">Custom Date</option>
-                        </select>
-                    </div>
-                    <div class="form-group custom-date-group" id="customDateFields" style="display:none;">
-                        <label for="startDate" class="form-label">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-input"><br><br>
-
-                        <label for="endDate" class="form-label">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-input">
-                    </div>
-                    <b><div id="error-message" class="text-danger" style="display: none;"></div></b><br>
-                    <button type="submit" class="btn generate-report-btn">Generate Report</button>
-                </form>
-            </div>
+            
 
 
             <!-- Sales Report Section -->
@@ -398,7 +402,7 @@
 
                         const row = `
                 <tr>
-                    <td>${order._id}</td>
+                    <td>${order.orderId}</td>
                     <td>${order.user.username}</td>
                     <td>${order.totalAmount.toFixed(2)}</td>
                     <td>${discount.toFixed(2)}</td>

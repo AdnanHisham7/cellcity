@@ -101,7 +101,6 @@ const getForgotPage = async (req, res) => {
 
 const sendForgotOTP = async (req, res) => {
     const { email } = req.body;
-    console.log('Initiating forgot OTP process for:', email); // Add this line
     const admin = await User.findOne({ email });
 
     if (!admin.isAdmin) {
@@ -117,10 +116,7 @@ const sendForgotOTP = async (req, res) => {
 };
 
 const getForgotOTPPage = (req, res) => {
-    console.log("Entering getForgotOTPPage"); // Add this line
-    console.log("This is forgot OTP");
     const { userId, email } = req.query;
-    console.log("Received userId:", userId, "and email:", email);
     if (!userId || !email) {
         return res.status(400).json({ error: 'Missing user ID or email' });
     }
@@ -130,7 +126,6 @@ const getForgotOTPPage = (req, res) => {
 const forgotVerifyOTP = async (req, res) => {
     try {
         let { userId, otp } = req.body;
-        console.log('Verifying OTP for:', { userId, otp });
 
         // Ensure userId is treated as a string, not as an object
         userId = userId.toString();
@@ -141,7 +136,6 @@ const forgotVerifyOTP = async (req, res) => {
 
         // Query with userId as a string
         const userOTPVerificationRecords = await userOTPVerification.find({ userId });
-        console.log('Fetched OTP records:', userOTPVerificationRecords);
 
         if (userOTPVerificationRecords.length <= 0) {
             throw new Error("Account record doesn't exist or has been verified already");
@@ -153,22 +147,18 @@ const forgotVerifyOTP = async (req, res) => {
         const hashedOTP = latestOTPRecord.otp;
         const user = await User.findById(userId);
         const email = user.email
-        console.log(`my email is ----------------------${email}`)
 
         if (expiresAt < Date.now()) {
             await userOTPVerification.deleteMany({ userId });
             throw new Error("Code has expired. Please request again");
         }
 
-        console.log('Comparing OTP:', otp, 'with hash:', hashedOTP);
         const validOTP = await bcrypt.compare(otp, hashedOTP);
 
         if (!validOTP) {
             console.error('OTP comparison failed. Invalid code.');
             throw new Error("Invalid code passed. Check your inbox");
         }
-
-        console.log('OTP is valid. Proceeding with password reset.');
 
         // Pass email in the redirect URL and ensure it is encoded
         res.redirect(`/admin/resetPassword?userId=${userId}&email=${encodeURIComponent(email)}`);
@@ -188,7 +178,6 @@ const forgotVerifyOTP = async (req, res) => {
 const getResetPasswordPage = (req, res) => {
     try {
         const { userId, email } = req.query;
-        console.log('Received userId:', userId, 'and email:', email); // Add this line
         if (!userId || !email) {
             return res.status(400).json({ error: 'Missing user ID or email' });
         }
@@ -789,6 +778,9 @@ const takeBrandAction = async (req, res) => {
 
 const listAdminOrders = async (req, res) => {
     try {
+        if(!req.user){
+            return res.redirect('/admin/login')
+        }
         const orders = await Order.find({})
             .populate('user', 'username email')
             .populate({
@@ -863,6 +855,9 @@ const updateOrderStatus = async (req, res) => {
 // Get all coupons
 const getAllCoupons = async (req, res) => {
     try {
+        if(!req.user){
+            return res.redirect('/admin/login')
+        }
         const coupons = await Coupon.find();
         if (!coupons || coupons.length === 0) {
             return res.render('admin/coupons', { coupons: [], noCoupons: true, currentUrl: req.originalUrl });
@@ -1041,6 +1036,10 @@ const updateCouponDetails = async (req, res) => {
 
 const getOffersPage = async (req, res) => {
     try {
+
+        if(!req.user){
+            return res.redirect('/admin')
+        }
         // Fetch product offers (variants)
         const variants = await Offer.find({ type: 'product' })
             .populate({
@@ -1068,6 +1067,9 @@ const getOffersPage = async (req, res) => {
 
 const getProductOffersPage = async (req, res) => {
     try {
+        if(!req.user){
+            return res.redirect('/admin/login')
+        }
         const offers = await Offer.find({ type: 'product' }).select('typeId');
         const offerVariantIds = offers.map(offer => offer.typeId);
         const variants = await Variants.find({

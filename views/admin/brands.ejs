@@ -164,8 +164,6 @@
                 brandName: formData.get('brandName').trim() // Trim whitespace
             };
 
-            console.log('Brand Data:', brandData); // Log the brand data being sent
-
             // Basic validation: Check if brand name is not empty
             if (!brandData.brandName) {
                 toastr.error('Brand name cannot be empty.');
@@ -194,7 +192,6 @@
                     }, 1500);
 
                 } else {
-                    console.log('you failed');
                     const errorData = await response.json();
                     document.getElementById('error-message').textContent = errorData.message || 'Failed to update product.';
                     document.getElementById('error-message').style.display = 'block';// Display the error message

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
 
-exports.authMiddleware = (req, res, next) => {
+exports.authMiddleware = async(req, res, next) => {
     const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
 
     if (!token) {
@@ -20,6 +21,19 @@ exports.authMiddleware = (req, res, next) => {
                 return res.redirect('/admin');
             }
         } else {
+            const userId = req.user.id
+            const user = await User.findById(userId)             
+            if(user.status == 'inactive'){
+                if (req.session.passport) {
+                    req.session.destroy(err => {
+                        if (err) {
+                            return res.status(500).send('Failed to destroy session');
+                        }
+                    })
+                }
+                res.clearCookie('token', { httpOnly: true });
+                return res.redirect('/login');
+            }
             // Non-admin users redirect logic
             if (req.originalUrl.startsWith('/admin')) {
                 return res.redirect('/');

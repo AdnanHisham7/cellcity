@@ -281,8 +281,13 @@
             margin-bottom: 1rem;
         }
 
+        .breadcrumb-item::before{
+            color: #a9b2bcae !important;
+        }
+
         .breadcrumb-item,
         .breadcrumb-item a {
+            text-decoration: none;
             color: #a9b2bc;
         }
 
@@ -633,7 +638,8 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <li class="breadcrumb-item"><a href="/profile">User</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                        <li class="breadcrumb-item"><a href="/orders">Orders</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><%= order.orderId %></li>
                     </ol>
                 </nav>
     
@@ -697,7 +703,7 @@
                         <div class="shipping-address-container">
                             <div class="shipping-header">Shipping Address</div>
                             <div class="shipping-details">
-                                <div class="shipping-name"><%= order.user.username %></div>
+                                <div class="shipping-name"><%= order.shippingAddress.username %></div>
                                 <div class="shipping-address">
                                     <%= order.shippingAddress.street %>, <%= order.shippingAddress.city %><br />
                                     <%= order.shippingAddress.state %><br />

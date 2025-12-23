@@ -29,7 +29,7 @@
     <style>
 
         body {
-            background-color: #1c1e20;
+            background-color: #1c1e20 !important;
             color: white;
         }
         .product-card {
@@ -176,13 +176,25 @@
 
         .results-count {
             margin-top: 15px;
+            margin-right: 35px;
         }
 
         .filter-applied{
             background-color: rgba(138, 138, 138, 0.212);
             padding: 8px 18px;
             border-radius: 20px;
-            margin-left: 40px;
+            margin-left: 5px;
+            margin-top: 10.1px;
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 400; 
+        }
+
+        .search-applied{
+            background-color: rgba(138, 138, 138, 0.212);
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin-left: 5px;
             margin-top: 10.1px;
             font-size: 13px;
             color: #ffffff;
@@ -375,7 +387,7 @@
             .search-container {
                 margin-left: 0px;
             }
-        }
+        }   
     </style>
 </head>
 
@@ -406,7 +418,6 @@
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
             <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -452,16 +463,14 @@
                             <li><a href="/">Home</a></li>
                             <li class="active"><a href="/shop">Shop</a></li>
                             <li><a href="/cart">Shopping Cart</a></li>
-                            <!-- <li><a href="/blogs">Blogs</a></li> -->
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
                         <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="/cart"><div class="price"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                        <a href="/wallet"><div class="price"><i class="fa-solid fa-wallet"></i></div></a>
                     </div>
                 </div>
             </div>
@@ -500,6 +509,9 @@
                         <form action="/shop" method="GET" class="d-flex">
                             <input type="text" name="search" class="form-control search-input"
                                 placeholder="Search for products..." value="<%= query.search || '' %>">
+                            <input type="hidden" id="variety" name="priceRange" value="<%= query.priceRange %>">
+                            
+                            <input type="hidden" name="sortBy" value="<%= query.sortBy %>">
                             <button type="submit" class="btn btn-search">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -516,6 +528,11 @@
                     </div>
                     <div class="filter-applied" id="filter-applied-container" style="display: none;">
                         <div id="filter-applied">
+                           
+                        </div>
+                    </div>
+                    <div class="search-applied" id="search-applied-container" style="display: none;">
+                        <div id="search-applied">
                            
                         </div>
                     </div>
@@ -590,43 +607,16 @@
                                             <a data-toggle="" data-target="">Filter Price</a>
                                         </div>
                                         <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                                              <div class="card-body">
+                                            <div class="card-body">
                                                 <div class="shop__sidebar__price">
                                                     <ul>
-                                                        <li><input type="checkbox" name="priceRange" value="0-50"
-                                                                onchange="priceFilter()"> $0.00 - $50.00</li>
-                                                        <li><input type="checkbox" name="priceRange" value="50-100"
-                                                                onchange="priceFilter()"> $50.00 - $100.00</li>
-                                                        <li><input type="checkbox" name="priceRange" value="100-150"
-                                                                onchange="priceFilter()"> $100.00 - $150.00</li>
-                                                        <li><input type="checkbox" name="priceRange" value="150-200"
-                                                                onchange="priceFilter()"> $150.00 - $200.00</li>
-                                                        <li><input type="checkbox" name="priceRange" value="200-250"
-                                                                onchange="priceFilter()"> $200.00 - $250.00</li>
-                                                        <li><input type="checkbox" name="priceRange" value="250+"
-                                                                onchange="priceFilter()"> $250.00+</li>
+                                                        <li><input type="checkbox" name="priceRange" value="0-5000" onchange="priceFilter()"> ₹0 - ₹5000</li>
+                                                        <li><input type="checkbox" name="priceRange" value="5000-10000" onchange="priceFilter()"> ₹5000 - ₹10000</li>
+                                                        <li><input type="checkbox" name="priceRange" value="10000-50000" onchange="priceFilter()"> ₹10000 - ₹50000</li>
+                                                        <li><input type="checkbox" name="priceRange" value="50000-100000" onchange="priceFilter()"> ₹50000 - ₹100000</li>
+                                                        <li><input type="checkbox" name="priceRange" value="100000-200000" onchange="priceFilter()"> ₹100000 - ₹200000</li>
+                                                        <li><input type="checkbox" name="priceRange" value="200000+" onchange="priceFilter()"> ₹200000+</li>
                                                     </ul>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tags Filter -->
-                                    <div class="card">
-                                        <div class="card-heading">
-                                            <a data-toggle="" data-target="">Tags</a>
-                                        </div>
-                                        <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="shop__sidebar__tags">
-                                                    <a href="#">Gaming</a>
-                                                    <a href="#">High Performance</a>
-                                                    <a href="#">Battery Life</a>
-                                                    <a href="#">Quality Camera</a>
-                                                    <a href="#">256GB ROM</a>
-                                                    <a href="#">16GB RAM</a>
-                                                    <a href="#">Refresh Rate</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -737,24 +727,25 @@
                             <ul class="pagination justify-content-center">
                                 <% if (currentPage > 1) { %>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>">Previous</a>
+                                        <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>&priceRange=<%= encodeURIComponent(query.priceRange) %>">Previous</a>
                                     </li>
                                 <% } %>
-    
+                    
                                 <% for (let i = 1; i <= totalPages; i++) { %>
                                     <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                                        <a class="page-link" href="?page=<%= i %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>"><%= i %></a>
+                                        <a class="page-link" href="?page=<%= i %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>&priceRange=<%= encodeURIComponent(query.priceRange) %>"><%= i %></a>
                                     </li>
                                 <% } %>
-    
+                    
                                 <% if (currentPage < totalPages) { %>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>">Next</a>
+                                        <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= query.search %>&sortBy=<%= query.sortBy %>&selectedBrands=<%= encodeURIComponent(JSON.stringify(selectedBrands)) %>&priceRange=<%= encodeURIComponent(query.priceRange) %>">Next</a>
                                     </li>
                                 <% } %>
                             </ul>
                         </nav>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -858,8 +849,6 @@
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
 
         const authSection = document.getElementById('authSection');
-        console.log('authSection shop',authSection)
-        console.log('isLoggedIn shop',isLoggedIn)
         if (isLoggedIn) {
             authSection.innerHTML = `
                 <li class="nav-item dropdown">
@@ -885,7 +874,7 @@
             `;
         }
 
-        //logout Logic
+        // logout Logic
         document.getElementById('logoutButton').addEventListener('click', async () => {
             try {
                 await fetch('/logout', {
@@ -901,57 +890,54 @@
     </script>
 
     <script>
-        function submitFilterForm() {
-            const selectedBrands = [];
-            const checkboxes = document.querySelectorAll('input[name="brands"]');
 
-            checkboxes.forEach((checkbox) => {
-                // Check if the checkbox is checked and has a non-empty value
-                if (checkbox.checked && checkbox.value) {
-                    selectedBrands.push(checkbox.value);
-                }
-            });
+function priceFilter() {
+    const selectedPriceRanges = [];
+    const checkboxes = document.querySelectorAll('input[name="priceRange"]:checked');
 
-            // Handle "All Brands" checkbox
-            const allBrandsChecked = Array.from(checkboxes).some(checkbox => checkbox.value === "all" && checkbox.checked);
-            if (allBrandsChecked) {
-                selectedBrands.length = 0; // Clear selected brands if "All Brands" is checked
-            }
+    checkboxes.forEach((checkbox) => {
+        selectedPriceRanges.push(checkbox.value);
+    });
 
-            // Create the query string for the selected brands
-            const brandsQueryString = encodeURIComponent(JSON.stringify(selectedBrands));
+    const priceRangeQueryString = selectedPriceRanges.length > 0 
+        ? encodeURIComponent(JSON.stringify(selectedPriceRanges)) 
+        : '[]';  // Send an empty array if no price is selected
 
-            // Alert for debugging
-            // alert('Selected Brands: ' + JSON.stringify(selectedBrands) + '\nQuery String: ' + brandsQueryString);
+    // Retain selected brands
+    const selectedBrands = getQueryParam('selectedBrands') || '[]';
 
-            // Redirect to the shop page with the selected filters
-            window.location.href = `/shop?selectedBrands=${brandsQueryString}`;
+    // Retain search query
+    const search = getQueryParam('search') || '';
+
+    // Retain sorting
+    const sortBy = getQueryParam('sortBy') || '';
+
+    // Retain current page
+    const page = getQueryParam('page') || 1;
+
+    // Redirect to the shop page with all the filters applied
+    window.location.href = `/shop?priceRange=${priceRangeQueryString}&selectedBrands=${selectedBrands}&search=${search}&sortBy=${sortBy}&page=${page}`;
+}
+
+
+function submitFilterForm() {
+    const selectedBrands = [];
+    const checkboxes = document.querySelectorAll('input[name="brands"]:checked');
+
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked && checkbox.value) {
+            selectedBrands.push(checkbox.value);
         }
+    });
 
+    const brandsQueryString = selectedBrands.length > 0 
+        ? encodeURIComponent(JSON.stringify(selectedBrands)) 
+        : '[]';  // Send an empty array if no brand is selected
 
-        function submitSortingForm() {
-            const sortSelect = document.getElementById('sort-by');
-            if (sortSelect.value !== "") { // Only submit if a valid option is selected
-                document.getElementById('sorting-form').submit(); // Submit the form
-            }
-
-
-            const selectedBrands = [];
-            const checkboxes = document.querySelectorAll('input[name="brands"]');
-
-            checkboxes.forEach((checkbox) => {
-                if (checkbox.checked && checkbox.value) {
-                    selectedBrands.push(checkbox.value);
-                }
-            });
-
-            const brandsQueryString = encodeURIComponent(JSON.stringify(selectedBrands));
-            const sortBy = document.getElementById('sort-by').value;
-
-            // Redirect to the shop page with the selected filters and sorting
-            window.location.href = `/shop?selectedBrands=${brandsQueryString}&sortBy=${sortBy}`;
-        }
-
+    // Retain selected price ranges
+    const priceRange = getQueryParam('priceRange') || '[]';
+    window.location.href = `/shop?selectedBrands=${brandsQueryString}&priceRange=${priceRange}`;
+}
 
 
         function getQueryParam(param) {
@@ -959,26 +945,73 @@
             return urlParams.get(param);
         }
 
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const priceRangeParam = urlParams.get('priceRange');
+            if (priceRangeParam) {
+                const selectedPriceRanges = JSON.parse(decodeURIComponent(priceRangeParam));
+
+                selectedPriceRanges.forEach((range) => {
+                    const checkbox = document.querySelector(`input[name="priceRange"][value="${range}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;  // Set the checkbox to checked if it matches the applied filter
+                    }
+                });
+            }
+        };
+
+
+        function submitSortingForm() {
+            const sortSelect = document.getElementById('sort-by');
+            if (sortSelect.value !== "") {
+                const priceRange = getQueryParam('priceRange') || '[]';
+                const selectedBrands = getQueryParam('selectedBrands') || '[]';
+                const searchQuery = getQueryParam('search') || '';
+                const sortBy = sortSelect.value;
+                window.location.href = `/shop?priceRange=${priceRange}&selectedBrands=${selectedBrands}&search=${searchQuery}&sortBy=${sortBy}`;
+            }
+        }
+
+
+
+
+
+        
+
         // Set the selected option in the dropdown based on the URL parameter
         function setSelectedSortOption() {
-            console.log('ufgfguyhdifgsdhfsdghfgsdhfgb')
             const sortBy = getQueryParam('sortBy');
             const sortSelect = document.getElementById('sort-by');
-
+            const searchQuery = getQueryParam('search')
+            const priceRange = getQueryParam('priceRange')
             // If the URL contains a sortBy parameter, set the appropriate option
-            if (sortBy) {
+            if(searchQuery != null && searchQuery != ''){
+                document.getElementById('search-applied-container').style.display = 'block'
+
+                document.getElementById('search-applied').innerHTML = `${searchQuery}&nbsp; <a href='/shop?sortBy=${sortBy ? sortBy:'[]'}&priceRange=${priceRange ? priceRange : '[]'}' style='font-weight:800; color:white;'>✕</a>`
+
+            }else{
+                document.getElementById('search-applied-container').style.display = 'none'
+
+            }
+
+
+            if (sortBy && sortBy != '[]') {
                 sortSelect.value = sortBy;
+
                 document.getElementById('filter-applied-container').style.display = 'block'
                 if(sortBy === 'price-asc'){
-                    document.getElementById('filter-applied').innerHTML = `Price in Ascending&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                    document.getElementById('filter-applied').innerHTML = `Price in Ascending&nbsp; <a href='/shop?priceRange=${priceRange ? priceRange : '[]'}&search=${searchQuery ? searchQuery : ''}' style='font-weight:800; color:white;'>✕</a>`
 
                 }else if(sortBy === 'price-desc'){
-                    document.getElementById('filter-applied').innerHTML = `Price in Descending&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                    document.getElementById('filter-applied').innerHTML = `Price in Descending&nbsp; <a href='/shop?priceRange=${priceRange ? priceRange : '[]'}&search=${searchQuery ? searchQuery : ''}' style='font-weight:800; color:white;'>✕</a>`
                 }else if(sortBy === 'name-asc'){
-                    document.getElementById('filter-applied').innerHTML = `Aa-Zz&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                    document.getElementById('filter-applied').innerHTML = `Aa-Zz&nbsp; <a href='/shop?priceRange=${priceRange ? priceRange : '[]'}&search=${searchQuery ? searchQuery : ''}' style='font-weight:800; color:white;'>✕</a>`
                 }else if(sortBy === 'name-desc'){
-                    document.getElementById('filter-applied').innerHTML = `Zz-Aa&nbsp; <a href='/shop' style='font-weight:800; color:white;'>✕</a>`
+                    document.getElementById('filter-applied').innerHTML = `Zz-Aa&nbsp; <a href='/shop?priceRange=${priceRange ? priceRange : '[]'}&search=${searchQuery ? searchQuery : ''}' style='font-weight:800; color:white;'>✕</a>`
                 }
+            }else if(sortBy == '[]'){
+                document.getElementById('filter-applied-container').style.display = 'none'
             } else {
                 // Default to "Choose" if no sortBy is provided
                 sortSelect.value = "";
@@ -997,7 +1030,6 @@
                     duration: 300 // Adjust duration if needed
                 }
             });
-
         });
 
         function sortProducts() {
@@ -1071,8 +1103,8 @@
                 .catch(error => {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: 'Something went wrong!',
+                        title: 'Login Required',
+                        text: 'Please Login to access this feature!',
                         timer: 2000,
                         showConfirmButton: false
                     });
@@ -1086,7 +1118,6 @@
                 event.preventDefault(); // Prevent default form submission
 
                 const variantId = form.querySelector('input[name="variantId"]').value;
-                console.log(variantId)
                 const cartData = {
                     variantId,
                 };
@@ -1130,19 +1161,3 @@
 
 </html>
 
-<!-- function applyFilters() {
-    const sortBy = document.getElementById('sortBy').value;
-    const brandFilters = Array.from(document.querySelectorAll('.brand-filter:checked')).map(el => el.value);
-
-    let queryString = `?sortBy=${sortBy}`;
-    if (brandFilters.length > 0) {
-        queryString += `&brands=${brandFilters.join(',')}`;
-    }
-
-    window.location.href = `/shop${queryString}`;
-}
-
-function sortProducts() {
-    const sortBy = document.getElementById('sortBy').value;
-    window.location.href = `/shop?sortBy=${sortBy}`;
-} -->

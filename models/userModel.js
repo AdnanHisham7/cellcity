@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Variant' }],
     walletBalance: { type: Number, default: 0 },  // User's wallet balance
     transactionHistory: [transactionSchema],
-    referralCode: { type: String, unique: true },
+    referralCode: { type: String },
     referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },

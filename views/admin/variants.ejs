@@ -546,7 +546,6 @@
 
                     // Client-side validations
                     if (!variantData.color || typeof variantData.color !== 'string') {
-                        console.log('Color validation failed:', variantData.color);
                         document.getElementById('colorError').style.display = 'block';
                         document.getElementById('colorError').textContent = 'Color is required and must be a string.';
                         document.getElementById('color').classList.add('input-error');
@@ -631,14 +630,12 @@
                 document.getElementById('confirmAction').addEventListener('click', async () => {
                     if (variantIdToToggle) {
                         try {
-                            console.log(`Sending request to toggle status for variantId: ${variantIdToToggle}`);
                             const response = await fetch(`/admin/variants/action/${variantIdToToggle}`, {
                                 method: 'POST'
                             });
 
                             if (response.ok) {
                                 const result = await response.json();
-                                console.log(`Response received: `, result);
 
                                 // Update the status in the table
                                 const row = document.querySelector(`tr[data-variant-id="${variantIdToToggle}"]`);

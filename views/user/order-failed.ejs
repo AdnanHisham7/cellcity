@@ -342,10 +342,7 @@
     <script>
 
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
-        console.log(isLoggedIn, 'huhuhuhuh')
         const authSection = document.getElementById('authSection');
-        console.log('authSection shop',authSection)
-        console.log('isLoggedIn shop',isLoggedIn)
         if (isLoggedIn) {
             authSection.innerHTML = `
                 <li class="nav-item dropdown">

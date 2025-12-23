@@ -594,8 +594,14 @@ ol {
 
 .header__nav__option a {
 	display: inline-block;
-	margin-right: 26px;
+	margin-right: 16px;
 	position: relative;
+}
+
+.header__nav__option a .price{
+	color: rgb(95, 94, 94);
+	margin-left: 4px;
+	font-size: 18px;
 }
 
 .header__nav__option a span {

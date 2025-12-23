@@ -7,7 +7,10 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>Cellcity- cart</title>
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -23,6 +26,11 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
+
+        .shopping-cart{
+            background-color: #1c1e20 !important;
+        }
+
         .toast-top-center {
             top: 50px !important;
             left: 50% !important;
@@ -175,10 +183,11 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="/cart"><div class="price"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                        <a href="/wallet"><div class="price"><i class="fa-solid fa-wallet"></i></div></a>
+                        
                     </div>
                 </div>
             </div>
@@ -260,9 +269,10 @@
                                                     </form>
                                                 </div>
                                             </td>
-                                            <td class="cart__price" data-variant="<%= item.variant._id %>">₹<%=
-                                                    (item.finalPrice * item.quantity).toFixed(2) %>
+                                            <td class="cart__price" data-variant="<%= item.variant._id %>">
+                                                ₹<%= (item.finalPrice * item.quantity).toFixed(2) %>
                                             </td>
+                                            
                                             <td class="cart__close">
                                                 <form action="/cart/remove/<%= item.variant._id %>" method="POST" class="remove-form">
                                                     <button type="submit" class="btn remove-btn">remove</button>
@@ -493,21 +503,14 @@
                         currentQuantity--;
                     }
 
-                    // Log current quantities for debugging
-                    console.log('currentQuantity', currentQuantity);
-                    console.log('availableStock', availableStock);
-                    console.log('maxQuantity', maxQuantity);
-
                     // Ensure currentQuantity does not exceed availableStock
                     if (currentQuantity > availableStock) {
-                        console.log(`Only ${availableStock} items available in stock. Current: ${currentQuantity}`);
                         toastr.warning(`Only ${availableStock} items available in stock.`);
                         currentQuantity = availableStock; // Adjust to available stock
                     }
 
                     // Ensure currentQuantity does not exceed maxQuantity
                     if (currentQuantity > maxQuantity) {
-                        console.log(`Quantity limit reached. Max: ${maxQuantity}, Current: ${currentQuantity}`);
                         toastr.warning('Quantity limit reached for the product.');
                         currentQuantity = maxQuantity; // Adjust to max quantity
                     }
@@ -535,8 +538,6 @@
                 })
                 .then(result => {
                     if (result.success) {
-                        // Debugging: Log the result
-                        console.log(result);
 
                         // Update the price and totals dynamically
                         const cartPriceElement = document.querySelector(`.cart__price[data-variant="${variantId}"]`);
@@ -545,19 +546,19 @@
 
                         // Check if elements exist before updating
                         if (cartPriceElement) {
-                            cartPriceElement.innerText = `₹${(result.updatedItem.finalPrice * currentQuantity)}`;
+                            cartPriceElement.innerText = `₹${(result.updatedItem.finalPrice * currentQuantity).toFixed(2)}`;
                         } else {
                             console.error(`Cart price element not found for variant: ${variantId}`);
                         }
 
                         if (subtotalElement) {
                             subtotalElement.innerText = `₹${result.subtotal}`;
-                        } else {
+                        }else {
                             console.error('Subtotal element not found.');
                         }
 
                         if (totalElement) {
-                            totalElement.innerText = `₹${result.total}`;
+                            totalElement.innerText = `₹${result.total.toFixed(2)}`;
                         } else {
                             console.error('Total element not found.');
                         }
@@ -605,8 +606,6 @@
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
 
         const authSection = document.getElementById('authSection');
-        console.log('authSection',authSection)
-        console.log('isLoggedIn',isLoggedIn)
         if (isLoggedIn) {
             authSection.innerHTML = `
                 <li class="nav-item dropdown">

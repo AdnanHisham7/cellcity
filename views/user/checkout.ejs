@@ -7,7 +7,10 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>Cellcity - checkout</title>
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -103,7 +106,7 @@
         }
 
         .card-header {
-            background-color: #3F557A !important;
+            background-color: #222222 !important;
             font-size: 1.2rem;
             padding: 15px;
         }
@@ -119,7 +122,7 @@
 
 
         .checkout .total-section{
-            background-color: #3F557A;
+            background-color: #333333;
             padding: 10px;
             border-radius: 4px;
             color: white;            
@@ -177,6 +180,10 @@
 
         .header__menu a{
             text-decoration: none;
+        }
+
+        .card-body{
+            background-color: rgb(57, 57, 57);
         }
 
         @media (max-width: 650px){
@@ -270,10 +277,11 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
+                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="/cart"><div class="price"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                        <a href="/wallet"><div class="price"><i class="fa-solid fa-wallet"></i></div></a>
+                        
                     </div>
                 </div>
             </div>
@@ -872,9 +880,7 @@
                     });
 
                     const result = await response.json();
-                    console.log('result', result.success)
                     if (result.success) {
-                        console.log('you are a king')
                         // If the address is successfully added, reload the address section dynamically
                         const addressSection = document.querySelector('.card-body');
                         addressSection.innerHTML = ''; // Clear existing addresses
@@ -1116,7 +1122,6 @@
                     zip: document.getElementById('zip').value,
                 };
             }
-            console.log('amountttttttttttttttttttttttt', amount)
             // Prepare the payload
             let payload = {
                 amount,
@@ -1221,7 +1226,8 @@
                 applyCouponForm.onsubmit = async function (event) {
                     event.preventDefault();  // Prevent page reload
 
-                    const couponCode = document.getElementById('couponCode').value;
+                    let couponCode = document.getElementById('couponCode').value;
+                    couponCode = couponCode.trim()
                     if (couponCode.trim() === '') {
                         toastr.warning('Coupon code is required')
                         return
@@ -1355,8 +1361,6 @@
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
 
         const authSection = document.getElementById('authSection');
-        console.log('authSection shop',authSection)
-        console.log('isLoggedIn shop',isLoggedIn)
         if (isLoggedIn) {
             authSection.innerHTML = `
                 <li class="nav-item dropdown">

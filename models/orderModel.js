@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid'); // Importing the UUID generator
 
 const addressSchema = new mongoose.Schema({
     street: { type: String, required: true },
@@ -10,6 +11,7 @@ const addressSchema = new mongoose.Schema({
 }, { _id: false }); // _id: false to avoid creating an additional ID for each address subdocument
 
 const orderSchema = new mongoose.Schema({
+    orderId: { type: String, default: uuidv4, unique: true }, // New UUID field for the orderId
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
     items: [{
         variant: { type: mongoose.Schema.Types.ObjectId, ref: 'Variant', required: true },
@@ -28,7 +30,7 @@ const orderSchema = new mongoose.Schema({
         percentage: Number
     },
     status: { type: String, enum: ['Pending', 'Confirmed', 'Returned', 'Delivered', 'Cancelled', 'Failed'], default: 'Pending' },
-},{ timestamps: true });
+}, { timestamps: true });
 
 // Update `updatedAt` field before saving
 orderSchema.pre('save', function(next) {

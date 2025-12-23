@@ -14,7 +14,8 @@
     <meta property="og:description" content="Discover the best smartphones at CellCity. Shop top brands and get fast delivery, amazing deals, and excellent customer service.">
     <meta property="og:type" content="website">
 
-
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/cd1d3af381.js" crossorigin="anonymous"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -153,16 +154,10 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
+                <p id="authSectionOffcanvas">
+                    <!-- Placeholder for auth content -->
+                </p>
+                <a href="/#faqs-section">FAQs</a>
             </div>
         </div>
         <div class="offcanvas__nav__option">
@@ -200,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
         <div class="container">
             <div class="row">
@@ -223,8 +218,9 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="/wallet"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="/cart"><div class="price"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                        <a href="/wallet"><div class="price"><i class="fa-solid fa-wallet"></i></div></a>
+                        
                     </div>
                 </div>
             </div>
@@ -569,9 +565,22 @@
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
 
         const authSection = document.getElementById('authSection');
-        console.log('authSection',authSection)
-        console.log('isLoggedIn',isLoggedIn)
         if (isLoggedIn) {
+            document.getElementById('authSectionOffcanvas').innerHTML = `<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/profile">Profile</a></li>
+                        
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/wishlist">Wishlist</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item mb-1" href="/orders">Orders</a></li>
+                        <li style="padding-left:13px;"><a style="color:black;" class="dropdown-item" href="/reviews">Reviews</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button id="logoutButton-1" class="dropdown-item">Logout</button></li>
+                    </ul>
+                </li>`
+
             authSection.innerHTML = `
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -589,6 +598,8 @@
                 </li>
             `;
         } else {
+            document.getElementById('authSectionOffcanvas').innerHTML = `
+            <a href="/login">Sign in</a>`;
             authSection.innerHTML = `
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Sign In</a>
@@ -596,8 +607,22 @@
             `;
         }
 
+
         //logout Logic
         document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                });
+                localStorage.removeItem('token'); // Clear the token from local storage
+                window.location.href = '/'; // Redirect to login page
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        document.getElementById('logoutButton-1').addEventListener('click', async () => {
             try {
                 await fetch('/logout', {
                     method: 'GET',

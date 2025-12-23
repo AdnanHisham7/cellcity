@@ -614,16 +614,14 @@
                             <li><a href="/">Home</a></li>
                             <li><a href="/shop">Shop</a></li>
                             <li><a href="/cart">Shopping Cart</a></li>
-                            <!-- <li><a href="/blogs">Blogs</a></li> -->
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <!-- <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a> -->
-                        <a href="/wishlist"><img src="/img/icon/heart.png" alt=""></a>
-                        <a href="/wallet"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="/cart"><div class="price"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                        <a href="/wallet"><div class="price"><i class="fa-solid fa-wallet"></i></div></a>
                     </div>
                 </div>
             </div>
@@ -649,10 +647,6 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
-
-    
-
    
     <div class="container">
         <div class="product-container">
@@ -666,7 +660,7 @@
                                         class="img-fluid product-subimages thumbnail mb-2" data-src="<%= image.replace('uploads', '') %>">
                                 <% }); %>
                             <% } else { %>
-                                <img src="/path/to/default-image.png" alt="Default Image">
+                             <img src="/path/to/default-image.png" alt="Default Image">
                             <% } %>
                         </div>
                         <% if (product.variants.length > 0 && variant.variantImages && variant.variantImages.length > 0) { %>
@@ -1170,7 +1164,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Server Response:', data);  // Log the full response
                 if (data.success) {
                     toastr.success(data.message);
 
@@ -1297,7 +1290,6 @@
     
             const form = event.target;
             const variantId = document.getElementById('variantId').value;
-            console.log(variantId)
             const cartData = {
                 variantId,
             };
@@ -1353,7 +1345,6 @@
 
                     // Change the source of the large image
                     const newSrc = this.getAttribute('data-src');
-                    console.log('New Source:', newSrc);
                     document.getElementById('largeImage').setAttribute('src', newSrc);
                 });
             });
@@ -1365,8 +1356,6 @@
         const isLoggedIn = "<%= isLoggedIn %>" === "true";
 
         const authSection = document.getElementById('authSection');
-        console.log('authSection shop',authSection)
-        console.log('isLoggedIn shop',isLoggedIn)
         if (isLoggedIn) {
             authSection.innerHTML = `
                 <li class="nav-item dropdown">

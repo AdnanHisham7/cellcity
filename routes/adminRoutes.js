@@ -110,7 +110,7 @@ router.post('/brands/action/:brandId', authMiddleware, takeBrandAction);
 
 
 
-router.get('/orders', listAdminOrders);
+router.get('/orders',authMiddleware, listAdminOrders);
 router.get('/orders/:orderId', getOrderDetails);
 router.post('/orders/:orderId/status', updateOrderStatus);
 
@@ -125,10 +125,10 @@ router.post('/coupons/edit/:couponId', editCoupon);
 router.post('/coupons/action/:couponId', authMiddleware, takeCouponAction);
 router.get('/coupons/delete/:couponId', deleteCoupon);
 
-router.get('/offers', getOffersPage);
-router.post('/add-offer', addOffer)
-router.get('/product-offers', getProductOffersPage);
-router.get('/brand-offers', getBrandOffersPage);
+router.get('/offers',authMiddleware, getOffersPage);
+router.post('/add-offer',authMiddleware, addOffer)
+router.get('/product-offers',authMiddleware, getProductOffersPage);
+router.get('/brand-offers',authMiddleware, getBrandOffersPage);
 
 router.post('/remove-offer', removeOffer);
 

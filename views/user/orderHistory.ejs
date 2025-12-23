@@ -643,7 +643,7 @@
                             <tbody>
                                 <% orders.forEach(order => { %>
                                 <tr class="order-row" style="background-color: red;">
-                                    <td><a href="/orders/<%= order._id %>">#<%= order._id %></a></td>
+                                    <td><a href="/orders/<%= order._id %>"><%= order.orderId %></a></td>
                                     <td class="<%= order.status.toLowerCase() %>-status">
                                         <%= order.status %>
                                     </td>
@@ -666,7 +666,7 @@
                                             <input type="hidden" id="orderId" value="<%= lastFailedOrder._id %>">
                                             <input type="hidden" id="amount" value="<%= finalAmount %>">
                                             <a href="javascript:void(0);" class="btn btn-sm retryButton" 
-                                               data-order-id="<%= lastFailedOrder._id %>" data-amount="<%= finalAmount %>" onclick="return confirm('Are you sure you want to Retry this order?')">Retry</a>
+                                               data-order-id="<%= lastFailedOrder._id %>" data-amount="<%= finalAmount %>">Retry</a>
                                         <% } %>
                                     
                                         <% } %>

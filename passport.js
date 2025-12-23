@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const User = require('./models/userModel'); // Import your User model
 
 passport.use(new GoogleStrategy({
@@ -16,11 +17,14 @@ async (accessToken, refreshToken, profile, done) => {
         if (user) {
             return done(null, user);
         } else {
+            const referralCode = generateReferralCode();
+
             user = new User({
                 googleId: profile.id,
                 username: profile.displayName, // Use email username as username
                 email: profile.emails[0].value,
-                avatar: profile.photos[0].value
+                avatar: profile.photos[0].value,
+                referralCode
             });
 
             await user.save();
@@ -30,6 +34,12 @@ async (accessToken, refreshToken, profile, done) => {
         return done(err, null);
     }
 }));
+
+
+const generateReferralCode = () => {
+    return crypto.randomBytes(4).toString('hex').toUpperCase();  // Generates an 8-character random string
+};
+
 
 passport.serializeUser((user, done) => {
     done(null, user.id);

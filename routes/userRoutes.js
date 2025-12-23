@@ -172,7 +172,7 @@ router.get('/retry-payment/:orderId', retryPayment)
 router.post('/update-razorpay-order', updateRazorPayOrder)
 
 
-router.get('/download-invoice/:orderId',authMiddleware, generateInvoicePDF)
+router.get('/download-invoice/:orderId', generateInvoicePDF)
 
 
 // add edit delete reviews
